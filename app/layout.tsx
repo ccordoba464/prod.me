@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Providers } from "./providers";
+import Link from "next/link";
 import "./globals.css";
+import Playbar from "../components/playbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,9 +17,32 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const links = [
+    { href: "/", label: "Home" },
+    { href: "/artist", label: "Artist" },
+  ];
+
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <main>
+          <Providers>
+            <header className="fixed w-screen top-0 z-[1000]">
+              <nav>
+                <ul className="flex gap-3 p-4 bg-red-500">
+                  {links.map(({ href, label }) => (
+                    <li key={href}>
+                      <Link href={href}>{label}</Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            </header>
+            <div className="p-4">{children}</div>
+            <Playbar />
+          </Providers>
+        </main>
+      </body>
     </html>
   );
 }
