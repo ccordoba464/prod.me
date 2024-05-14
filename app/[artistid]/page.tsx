@@ -35,9 +35,9 @@ export default function Profile({ params }: { params: any }) {
         <Tabs position="relative" variant="unstyled">
           <TabList>
             <Tab>All</Tab>
+            <Tab>Tracks</Tab>
             <Tab>Beats</Tab>
             <Tab>Opens</Tab>
-            <Tab>Tracks</Tab>
           </TabList>
           <TabIndicator
             mt="-1.5px"

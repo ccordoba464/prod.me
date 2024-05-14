@@ -5,23 +5,23 @@ export default function Song({ params }: { params: any }) {
         <div className="flex flex-col mr-6">
           <div className="w-[360px] h-[360px] overflow-hidden bg-[#3b4045] rounded-md"></div>
         </div>
-        <div className="flex flex-col w-full py-2">
+        <div className="flex flex-col w-full py-4">
           <div className="font-bold text-4xl uppercase">{params.songid}</div>
 
           <div className="font-bold text-3xl text-red-500 mb-1">
             {params.artistid}
           </div>
 
-          <div className="flex gap-1 mb-8">
-            <span className="font-bold">Album </span> •
+          <div className="flex gap-1 mb-6">
+            <span className="font-bold">Open </span> •
             <span className="font-bold">2024</span>
           </div>
 
-          <div className="flex mb-8 gap-2">
-            <button className="bg-red-500 px-10 py-2 rounded-lg text-white text-lg font-bold">
+          <div className="flex mb-8 gap-2 text-lg font-bold">
+            <button className="bg-red-500 px-10 py-2 rounded-lg text-white ">
               Play
             </button>
-            <button className="bg-red-500 px-10 py-2 rounded-lg text-white text-lg font-bold">
+            <button className="bg-red-500 px-10 py-2 rounded-lg text-white ">
               + Add
             </button>
           </div>
@@ -47,18 +47,31 @@ export default function Song({ params }: { params: any }) {
         </div>
       </div>
 
-      <div className="flex flex-col px-10 gap-2 text-white">
+      <div className="flex flex-col px-10 gap-2 text-white text-lg font-bold">
         <div className="flex items-center shadow-md rounded-md w-full bg-red-500 p-2">
-          <div className="text-lg font-bold px-4">1</div>
-          <div className="text-lg font-bold ">Song Title</div>
+          <div className="px-4">1</div>
+          <div className="mr-4 text-md">Active Version</div>
+          <div className="text-sm mr-4">May 24, 2024 • 6:43PM</div>
+          <div className="self-end ml-auto px-4 flex items-center">
+            Download
+          </div>
         </div>
         <div className="flex items-center shadow-md rounded-md w-full bg-red-500 p-2">
-          <div className="text-lg font-bold px-4">2</div>
-          <div className="text-lg font-bold ">Song Title</div>
+          <div className=" px-4">2</div>
+          <div className="mr-4 text-md">SONG V2</div>
+          <div className="text-sm mr-4">May 24, 2024 • 6:43PM</div>
+
+          <div className="self-end ml-auto px-4 flex items-center">
+            Download
+          </div>
         </div>
         <div className="flex items-center shadow-md rounded-md w-full bg-red-500 p-2">
-          <div className="text-lg font-bold px-4">3</div>
-          <div className="text-lg font-bold ">Song Title</div>
+          <div className=" px-4">3</div>
+          <div className="mr-4 text-md">SONG V1</div>
+          <div className="text-sm mr-4">May 24, 2024 • 6:43PM</div>
+          <div className="self-end ml-auto px-4 flex items-center">
+            Download
+          </div>
         </div>
       </div>
     </div>

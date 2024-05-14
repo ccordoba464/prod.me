@@ -28,7 +28,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <main>
           <Providers>
-            <header className="fixed w-screen top-0 z-[1000] bg-red-500">
+            <header className="fixed w-screen top-0 z-[1000] bg-red-500 font-bold text-white">
               <div className="flex items-center w-full justify-evenly">
                 <div>LOGO</div>
                 <nav>
