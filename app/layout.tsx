@@ -20,6 +20,7 @@ export default function RootLayout({
   const links = [
     { href: "/", label: "Home" },
     { href: "/artist", label: "Artist" },
+    { href: "/artist/song", label: "Song" },
   ];
 
   return (
@@ -27,18 +28,26 @@ export default function RootLayout({
       <body className={inter.className}>
         <main>
           <Providers>
-            <header className="fixed w-screen top-0 z-[1000]">
-              <nav>
-                <ul className="flex gap-3 p-4 bg-red-500">
-                  {links.map(({ href, label }) => (
-                    <li key={href}>
-                      <Link href={href}>{label}</Link>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
+            <header className="fixed w-screen top-0 z-[1000] bg-red-500">
+              <div className="flex items-center w-full justify-evenly">
+                <div>LOGO</div>
+                <nav>
+                  <ul className="flex gap-3 p-4">
+                    {links.map(({ href, label }) => (
+                      <li key={href}>
+                        <Link href={href}>{label}</Link>
+                      </li>
+                    ))}
+                  </ul>
+                </nav>
+                <div className="flex items-center gap-2">
+                  <div>Saved</div>
+                  <div>Notifications</div>
+                  <div className="w-[40px] h-[40px] overflow-hidden bg-[#3b4045] rounded-full mr-2"></div>
+                </div>
+              </div>
             </header>
-            <div className="p-4">{children}</div>
+            <div className="mt-14">{children}</div>
             <Playbar />
           </Providers>
         </main>

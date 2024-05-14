@@ -34,7 +34,7 @@ const Playbar = () => {
 
         <div className="flex items-center relative">
           <div className="flex justify-center">Volume</div>
-          <div className="absolute bottom-[60px] bg-red-300 p-2 rounded-md left-1/2 transform -translate-x-1/2">
+          <div className="absolute bottom-[60px] bg-red-300 p-2 rounded-md left-1/2 transform -translate-x-1/2 hidden">
             <Slider
               aria-label="slider-ex-3"
               defaultValue={30}
