@@ -1,7 +1,7 @@
 export default function Song({ params }: { params: any }) {
   return (
     <div className="flex flex-col h-screen px-6 py-6 mx-auto w-[1200px]">
-      <div className="flex">
+      <div className="flex mb-4">
         <div className="flex flex-col mr-6">
           <div className="w-[360px] h-[360px] overflow-hidden bg-[#3b4045] rounded-md"></div>
         </div>
@@ -44,6 +44,21 @@ export default function Song({ params }: { params: any }) {
               <div className="text-md font-bold text-gray-500">Duration</div>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div className="flex flex-col px-10 gap-2 text-white">
+        <div className="flex items-center shadow-md rounded-md w-full bg-red-500 p-2">
+          <div className="text-lg font-bold px-4">1</div>
+          <div className="text-lg font-bold ">Song Title</div>
+        </div>
+        <div className="flex items-center shadow-md rounded-md w-full bg-red-500 p-2">
+          <div className="text-lg font-bold px-4">2</div>
+          <div className="text-lg font-bold ">Song Title</div>
+        </div>
+        <div className="flex items-center shadow-md rounded-md w-full bg-red-500 p-2">
+          <div className="text-lg font-bold px-4">3</div>
+          <div className="text-lg font-bold ">Song Title</div>
         </div>
       </div>
     </div>

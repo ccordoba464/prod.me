@@ -7,17 +7,17 @@ import {
 
 const Playbar = () => {
   return (
-    <div className="fixed bottom-0 flex w-full py-6 items-center justify-center">
-      <div className="bg-red-300 flex p-1 rounded-lg">
+    <div className="fixed bottom-0 flex w-full py-6 items-center justify-center text-white font-bold">
+      <div className="bg-red-500 flex p-1 rounded-lg">
         <div className="flex mr-4">
           <div className="w-[50px] h-[50px] overflow-hidden bg-[#3b4045] rounded-md mr-2"></div>
-          <div className="flex flex-col text-sm justify-center ">
+          <div className="flex flex-col text-sm justify-center">
             <div>Title</div>
             <div>Artist</div>
           </div>
         </div>
 
-        <div className="flex gap-2 mr-4">
+        <div className="flex gap-2 mr-4 ">
           <button>Restart</button>
           <button>Play</button>
           <button>Skip</button>
@@ -34,7 +34,7 @@ const Playbar = () => {
 
         <div className="flex items-center relative">
           <div className="flex justify-center">Volume</div>
-          <div className="absolute bottom-[60px] bg-red-300 p-2 rounded-md left-1/2 transform -translate-x-1/2 hidden">
+          <div className="absolute bottom-[60px] bg-red-500 p-2 rounded-md left-1/2 transform -translate-x-1/2 hidden">
             <Slider
               aria-label="slider-ex-3"
               defaultValue={30}
