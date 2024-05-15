@@ -7,7 +7,7 @@ import {
   TabIndicator,
 } from "@chakra-ui/react";
 import Image from "next/image";
-import OpenCard from "@/components/OpenCard";
+import OpenCard from "../../components/OpenCard";
 
 export default function Profile({ params }: { params: any }) {
   return (
@@ -32,19 +32,14 @@ export default function Profile({ params }: { params: any }) {
       </div>
 
       <div className="px-6 py-2">
-        <Tabs position="relative" variant="unstyled">
+        <Tabs colorScheme="red">
           <TabList>
             <Tab>All</Tab>
             <Tab>Tracks</Tab>
             <Tab>Beats</Tab>
             <Tab>Opens</Tab>
           </TabList>
-          <TabIndicator
-            mt="-1.5px"
-            height="2px"
-            bg="blue.500"
-            borderRadius="1px"
-          />
+          <TabIndicator mt="-1.5px" height="2px" borderRadius="1px" />
           <TabPanels>
             <TabPanel>
               <div className="flex flex-col gap-4 mb-20">

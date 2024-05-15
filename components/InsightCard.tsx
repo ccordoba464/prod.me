@@ -1,12 +1,12 @@
 import Link from "next/link";
 
-export default function OpenCard() {
+const InsightCard = ({ params }) => {
   return (
-    <Link href={"/artist/song"}>
+    <Link href="/artist/song">
       <div className="flex flex-col">
         <div className="flex items-center justify-between shadow-md rounded-sm w-full bg-red-00 border">
           <div className="flex">
-            <div className="w-[130px] h-[130px] overflow-hidden mr-10 rounded-sm bg-[#3b4045]"></div>
+            <div className="w-[160px] h-[160px] overflow-hidden mr-10 rounded-sm bg-[#3b4045]"></div>
             <div className="flex flex-col justify-center">
               <div className="text-xl font-bold ">Song Title</div>
               <div className="text-sm font-bold text-gray-500">Artist name</div>
@@ -35,4 +35,6 @@ export default function OpenCard() {
       </div>
     </Link>
   );
-}
+};
+
+export default InsightCard;
