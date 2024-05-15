@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-const InsightCard = ({ params }) => {
+const InsightCard = ({}) => {
   return (
     <Link href="/artist/song">
       <div className="flex flex-col">
