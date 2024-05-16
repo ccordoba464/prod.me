@@ -7,8 +7,12 @@ import {
   TabIndicator,
 } from "@chakra-ui/react";
 import InsightCard from "@/components/InsightCard";
+import { fetchTracks } from "@/lib/data";
 
-export default function Library({ params }: { params: any }) {
+export default async function Library({ params }: { params: any }) {
+  const tracks = await fetchTracks();
+  console.log(tracks);
+
   return (
     <div className="flex bg-white flex-col mx-auto w-[1200px]">
       <div className="px-6 py-4">
@@ -22,7 +26,11 @@ export default function Library({ params }: { params: any }) {
           <TabIndicator mt="-1.5px" height="2px" borderRadius="1px" />
           <TabPanels>
             <TabPanel>
-              <div className="flex flex-col gap-4 mb-20"></div>
+              <div className="flex flex-col gap-4 mb-20">
+                {tracks.map(track => (
+                  <InsightCard key={track.id} track={track} />
+                ))}
+              </div>
             </TabPanel>
             <TabPanel>
               <div className="flex flex-col gap-4 mb-20"></div>
@@ -32,7 +40,6 @@ export default function Library({ params }: { params: any }) {
             </TabPanel>
             <TabPanel>
               <div className="flex flex-col gap-4 mb-20">
-                <InsightCard />
                 <div className="flex flex-col">
                   <div className="w-[160px] h-[160px] overflow-hidden bg-[#3b4045] rounded-md"></div>
                 </div>
