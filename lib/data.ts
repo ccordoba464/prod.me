@@ -1,5 +1,17 @@
 import { sql } from "@vercel/postgres";
+import { User, Track } from "../lib/definitions";
 import { unstable_noStore as noStore } from "next/cache";
+
+export async function fetchTracks() {
+  noStore();
+  try {
+    const data = await sql<Track>`SELECT * FROM tracks`;
+    return data.rows;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch tracks data.");
+  }
+}
 
 //Add noStore() in async functions to prevent the response from being cached.
 // This is equivalent to in fetch(..., {cache: 'no-store'}).
