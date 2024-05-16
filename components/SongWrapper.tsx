@@ -1,4 +1,8 @@
-export default function MusicList() {
+//import { fetchCardData } from "@/app/lib/data";
+
+export default async function CoverWrapper(): Promise<JSX.Element> {
+  //const {recentlyPlayed, newMusic} = await fetchCardData(); // Fetch data inside the component
+
   return (
     <div className="flex flex-col py-6">
       <h2 className="font-bold text-2xl mb-2">Recently Played</h2>
