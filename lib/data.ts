@@ -1,5 +1,5 @@
 import { sql } from "@vercel/postgres";
-import { User, Track } from "../lib/definitions";
+import { User, Track, Track_version } from "../lib/definitions";
 import { unstable_noStore as noStore } from "next/cache";
 
 export async function fetchTracks() {
@@ -13,33 +13,33 @@ export async function fetchTracks() {
   }
 }
 
-export async function fetchArtistData() {
-  noStore();
-  try {
-    const data = await sql<User>`SELECT * FROM users WHERE role='artist'`;
-    return data.rows;
-  } catch (error) {
-    console.error("Database Error:", error);
-    throw new Error("Failed to fetch artist data.");
-  }
-}
-
 export async function getUser(userid: string) {
   noStore();
   try {
-    const user = await sql`SELECT * FROM users WHERE id=${userid}`;
-    return user.rows[0] as User;
+    const user = await sql<User>`SELECT * FROM users WHERE id=${userid}`;
+    return user.rows;
   } catch (error) {
     console.error("Failed to fetch user:", error);
     throw new Error("Failed to fetch user.");
   }
 }
 
-export async function getTrack(trackid: string) {
+export async function getTrackWithVersions(trackid: string) {
   noStore();
   try {
-    const track = await sql`SELECT * FROM tracks WHERE id=${trackid}`;
-    return track.rows[0] as Track;
+    const trackPromise =
+      await sql<Track>`SELECT * FROM tracks WHERE id=${trackid}`;
+    const versionsPromise =
+      await sql<Track_version>`SELECT * FROM track_versions WHERE track_id=${trackid}`;
+
+    const [track, versions] = await Promise.all([
+      trackPromise,
+      versionsPromise,
+    ]);
+    return {
+      track: track.rows[0],
+      versions: versions.rows,
+    };
   } catch (error) {
     console.error("Failed to fetch track:", error);
     throw new Error("Failed to fetch track.");

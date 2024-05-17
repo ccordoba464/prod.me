@@ -13,9 +13,17 @@ export type Track = {
   user_id: string;
   title: string;
   description: string;
-  file_url: string;
-  cover_image_url: string;
   genre: string;
+  cover_image_url: string;
+  created_at: string;
+  updated_at: string;
+};
+
+export type Track_version = {
+  id: string;
+  track_id: string;
+  version_number: number;
+  file_url: string;
   duration: string;
   key: string;
   bpm: number;

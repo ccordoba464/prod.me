@@ -1,6 +1,6 @@
 const { db } = require("@vercel/postgres");
 const bcrypt = require("bcrypt");
-const { users, tracks } = require("../lib/placeholder-data.js");
+const { users, tracks, track_versions } = require("../lib/placeholder-data.js");
 
 async function seedUsers(client) {
   try {
@@ -46,26 +46,21 @@ async function seedUsers(client) {
 
 async function seedTracks(client) {
   try {
-    // Creates a PostgreSQL extension called "uuid-ossp", generates UUIDs
     await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 
     // Create the "tracks" table if it doesn't exist
-    const createTable = await client.sql`
+    await client.sql`
       CREATE TABLE IF NOT EXISTS tracks (
         id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
         user_id UUID NOT NULL,
         title VARCHAR(255) NOT NULL,
         description TEXT NOT NULL,
-        file_url TEXT NOT NULL,
-        cover_image_url TEXT NOT NULL,
         genre VARCHAR(255) NOT NULL,
-        duration VARCHAR(255) NOT NULL,
-        key VARCHAR(255) NOT NULL,
-        bpm INT NOT NULL,
+        cover_image_url TEXT NOT NULL,
         created_at TIMESTAMP NOT NULL DEFAULT NOW(),
         updated_at TIMESTAMP NOT NULL DEFAULT NOW()
-        );
-      `;
+      );
+    `;
 
     console.log(`Created "tracks" table`);
 
@@ -73,21 +68,59 @@ async function seedTracks(client) {
     const insertedTracks = await Promise.all(
       tracks.map(async track => {
         return client.sql`
-        INSERT INTO tracks (id, user_id, title, description, file_url, cover_image_url, genre, duration, key, bpm, created_at, updated_at)
-        VALUES (${track.id}, ${track.user_id}, ${track.title}, ${track.description}, ${track.file_url}, ${track.cover_image_url},${track.genre}, ${track.duration}, ${track.key}, ${track.bpm}, ${track.created_at},${track.updated_at})
+        INSERT INTO tracks (id, user_id, title, description, genre, cover_image_url, created_at, updated_at)
+        VALUES (${track.id}, ${track.user_id}, ${track.title}, ${track.description}, ${track.genre}, ${track.cover_image_url}, ${track.created_at}, ${track.updated_at})
         ON CONFLICT (id) DO NOTHING;
       `;
       })
     );
 
-    console.log(`Seeded ${insertedTracks.length} users`);
+    console.log(`Seeded ${insertedTracks.length} tracks`);
 
-    return {
-      createTable,
-      tracks: insertedTracks,
-    };
+    return insertedTracks;
   } catch (error) {
     console.error("Error seeding tracks:", error);
+    throw error;
+  }
+}
+
+async function seedTrackVersions(client) {
+  try {
+    await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+
+    // Create the "track_versions" table if it doesn't exist
+    await client.sql`
+      CREATE TABLE IF NOT EXISTS track_versions (
+        id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+        track_id UUID NOT NULL REFERENCES tracks(id),
+        version_number INT NOT NULL,
+        file_url TEXT NOT NULL,
+        duration VARCHAR(255) NOT NULL,
+        key VARCHAR(255) NOT NULL,
+        bpm INT NOT NULL,
+        created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+        updated_at TIMESTAMP NOT NULL DEFAULT NOW()
+      );
+    `;
+
+    console.log(`Created "track_versions" table`);
+
+    // Insert data into the "track_versions" table
+    const insertedTrackVersions = await Promise.all(
+      track_versions.map(async version => {
+        return client.sql`
+        INSERT INTO track_versions (id, track_id, version_number, file_url, duration, key, bpm, created_at, updated_at)
+        VALUES (${version.id}, ${version.track_id}, ${version.version_number}, ${version.file_url}, ${version.duration}, ${version.key}, ${version.bpm}, ${version.created_at}, ${version.updated_at})
+        ON CONFLICT (id) DO NOTHING;
+      `;
+      })
+    );
+
+    console.log(`Seeded ${insertedTrackVersions.length} track versions`);
+
+    return insertedTrackVersions;
+  } catch (error) {
+    console.error("Error seeding track versions:", error);
     throw error;
   }
 }
@@ -211,9 +244,7 @@ async function main() {
 
   await seedUsers(client);
   await seedTracks(client);
-  //   await seedCustomers(client);
-  //   await seedInvoices(client);
-  //   await seedRevenue(client);
+  await seedTrackVersions(client);
 
   await client.end();
 }

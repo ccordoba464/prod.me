@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { getTrack } from "@/lib/data";
+import { getTrackWithVersions } from "@/lib/data";
 
 interface TrackProps {
   params: {
@@ -9,7 +9,7 @@ interface TrackProps {
 
 export default async function Track({ params }: TrackProps) {
   const { songid } = params;
-  const trackData = await getTrack(songid);
+  const { track, versions } = await getTrackWithVersions(songid);
 
   return (
     <div className="flex flex-col h-screen px-6 py-6 mx-auto w-[1200px]">
@@ -18,11 +18,9 @@ export default async function Track({ params }: TrackProps) {
           <div className="w-[360px] h-[360px] overflow-hidden bg-[#3b4045] rounded-md"></div>
         </div>
         <div className="flex flex-col w-full py-4">
-          <div className="font-bold text-4xl uppercase">{trackData.id}</div>
+          <div className="font-bold text-4xl uppercase">{track.id}</div>
 
-          <div className="font-bold text-3xl text-red-500 mb-1">
-            {trackData.id}
-          </div>
+          <div className="font-bold text-3xl text-red-500 mb-1">{track.id}</div>
 
           <div className="flex gap-1 mb-6">
             <span className="font-bold">Open</span> •
@@ -40,19 +38,19 @@ export default async function Track({ params }: TrackProps) {
 
           <div className="flex mb-8">
             <div className="flex flex-col items-center shadow-md px-10 py-4 mr-4 border rounded-sm">
-              <div className="text-2xl font-bold">{trackData.genre}</div>
+              <div className="text-2xl font-bold">{track.genre}</div>
               <div className="text-md font-bold text-gray-500">Genre</div>
             </div>
             <div className="flex flex-col items-center shadow-md px-10 py-4 mr-4 border rounded-sm">
-              <div className="text-2xl font-bold">{trackData.key}</div>
+              <div className="text-2xl font-bold">{track.key}</div>
               <div className="text-md font-bold text-gray-500">Key</div>
             </div>
             <div className="flex flex-col items-center shadow-md px-10 py-4 mr-4 border rounded-sm">
-              <div className="text-2xl font-bold">{trackData.bpm}</div>
+              <div className="text-2xl font-bold">{track.bpm}</div>
               <div className="text-md font-bold text-gray-500">BPM</div>
             </div>
             <div className="flex flex-col items-center shadow-md px-10 py-4 mr-4 border rounded-sm">
-              <div className="text-2xl font-bold">{trackData.duration}</div>
+              <div className="text-2xl font-bold">{track.duration}</div>
               <div className="text-md font-bold text-gray-500">Duration</div>
             </div>
           </div>
@@ -60,31 +58,22 @@ export default async function Track({ params }: TrackProps) {
       </div>
 
       <div className="flex flex-col px-10 gap-2 text-white text-lg font-bold">
-        <div className="flex items-center shadow-md rounded-md w-full bg-red-500 p-2">
-          <div className="px-4">1</div>
-          <div className="mr-4 text-md">Active Version</div>
-          <div className="text-sm mr-4">May 24, 2024 • 6:43PM</div>
-          <div className="self-end ml-auto px-4 flex items-center">
-            Download
+        {versions.map(version => (
+          <div
+            key={version.id}
+            className="flex items-center shadow-md rounded-md w-full bg-red-500 p-2"
+          >
+            <div className="px-4">{version.version_number}</div>
+            <div className="mr-4 text-md">{version.file_url}</div>
+            <div className="text-sm mr-4">
+              {new Date(version.created_at).toLocaleString()} •
+              {version.time || "N/A"}
+            </div>
+            <div className="self-end ml-auto px-4 flex items-center">
+              Download
+            </div>
           </div>
-        </div>
-        <div className="flex items-center shadow-md rounded-md w-full bg-red-500 p-2">
-          <div className=" px-4">2</div>
-          <div className="mr-4 text-md">SONG V2</div>
-          <div className="text-sm mr-4">May 24, 2024 • 6:43PM</div>
-
-          <div className="self-end ml-auto px-4 flex items-center">
-            Download
-          </div>
-        </div>
-        <div className="flex items-center shadow-md rounded-md w-full bg-red-500 p-2">
-          <div className=" px-4">3</div>
-          <div className="mr-4 text-md">SONG V1</div>
-          <div className="text-sm mr-4">May 24, 2024 • 6:43PM</div>
-          <div className="self-end ml-auto px-4 flex items-center">
-            Download
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );
