@@ -8,7 +8,7 @@ const Header = () => {
   const links = [
     { href: "/", label: "Home" },
     { href: "/library", label: "Library" },
-    { href: "/artist/artistid", label: "Artist" },
+    { href: "/artist/410544b2-4001-4271-9855-fec4b6a6442a", label: "Artist" },
     { href: "/track/songid", label: "Track" },
   ];
 

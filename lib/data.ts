@@ -13,6 +13,27 @@ export async function fetchTracks() {
   }
 }
 
+export async function fetchArtistData() {
+  noStore();
+  try {
+    const data = await sql<User>`SELECT * FROM users WHERE role='artist'`;
+    return data.rows;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch artist data.");
+  }
+}
+
+export async function getUser(userid: string) {
+  try {
+    const user = await sql`SELECT * FROM users WHERE id=${userid}`;
+    return user.rows[0] as User;
+  } catch (error) {
+    console.error("Failed to fetch user:", error);
+    throw new Error("Failed to fetch user.");
+  }
+}
+
 //Add noStore() in async functions to prevent the response from being cached.
 // This is equivalent to in fetch(..., {cache: 'no-store'}).
 

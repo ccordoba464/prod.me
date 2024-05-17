@@ -8,8 +8,17 @@ import {
 } from "@chakra-ui/react";
 import Image from "next/image";
 import OpenCard from "../../../components/OpenCard";
+import { getUser } from "@/lib/data";
+interface ProfileProps {
+  params: {
+    userid: string;
+  };
+}
 
-export default function Profile({ params }: { params: any }) {
+export default async function Profile({ params }: ProfileProps) {
+  const { userid } = params;
+  const userData = await getUser(userid);
+
   return (
     <div className="flex bg-white flex-col mx-auto w-[1200px]">
       <div className="flex p-20 bg-gray-600 items-center">
@@ -25,9 +34,9 @@ export default function Profile({ params }: { params: any }) {
 
         <div className="flex flex-col">
           <h1 className="text-white font-bold text-6xl uppercase">
-            {params.artistid}
+            {userData.name}
           </h1>
-          <h2>{params.artistid}</h2>
+          <h2>{userData.name}</h2>
         </div>
       </div>
 
