@@ -9,7 +9,6 @@ import {
 import InsightCard from "@/components/InsightCard";
 import { fetchTracks } from "@/lib/data";
 import { Suspense } from "react";
-import Link from "next/link";
 
 interface LibraryProps {
   params: {
