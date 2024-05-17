@@ -35,6 +35,17 @@ export async function getUser(userid: string) {
   }
 }
 
+export async function getTrack(trackid: string) {
+  noStore();
+  try {
+    const track = await sql`SELECT * FROM tracks WHERE id=${trackid}`;
+    return track.rows[0] as Track;
+  } catch (error) {
+    console.error("Failed to fetch track:", error);
+    throw new Error("Failed to fetch track.");
+  }
+}
+
 //Add noStore() in async functions to prevent the response from being cached.
 // This is equivalent to in fetch(..., {cache: 'no-store'}).
 

@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const InsightCard = ({ track }: { track: any }) => {
   return (
-    <Link href="/artist/song">
+    <Link href="/artist/410544b2-4001-4271-9855-fec4b6a6442a">
       <div className="flex flex-col w-[1120px]">
         <div className="flex items-center justify-between shadow-md rounded-sm w-full bg-red-00 border">
           <div className="flex">

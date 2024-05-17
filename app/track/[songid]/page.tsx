@@ -1,4 +1,16 @@
-export default function Song({ params }: { params: any }) {
+import Image from "next/image";
+import { getTrack } from "@/lib/data";
+
+interface TrackProps {
+  params: {
+    songid: string;
+  };
+}
+
+export default async function Track({ params }: TrackProps) {
+  const { songid } = params;
+  const trackData = await getTrack(songid);
+
   return (
     <div className="flex flex-col h-screen px-6 py-6 mx-auto w-[1200px]">
       <div className="flex mb-4">
@@ -6,14 +18,14 @@ export default function Song({ params }: { params: any }) {
           <div className="w-[360px] h-[360px] overflow-hidden bg-[#3b4045] rounded-md"></div>
         </div>
         <div className="flex flex-col w-full py-4">
-          <div className="font-bold text-4xl uppercase">{params.songid}</div>
+          <div className="font-bold text-4xl uppercase">{trackData.id}</div>
 
           <div className="font-bold text-3xl text-red-500 mb-1">
-            {params.artistid}
+            {trackData.id}
           </div>
 
           <div className="flex gap-1 mb-6">
-            <span className="font-bold">Open </span> •
+            <span className="font-bold">Open</span> •
             <span className="font-bold">2024</span>
           </div>
 
@@ -28,19 +40,19 @@ export default function Song({ params }: { params: any }) {
 
           <div className="flex mb-8">
             <div className="flex flex-col items-center shadow-md px-10 py-4 mr-4 border rounded-sm">
-              <div className="text-2xl font-bold">Hip Hop</div>
+              <div className="text-2xl font-bold">{trackData.genre}</div>
               <div className="text-md font-bold text-gray-500">Genre</div>
             </div>
             <div className="flex flex-col items-center shadow-md px-10 py-4 mr-4 border rounded-sm">
-              <div className="text-2xl font-bold">B Major</div>
+              <div className="text-2xl font-bold">{trackData.key}</div>
               <div className="text-md font-bold text-gray-500">Key</div>
             </div>
             <div className="flex flex-col items-center shadow-md px-10 py-4 mr-4 border rounded-sm">
-              <div className="text-2xl font-bold">130</div>
+              <div className="text-2xl font-bold">{trackData.bpm}</div>
               <div className="text-md font-bold text-gray-500">BPM</div>
             </div>
             <div className="flex flex-col items-center shadow-md px-10 py-4 mr-4 border rounded-sm">
-              <div className="text-2xl font-bold">2:23</div>
+              <div className="text-2xl font-bold">{trackData.duration}</div>
               <div className="text-md font-bold text-gray-500">Duration</div>
             </div>
           </div>

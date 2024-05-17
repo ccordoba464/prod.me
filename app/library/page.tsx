@@ -10,7 +10,13 @@ import InsightCard from "@/components/InsightCard";
 import { fetchTracks } from "@/lib/data";
 import { Suspense } from "react";
 
-export default async function Library({ params }: { params: any }) {
+interface LibraryProps {
+  params: {
+    userid: string;
+  };
+}
+
+export default async function Library({ params }: LibraryProps) {
   const tracks = await fetchTracks();
   console.log(tracks);
 
