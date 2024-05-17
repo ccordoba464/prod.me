@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <div className="flex px-6 py-6 mx-auto w-[1200px] ">
       <div className="flex flex-col w-full mr-6">
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<div>FSPEIJFSPEIJFPSEIJFPISEJFPIESFJ</div>}>
           <SongWrapper />
           <SongWrapper />
           <SongWrapper />

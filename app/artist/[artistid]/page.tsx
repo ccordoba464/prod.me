@@ -7,7 +7,7 @@ import {
   TabIndicator,
 } from "@chakra-ui/react";
 import Image from "next/image";
-import OpenCard from "../../components/OpenCard";
+import OpenCard from "../../../components/OpenCard";
 
 export default function Profile({ params }: { params: any }) {
   return (

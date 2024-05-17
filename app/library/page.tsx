@@ -8,6 +8,7 @@ import {
 } from "@chakra-ui/react";
 import InsightCard from "@/components/InsightCard";
 import { fetchTracks } from "@/lib/data";
+import { Suspense } from "react";
 
 export default async function Library({ params }: { params: any }) {
   const tracks = await fetchTracks();
@@ -26,14 +27,16 @@ export default async function Library({ params }: { params: any }) {
           <TabIndicator mt="-1.5px" height="2px" borderRadius="1px" />
           <TabPanels>
             <TabPanel>
-              <div className="flex flex-col gap-4 mb-20">
-                {tracks.map(track => (
-                  <InsightCard key={track.id} track={track} />
-                ))}
-              </div>
+              <div className="flex flex-col gap-4 mb-20"></div>
             </TabPanel>
             <TabPanel>
-              <div className="flex flex-col gap-4 mb-20"></div>
+              <div className="flex flex-col gap-4 mb-20">
+                <Suspense fallback={<div>TESTING</div>}>
+                  {tracks.map(track => (
+                    <InsightCard key={track.id} track={track} />
+                  ))}
+                </Suspense>
+              </div>
             </TabPanel>
             <TabPanel>
               <div className="flex flex-col gap-4 mb-20"></div>
