@@ -2,49 +2,6 @@ const { db } = require("@vercel/postgres");
 const bcrypt = require("bcrypt");
 const { users, tracks } = require("../lib/placeholder-data.js");
 
-async function seedTracks(client) {
-  try {
-    // Creates a PostgreSQL extension called "uuid-ossp", generates UUIDs
-    await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
-
-    // Create the "tracks" table if it doesn't exist
-    const createTable = await client.sql`
-      CREATE TABLE IF NOT EXISTS tracks (
-        id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-        title VARCHAR(255) NOT NULL,
-        artist VARCHAR(255) NOT NULL,
-        genre VARCHAR(255) NOT NULL,
-        year INT NOT NULL,
-        duration VARCHAR(255) NOT NULL,
-        key VARCHAR(255) NOT NULL,
-        bpm INT NOT NULL
-        );`;
-
-    console.log(`Created "tracks" table`);
-
-    // Insert data into the "tracks" table
-    const insertedTracks = await Promise.all(
-      tracks.map(async track => {
-        return client.sql`
-        INSERT INTO tracks (id, title, artist, genre, year, duration, key, bpm)
-        VALUES (${track.id}, ${track.title}, ${track.artist}, ${track.genre}, ${track.year}, ${track.duration}, ${track.key}, ${track.bpm})
-        ON CONFLICT (id) DO NOTHING;
-      `;
-      })
-    );
-
-    console.log(`Seeded ${insertedTracks.length} users`);
-
-    return {
-      createTable,
-      tracks: insertedTracks,
-    };
-  } catch (error) {
-    console.error("Error seeding tracks:", error);
-    throw error;
-  }
-}
-
 async function seedUsers(client) {
   try {
     await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
@@ -52,9 +9,12 @@ async function seedUsers(client) {
     const createTable = await client.sql`
       CREATE TABLE IF NOT EXISTS users (
         id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-        name VARCHAR(255) NOT NULL,
+        username VARCHAR(255) NOT NULL,
         email TEXT NOT NULL UNIQUE,
-        password TEXT NOT NULL
+        password TEXT NOT NULL,
+        profile_picture_url TEXT, 
+        created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+        updated_at TIMESTAMP NOT NULL DEFAULT NOW()
       );
     `;
 
@@ -65,8 +25,8 @@ async function seedUsers(client) {
       users.map(async user => {
         const hashedPassword = await bcrypt.hash(user.password, 10);
         return client.sql`
-        INSERT INTO users (id, name, email, password)
-        VALUES (${user.id}, ${user.name}, ${user.email}, ${hashedPassword})
+        INSERT INTO users (id, username, email, password, profile_picture_url, created_at, updated_at)
+        VALUES (${user.id}, ${user.username}, ${user.email}, ${hashedPassword}, ${user.profile_picture_url}, ${user.created_at}, ${user.updated_at})
         ON CONFLICT (id) DO NOTHING;
       `;
       })
@@ -80,6 +40,54 @@ async function seedUsers(client) {
     };
   } catch (error) {
     console.error("Error seeding users:", error);
+    throw error;
+  }
+}
+
+async function seedTracks(client) {
+  try {
+    // Creates a PostgreSQL extension called "uuid-ossp", generates UUIDs
+    await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+
+    // Create the "tracks" table if it doesn't exist
+    const createTable = await client.sql`
+      CREATE TABLE IF NOT EXISTS tracks (
+        id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+        user_id UUID NOT NULL,
+        title VARCHAR(255) NOT NULL,
+        description TEXT NOT NULL,
+        file_url TEXT NOT NULL,
+        cover_image_url TEXT NOT NULL,
+        genre VARCHAR(255) NOT NULL,
+        duration VARCHAR(255) NOT NULL,
+        key VARCHAR(255) NOT NULL,
+        bpm INT NOT NULL,
+        created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+        updated_at TIMESTAMP NOT NULL DEFAULT NOW()
+        );
+      `;
+
+    console.log(`Created "tracks" table`);
+
+    // Insert data into the "tracks" table
+    const insertedTracks = await Promise.all(
+      tracks.map(async track => {
+        return client.sql`
+        INSERT INTO tracks (id, user_id, title, description, file_url, cover_image_url, genre, duration, key, bpm, created_at, updated_at)
+        VALUES (${track.id}, ${track.user_id}, ${track.title}, ${track.description}, ${track.file_url}, ${track.cover_image_url},${track.genre}, ${track.duration}, ${track.key}, ${track.bpm}, ${track.created_at},${track.updated_at})
+        ON CONFLICT (id) DO NOTHING;
+      `;
+      })
+    );
+
+    console.log(`Seeded ${insertedTracks.length} users`);
+
+    return {
+      createTable,
+      tracks: insertedTracks,
+    };
+  } catch (error) {
+    console.error("Error seeding tracks:", error);
     throw error;
   }
 }

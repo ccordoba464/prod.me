@@ -25,6 +25,7 @@ export async function fetchArtistData() {
 }
 
 export async function getUser(userid: string) {
+  noStore();
   try {
     const user = await sql`SELECT * FROM users WHERE id=${userid}`;
     return user.rows[0] as User;
