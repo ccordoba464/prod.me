@@ -1,5 +1,5 @@
 import { sql } from "@vercel/postgres";
-import { User, Track, Track_version } from "../lib/definitions";
+import { User, Track, Track_version, Beat } from "../lib/definitions";
 import { unstable_noStore as noStore } from "next/cache";
 
 export async function fetchTracks() {
@@ -32,6 +32,17 @@ export async function getUser(userid: string) {
   } catch (error) {
     console.error("Failed to fetch user:", error);
     throw new Error("Failed to fetch user.");
+  }
+}
+
+export async function getBeat(beatid: string) {
+  noStore();
+  try {
+    const data = await sql<Beat>`SELECT * FROM beats WHERE id=${beatid}`;
+    return data.rows[0];
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch beat.");
   }
 }
 

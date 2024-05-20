@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { getTrackWithVersions } from "@/lib/data";
 interface InsightCardProps {
   track: {
     id: string;
     user_id: string;
+    current_version_id: string;
     title: string;
     description: string;
     genre: string;
