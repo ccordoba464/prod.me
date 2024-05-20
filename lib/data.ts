@@ -17,7 +17,7 @@ export async function getUser(userid: string) {
   noStore();
   try {
     const user = await sql<User>`SELECT * FROM users WHERE id=${userid}`;
-    return user.rows;
+    return user.rows[0];
   } catch (error) {
     console.error("Failed to fetch user:", error);
     throw new Error("Failed to fetch user.");
