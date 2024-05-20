@@ -1,5 +1,6 @@
 import Image from "next/image";
-import { getTrackWithVersions } from "@/lib/data";
+import { getTrackWithVersions, getUser } from "@/lib/data";
+import Link from "next/link";
 
 interface TrackProps {
   params: {
@@ -10,6 +11,7 @@ interface TrackProps {
 export default async function Track({ params }: TrackProps) {
   const { songid } = params;
   const { track, versions } = await getTrackWithVersions(songid);
+  const user = await getUser(track.user_id);
 
   return (
     <div className="flex flex-col h-screen px-6 py-6 mx-auto w-[1200px]">
@@ -18,13 +20,17 @@ export default async function Track({ params }: TrackProps) {
           <div className="w-[360px] h-[360px] overflow-hidden bg-[#3b4045] rounded-md"></div>
         </div>
         <div className="flex flex-col w-full py-4">
-          <div className="font-bold text-4xl uppercase">{track.id}</div>
+          <div className="font-bold text-4xl uppercase">{track.title}</div>
 
-          <div className="font-bold text-3xl text-red-500 mb-1">{track.id}</div>
+          <div className="font-bold text-3xl text-red-500 mb-1">
+            <Link href={`/artist/${user.id}`}>{user.username}</Link>
+          </div>
 
           <div className="flex gap-1 mb-6">
             <span className="font-bold">Open</span> •
-            <span className="font-bold">2024</span>
+            <span className="font-bold">
+              {new Date(track.created_at).getFullYear()}
+            </span>
           </div>
 
           <div className="flex mb-8 gap-2 text-lg font-bold">
@@ -42,15 +48,17 @@ export default async function Track({ params }: TrackProps) {
               <div className="text-md font-bold text-gray-500">Genre</div>
             </div>
             <div className="flex flex-col items-center shadow-md px-10 py-4 mr-4 border rounded-sm">
-              <div className="text-2xl font-bold">{track.key}</div>
+              <div className="text-2xl font-bold">{versions[0].key || ""}</div>
               <div className="text-md font-bold text-gray-500">Key</div>
             </div>
             <div className="flex flex-col items-center shadow-md px-10 py-4 mr-4 border rounded-sm">
-              <div className="text-2xl font-bold">{track.bpm}</div>
+              <div className="text-2xl font-bold">{versions[0].bpm || ""}</div>
               <div className="text-md font-bold text-gray-500">BPM</div>
             </div>
             <div className="flex flex-col items-center shadow-md px-10 py-4 mr-4 border rounded-sm">
-              <div className="text-2xl font-bold">{track.duration}</div>
+              <div className="text-2xl font-bold">
+                {versions[0].duration || ""}
+              </div>
               <div className="text-md font-bold text-gray-500">Duration</div>
             </div>
           </div>
