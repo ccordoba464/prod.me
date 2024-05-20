@@ -9,15 +9,15 @@ import {
   TabPanel,
   TabIndicator,
 } from "@chakra-ui/react";
-import Link from "next/link";
 import { useEffect, useState } from "react";
+
+const tabs = ["All", "Projects", "Tracks", "Beats", "Opens"];
 
 export default function LibraryLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const tabs = ["Projects", "Tracks", "Beats", "Opens"];
   const router = useRouter();
   const pathname = usePathname();
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -31,7 +31,9 @@ export default function LibraryLayout({
   }, [pathname]);
 
   const handleTabChange = (index: number) => {
-    router.push(`/library/${tabs[index].toLowerCase()}`);
+    const tab = tabs[index].toLowerCase();
+    const path = tab === "all" ? "/library" : `/library/${tab}`;
+    router.push(path);
   };
 
   return (
@@ -44,9 +46,7 @@ export default function LibraryLayout({
         >
           <TabList>
             {tabs.map((tab, index) => (
-              <Tab key={index}>
-                <Link href={`/library/${tab.toLowerCase()}`}>{tab}</Link>
-              </Tab>
+              <Tab key={index}>{tab}</Tab>
             ))}
           </TabList>
           <TabIndicator mt="-1.5px" height="2px" borderRadius="1px" />
