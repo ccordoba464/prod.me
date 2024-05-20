@@ -1,6 +1,11 @@
 const { db } = require("@vercel/postgres");
 const bcrypt = require("bcrypt");
-const { users, tracks, track_versions } = require("../lib/placeholder-data.js");
+const {
+  users,
+  tracks,
+  track_versions,
+  beats,
+} = require("../lib/placeholder-data.js");
 
 async function seedUsers(client) {
   try {
@@ -37,6 +42,48 @@ async function seedUsers(client) {
     return insertedUsers;
   } catch (error) {
     console.error("Error seeding users:", error);
+    throw error;
+  }
+}
+
+async function seedBeats(client) {
+  try {
+    await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+
+    await client.sql`
+    CREATE TABLE IF NOT EXISTS beats (
+      id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+      user_id UUID NOT NULL REFERENCES users(id),
+      title VARCHAR(255) NOT NULL,
+      description TEXT NOT NULL,
+      genre VARCHAR(255) NOT NULL,
+      key VARCHAR(255) NOT NULL,
+      bpm INT NOT NULL,
+      duration VARCHAR(255) NOT NULL,
+      cover_image_url TEXT NOT NULL,
+      file_url TEXT NOT NULL,
+      created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+      updated_at TIMESTAMP NOT NULL DEFAULT NOW()
+    );
+    `;
+
+    console.log(`Created "beats" table`);
+
+    const insertedBeats = await Promise.all(
+      beats.map(async beat => {
+        return client.sql`
+        INSERT INTO beats (id, user_id, title, description, genre, key, bpm, duration, cover_image_url, file_url, created_at, updated_at)
+        VALUES (${beat.id}, ${beat.user_id}, ${beat.title}, ${beat.description}, ${beat.genre}, ${beat.key}, ${beat.bpm}, ${beat.duration}, ${beat.cover_image_url}, ${beat.file_url}, ${beat.created_at}, ${beat.updated_at})
+        ON CONFLICT (id) DO NOTHING;
+      `;
+      })
+    );
+
+    console.log(`Seeded ${insertedBeats.length} tracks`);
+
+    return insertedBeats;
+  } catch (error) {
+    console.error("Error seeding beats:", error);
     throw error;
   }
 }
@@ -243,6 +290,7 @@ async function main() {
   await seedUsers(client);
   await seedTracks(client);
   await seedTrackVersions(client);
+  await seedBeats(client);
 
   await client.end();
 }

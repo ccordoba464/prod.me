@@ -13,6 +13,17 @@ export async function fetchTracks() {
   }
 }
 
+export async function fetchBeats() {
+  noStore();
+  try {
+    const data = await sql<Track>`SELECT * FROM beats`;
+    return data.rows;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch beats data.");
+  }
+}
+
 export async function getUser(userid: string) {
   noStore();
   try {

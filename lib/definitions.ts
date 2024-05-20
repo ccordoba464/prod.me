@@ -8,6 +8,21 @@ export type User = {
   updated_at: string;
 };
 
+export type Beat = {
+  id: string;
+  user_id: string;
+  title: string;
+  description: string;
+  genre: string;
+  key: string;
+  bpm: number;
+  duration: string;
+  cover_image_url: string;
+  file_url: string;
+  created_at: string;
+  updated_at: string;
+};
+
 export type Track = {
   id: string;
   user_id: string;

@@ -21,7 +21,6 @@ export default function LibraryLayout({
   const router = useRouter();
   const pathname = usePathname();
   const [selectedIndex, setSelectedIndex] = useState(0);
-  console.log(pathname);
 
   useEffect(() => {
     const tabIndex = tabs.findIndex(tab =>
