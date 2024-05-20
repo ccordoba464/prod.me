@@ -10,7 +10,6 @@ interface LibraryProps {
 
 export default async function Library({ params }: LibraryProps) {
   const tracks = await fetchTracks();
-  console.log(tracks);
 
   return (
     <div className="flex flex-col gap-4 mb-20">
