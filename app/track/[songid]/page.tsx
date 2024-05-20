@@ -59,9 +59,9 @@ export default async function Track({ params }: TrackProps) {
 
       <div className="flex flex-col px-10 gap-2 text-white text-lg font-bold">
         {versions.map(version => (
-          <div
+          <button
             key={version.id}
-            className="flex items-center shadow-md rounded-md w-full bg-red-500 p-2"
+            className="flex items-center shadow-md rounded-md w-full hover:bg-red-600 bg-red-500 p-2 cursor-pointer"
           >
             <div className="px-4">{version.version_number}</div>
             <div className="mr-4 text-md">{version.file_url}</div>
@@ -69,10 +69,7 @@ export default async function Track({ params }: TrackProps) {
               {new Date(version.created_at).toLocaleString()} •
               {version.time || "N/A"}
             </div>
-            <div className="self-end ml-auto px-4 flex items-center">
-              Download
-            </div>
-          </div>
+          </button>
         ))}
       </div>
     </div>

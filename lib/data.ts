@@ -30,7 +30,7 @@ export async function getTrackWithVersions(trackid: string) {
     const trackPromise =
       await sql<Track>`SELECT * FROM tracks WHERE id=${trackid}`;
     const versionsPromise =
-      await sql<Track_version>`SELECT * FROM track_versions WHERE track_id=${trackid}`;
+      await sql<Track_version>`SELECT * FROM track_versions WHERE track_id=${trackid} ORDER BY version_number DESC`;
 
     const [track, versions] = await Promise.all([
       trackPromise,

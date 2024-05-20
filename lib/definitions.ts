@@ -11,6 +11,7 @@ export type User = {
 export type Track = {
   id: string;
   user_id: string;
+  current_version_id: string;
   title: string;
   description: string;
   genre: string;

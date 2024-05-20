@@ -34,10 +34,7 @@ async function seedUsers(client) {
 
     console.log(`Seeded ${insertedUsers.length} users`);
 
-    return {
-      createTable,
-      users: insertedUsers,
-    };
+    return insertedUsers;
   } catch (error) {
     console.error("Error seeding users:", error);
     throw error;
@@ -52,7 +49,8 @@ async function seedTracks(client) {
     await client.sql`
       CREATE TABLE IF NOT EXISTS tracks (
         id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-        user_id UUID NOT NULL,
+        user_id UUID NOT NULL ,
+        current_version_id UUID,
         title VARCHAR(255) NOT NULL,
         description TEXT NOT NULL,
         genre VARCHAR(255) NOT NULL,
@@ -68,8 +66,8 @@ async function seedTracks(client) {
     const insertedTracks = await Promise.all(
       tracks.map(async track => {
         return client.sql`
-        INSERT INTO tracks (id, user_id, title, description, genre, cover_image_url, created_at, updated_at)
-        VALUES (${track.id}, ${track.user_id}, ${track.title}, ${track.description}, ${track.genre}, ${track.cover_image_url}, ${track.created_at}, ${track.updated_at})
+        INSERT INTO tracks (id, user_id, current_version_id, title, description, genre, cover_image_url, created_at, updated_at)
+        VALUES (${track.id}, ${track.user_id}, ${track.current_version_id}, ${track.title}, ${track.description}, ${track.genre}, ${track.cover_image_url}, ${track.created_at}, ${track.updated_at})
         ON CONFLICT (id) DO NOTHING;
       `;
       })
