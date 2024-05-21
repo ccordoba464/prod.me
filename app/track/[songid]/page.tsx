@@ -3,6 +3,7 @@ import { getTrackWithVersions, getUser } from "@/lib/data";
 import Link from "next/link";
 import { Divider, Input } from "@chakra-ui/react";
 import CommentSection from "@/components/CommentSection";
+import { PlayerControls } from "@/components/PlayerControls";
 
 interface TrackProps {
   params: {
@@ -16,6 +17,8 @@ export default async function Track({ params }: TrackProps) {
   const user = await getUser(track.user_id);
   // const comments = await getComments(track.id);
   const comments = ["comment1", "comment2", "comment3"];
+
+  //const { playTrack } = usePlayer();
 
   return (
     <div className="flex flex-col px-6 py-6 mx-auto w-[1200px]">
@@ -38,9 +41,7 @@ export default async function Track({ params }: TrackProps) {
           </div>
 
           <div className="flex mb-6 gap-2 text-lg font-bold">
-            <button className="bg-red-500 px-6 py-1 rounded-lg text-white ">
-              Play
-            </button>
+            <PlayerControls fileUrl={versions[0].file_url} />
             <button className="bg-red-500 px-6 py-1 rounded-lg text-white ">
               + Add
             </button>
