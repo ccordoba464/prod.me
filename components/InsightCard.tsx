@@ -155,6 +155,10 @@ export const BeatInsightCard = ({ beat }: BeatInsightCardProps) => {
             <div className="text-sm font-bold text-gray-500">Likes</div>
             <div className="text-lg font-bold">12</div>
           </div>
+          <div className="flex flex-col items-center justify-center w-[100px]">
+            <div className="text-sm font-bold text-gray-500">Views</div>
+            <div className="text-lg font-bold">327</div>
+          </div>
         </div>
         <div className="mr-6">Play</div>
       </div>

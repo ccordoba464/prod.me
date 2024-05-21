@@ -1,4 +1,8 @@
-import { InsightCard, TrackInsightCard } from "@/components/InsightCard";
+import {
+  InsightCard,
+  TrackInsightCard,
+  BeatInsightCard,
+} from "@/components/InsightCard";
 import { ProjectCard } from "@/components/ProjectCard";
 import { fetchTracks, fetchBeats } from "@/lib/data";
 import { Suspense } from "react";
@@ -46,8 +50,8 @@ export default async function Library({ params }: LibraryProps) {
       <div className="">
         <div className="text-xl mb-2">Beats</div>
         <Suspense fallback={<div>TESTING</div>}>
-          {tracks.map(track => (
-            <InsightCard key={track.id} track={track} />
+          {beats.map(beat => (
+            <BeatInsightCard key={beat.id} beat={beat} />
           ))}
         </Suspense>
       </div>
