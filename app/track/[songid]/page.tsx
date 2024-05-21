@@ -18,7 +18,7 @@ export default async function Track({ params }: TrackProps) {
   const comments = ["comment1", "comment2", "comment3"];
 
   return (
-    <div className="flex flex-col h-screen px-6 py-6 mx-auto w-[1200px]">
+    <div className="flex flex-col px-6 py-6 mx-auto w-[1200px]">
       <div className="flex mb-4">
         <div className="flex flex-col mr-6">
           <div className="w-[320px] h-[320px] overflow-hidden bg-[#3b4045] rounded-md"></div>
@@ -72,8 +72,8 @@ export default async function Track({ params }: TrackProps) {
         </div>
       </div>
 
-      <div className="flex rounded-lg p-4">
-        <div className="flex flex-col  rounded-lg mr-4">
+      <div className="flex rounded-lg p-4 mb-40 h-[1200px]">
+        <div className="flex flex-col rounded-lg px-2">
           <div className="flex text-sm justify-between mb-2">
             <div className="flex">
               <div className="p-1 hover:bg-gray-200 mr-2 rounded-md">
@@ -109,9 +109,11 @@ export default async function Track({ params }: TrackProps) {
           <CommentSection comments={comments} />
         </div>
 
-        <Divider orientation="vertical" />
+        <div className="px-2">
+          <Divider orientation="vertical" />
+        </div>
 
-        <div className="flex flex-col px-4">
+        <div className="flex flex-col px-2">
           <div className="mb-2">Versions</div>
           {versions.map(version => (
             <button

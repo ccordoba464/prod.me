@@ -1,4 +1,3 @@
-// components/CommentSection.tsx
 "use client";
 
 import { useState } from "react";
@@ -43,7 +42,7 @@ const CommentSection = ({ comments }: CommentSectionProps) => {
             />
           </div>
           {isFocused && (
-            <div className="flex mb-4 justify-end ">
+            <div className="flex mb-2 justify-end ">
               <button
                 className="bg-red-500 text-white font-bold rounded-md px-2 mr-1 text-sm"
                 onClick={handleClear}
