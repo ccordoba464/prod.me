@@ -36,7 +36,7 @@ export default async function Library({ params }: LibraryProps) {
         <div className="text-xl mb-2">Tracks</div>
         <Suspense fallback={<div>TESTING</div>}>
           {tracks.map(track => (
-            <InsightCard key={track.id} track={track} />
+            <TrackInsightCard key={track.id} track={track} />
           ))}
         </Suspense>
       </div>
