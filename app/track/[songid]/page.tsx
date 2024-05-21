@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { getTrackWithVersions, getUser } from "@/lib/data";
 import Link from "next/link";
-import CommentComponent from "@/components/Comment";
-import { Divider } from "@chakra-ui/react";
+import { Divider, Input } from "@chakra-ui/react";
+import CommentSection from "@/components/CommentSection";
 
 interface TrackProps {
   params: {
@@ -88,13 +88,13 @@ export default async function Track({ params }: TrackProps) {
             </div>
 
             <div className="flex items-center text-sm">
-              <button className="bg-red-500 text-white font-bold rounded-md px-2 mr-1">
+              <button className="bg-red-500 text-white font-bold rounded-md p-1 mr-1 text-sm">
                 Like
               </button>
-              <button className="bg-red-500 text-white font-bold rounded-md px-2 mr-1">
+              <button className="bg-red-500 text-white font-bold rounded-md p-1 mr-1 text-sm">
                 Share
               </button>
-              <button className="bg-red-500 text-white font-bold rounded-md px-2 mr-1">
+              <button className="bg-red-500 text-white font-bold rounded-md p-1 mr-1 text-sm">
                 Add to Queue
               </button>
             </div>
@@ -106,22 +106,7 @@ export default async function Track({ params }: TrackProps) {
             {track.description != null && <div>{track.description}</div>}
           </div>
 
-          <div className="flex flex-col text-sm">
-            <div className="flex justify-between mb-2">
-              <span>{comments.length + " Comments"}</span>
-              <button className="bg-red-500 text-white font-bold rounded-md px-2 mr-1">
-                Sort by
-              </button>
-            </div>
-            <Divider />
-
-            <div className="mt-4">
-              <CommentComponent />
-              <CommentComponent />
-              <CommentComponent />
-              <CommentComponent />
-            </div>
-          </div>
+          <CommentSection comments={comments} />
         </div>
 
         <Divider orientation="vertical" />
