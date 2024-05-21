@@ -8,7 +8,7 @@ import {
 } from "@chakra-ui/react";
 import Image from "next/image";
 import { getUser, fetchUserTracks } from "@/lib/data";
-import InsightCard from "@/components/InsightCard";
+import { TrackInsightCard, InsightCard } from "@/components/InsightCard";
 interface ProfileProps {
   params: {
     userid: string;
@@ -61,7 +61,7 @@ export default async function Profile({ params }: ProfileProps) {
             <TabPanel>
               <div className="flex flex-col gap-4 mb-20">
                 {userTracks.map(track => (
-                  <InsightCard key={track.id} track={track} />
+                  <TrackInsightCard key={track.id} track={track} />
                 ))}
               </div>
             </TabPanel>

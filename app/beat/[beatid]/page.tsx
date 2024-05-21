@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { getBeat, getUser } from "@/lib/data";
 import Link from "next/link";
+import { InsightCard, TrackInsightCard } from "@/components/InsightCard";
 
 interface BeatProps {
   params: {

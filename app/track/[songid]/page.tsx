@@ -103,12 +103,7 @@ export default async function Track({ params }: TrackProps) {
           <Divider />
 
           <div className="text-sm my-2 mb-4">
-            <div>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Repudiandae illo neque veritatis quidem fugiat sit repellendus
-              veniam ratione asperiores nesciunt, eum reprehenderit minus, enim
-              eligendi reiciendis rem quas ea vitae!
-            </div>
+            {track.description != null && <div>{track.description}</div>}
           </div>
 
           <div className="flex flex-col text-sm">
