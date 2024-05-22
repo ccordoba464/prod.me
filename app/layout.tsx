@@ -4,6 +4,13 @@ import { Providers } from "./providers";
 import "./globals.css";
 import Playbar from "../components/Playbar";
 import Header from "@/components/Header";
+import {
+  ClerkProvider,
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from "@clerk/nextjs";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,16 +25,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <main>
-          <Providers>
-            <Header />
-            <div className="mt-14">{children}</div>
-            <Playbar />
-          </Providers>
-        </main>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={inter.className}>
+          <main>
+            <Providers>
+              <Header />
+              <div className="mt-14">{children}</div>
+              <Playbar />
+            </Providers>
+          </main>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
