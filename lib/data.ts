@@ -16,7 +16,7 @@ export async function fetchTracks() {
 export async function fetchBeats() {
   noStore();
   try {
-    const data = await sql<Track>`SELECT * FROM beats`;
+    const data = await sql<Beat>`SELECT * FROM beats`;
     return data.rows;
   } catch (error) {
     console.error("Database Error:", error);
