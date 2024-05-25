@@ -6,5 +6,9 @@ export default function LibraryRootLayout({
 }: {
   children: ReactNode;
 }) {
-  return <LibraryLayout>{children}</LibraryLayout>;
+  return (
+    <div className="mt-14">
+      <LibraryLayout>{children}</LibraryLayout>
+    </div>
+  );
 }

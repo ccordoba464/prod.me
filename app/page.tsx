@@ -5,7 +5,7 @@ import { Suspense } from "react"; // Use this if you have a skeleton component
 export default function Home() {
   //const { data, error } = fetchCardData();
   return (
-    <div className="flex px-6 py-6 mx-auto w-[1200px] ">
+    <div className="flex px-6 py-6 mx-auto w-[1200px] mt-14">
       <div className="flex flex-col w-full mr-6">
         <Suspense fallback={<div>FSPEIJFSPEIJFPSEIJFPISEJFPIESFJ</div>}>
           <SongWrapper />

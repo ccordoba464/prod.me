@@ -21,7 +21,7 @@ export default async function Profile({ params }: ProfileProps) {
   const userTracks = await fetchUserTracks(userid);
 
   return (
-    <div className="flex bg-white flex-col mx-auto w-[1200px]">
+    <div className="flex bg-white flex-col mx-auto w-[1200px] mt-14">
       <div className="flex p-20 bg-gray-600 items-center">
         <div className="w-[200px] h-[200px] overflow-hidden mr-10">
           <Image

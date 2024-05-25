@@ -20,7 +20,7 @@ export default async function Beat({ params }: BeatProps) {
   const comments = ["comment1", "comment2", "comment3"];
 
   return (
-    <div className="flex flex-col h-screen px-6 py-6 mx-auto w-[1200px]">
+    <div className="flex flex-col h-screen px-6 py-6 mx-auto w-[1200px] mt-14">
       <div className="flex mb-4">
         <div className="flex flex-col mr-6">
           <div className="w-[320px] h-[320px] overflow-hidden bg-[#3b4045] rounded-md"></div>

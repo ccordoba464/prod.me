@@ -23,7 +23,7 @@ export default function RootLayout({
         <main>
           <Providers>
             <Header />
-            <div className="mt-14">{children}</div>
+            <div className="">{children}</div>
             <Playbar />
           </Providers>
         </main>
