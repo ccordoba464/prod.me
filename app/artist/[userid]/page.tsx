@@ -7,8 +7,8 @@ import {
   TabIndicator,
 } from "@chakra-ui/react";
 import Image from "next/image";
-import { getUser, fetchUserTracks } from "@/lib/data";
 import { TrackInsightCard, InsightCard } from "@/components/InsightCard";
+import { prisma } from "@/prisma/prisma";
 interface ProfileProps {
   params: {
     userid: string;
@@ -17,8 +17,8 @@ interface ProfileProps {
 
 export default async function Profile({ params }: ProfileProps) {
   const { userid } = params;
-  const userData = await getUser(userid);
-  const userTracks = await fetchUserTracks(userid);
+  const tracks = await prisma.track.findMany();
+  const user = await prisma.user.findUnique({ where: { id: userid } });
 
   return (
     <div className="flex bg-white flex-col mx-auto w-[1200px] mt-14">
@@ -35,9 +35,9 @@ export default async function Profile({ params }: ProfileProps) {
 
         <div className="flex flex-col">
           <h1 className="text-white font-bold text-6xl uppercase">
-            {userData.username}
+            {user.username}
           </h1>
-          <h2>{userData.username}</h2>
+          <h2>{user.username}</h2>
         </div>
       </div>
 
@@ -53,28 +53,28 @@ export default async function Profile({ params }: ProfileProps) {
           <TabPanels>
             <TabPanel>
               <div className="flex flex-col gap-4 mb-20">
-                {userTracks.map(track => (
+                {tracks.map(track => (
                   <InsightCard key={track.id} track={track} />
                 ))}
               </div>
             </TabPanel>
             <TabPanel>
               <div className="flex flex-col gap-4 mb-20">
-                {userTracks.map(track => (
+                {tracks.map(track => (
                   <TrackInsightCard key={track.id} track={track} />
                 ))}
               </div>
             </TabPanel>
             <TabPanel>
               <div className="flex flex-col gap-4 mb-20">
-                {userTracks.map(track => (
+                {tracks.map(track => (
                   <InsightCard key={track.id} track={track} />
                 ))}
               </div>
             </TabPanel>
             <TabPanel>
               <div className="flex flex-col gap-4 mb-20">
-                {userTracks.map(track => (
+                {tracks.map(track => (
                   <InsightCard key={track.id} track={track} />
                 ))}
               </div>

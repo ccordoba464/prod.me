@@ -3,7 +3,7 @@ import {
   TrackInsightCard,
   BeatInsightCard,
 } from "@/components/InsightCard";
-import { fetchBeats, fetchTracks } from "@/lib/data";
+import { prisma } from "@/prisma/prisma";
 import { Suspense } from "react";
 
 interface LibraryProps {
@@ -13,8 +13,9 @@ interface LibraryProps {
 }
 
 export default async function Library({ params }: LibraryProps) {
-  const beats = await fetchBeats();
-
+  const beats = await prisma.beat.findMany({
+    where: { user_id: params.userid },
+  });
   return (
     <div className="flex flex-col gap-4 mb-20">
       <Suspense fallback={<div>TESTING</div>}>

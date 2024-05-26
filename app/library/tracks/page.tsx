@@ -1,6 +1,7 @@
 import { InsightCard, TrackInsightCard } from "@/components/InsightCard";
 import { fetchTracks } from "@/lib/data";
 import { Suspense } from "react";
+import { prisma } from "@/prisma/prisma";
 
 interface LibraryProps {
   params: {
@@ -8,8 +9,10 @@ interface LibraryProps {
   };
 }
 
-export default async function Library({ params }: LibraryProps) {
-  const tracks = await fetchTracks();
+export default async function Tracks({ params }: LibraryProps) {
+  const tracks = await prisma.track.findMany({
+    where: { user_id: params.userid },
+  });
 
   return (
     <div className="flex flex-col gap-4 mb-20">

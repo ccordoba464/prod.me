@@ -2,13 +2,7 @@
 
 import { ChakraProvider } from "@chakra-ui/react";
 import { PlayerProvider } from "@/context/PlayerContext";
-import {
-  ClerkProvider,
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-} from "@clerk/nextjs";
+import { ClerkProvider } from "@clerk/nextjs";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (

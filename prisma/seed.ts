@@ -1,3 +1,6 @@
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
+
 const users = [
   {
     id: "410544b2-4001-4271-9855-fec4b6a6442a",
@@ -5,8 +8,8 @@ const users = [
     email: "user1@nextmail.com",
     password: "123456",
     profile_picture_url: "https://example.com/user.jpg",
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString(),
+    created_at: new Date(),
+    updated_at: new Date(),
   },
 ];
 
@@ -22,8 +25,8 @@ const beats = [
     duration: "3:00",
     key: "C Major",
     bpm: 120,
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString(),
+    created_at: new Date(),
+    updated_at: new Date(),
   },
 ];
 
@@ -31,17 +34,12 @@ const tracks = [
   {
     id: "410544b2-4001-4271-9855-fec4b6a6442a",
     user_id: "410544b2-4001-4271-9855-fec4b6a6442a",
-    current_version_id: "510544b2-4001-4271-9855-fec4b6a6442f",
     title: "SLEEPOVER",
     description: "Description",
-    file_url: "https://example.com/music.mp3",
     cover_image_url: "https://example.com/cover.jpg",
     genre: "Rap",
-    duration: "3:00",
-    key: "C Major",
-    bpm: 120,
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString(),
+    created_at: new Date(),
+    updated_at: new Date(),
   },
 ];
 
@@ -54,8 +52,8 @@ const track_versions = [
     duration: "3:00",
     key: "C Major",
     bpm: 120,
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString(),
+    created_at: new Date(),
+    updated_at: new Date(),
   },
   {
     id: "510544b2-4001-4271-9855-fec4b6a6442f",
@@ -65,8 +63,8 @@ const track_versions = [
     duration: "3:20",
     key: "C Major",
     bpm: 120,
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString(),
+    created_at: new Date(),
+    updated_at: new Date(),
   },
 ];
 
@@ -76,15 +74,34 @@ const comments = [
     user_id: "410544b2-4001-4271-9855-fec4b6a6442a",
     track_id: "410544b2-4001-4271-9855-fec4b6a6442a",
     content: "Great track!",
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString(),
+    created_at: new Date(),
+    updated_at: new Date(),
   },
 ];
 
-module.exports = {
-  users,
-  tracks,
-  track_versions,
-  beats,
-  comments,
-};
+async function main() {
+  // Deleting all existing records
+  await prisma.track_version.deleteMany({});
+  await prisma.track.deleteMany({});
+  await prisma.beat.deleteMany({});
+  await prisma.comment.deleteMany({});
+  await prisma.user.deleteMany({});
+
+  // Creating new records
+  await prisma.user.createMany({ data: users });
+  await prisma.beat.createMany({ data: beats });
+  await prisma.track.createMany({ data: tracks });
+  await prisma.track_version.createMany({ data: track_versions });
+  await prisma.comment.createMany({ data: comments });
+  s;
+}
+
+main()
+  .then(async () => {
+    await prisma.$disconnect();
+  })
+  .catch(async e => {
+    console.error(e);
+    await prisma.$disconnect();
+    process.exit(1);
+  });

@@ -7,6 +7,7 @@ import { ProjectCard } from "@/components/ProjectCard";
 import { fetchTracks, fetchBeats } from "@/lib/data";
 import { Suspense } from "react";
 import { Divider } from "@chakra-ui/react";
+import { prisma } from "@/prisma/prisma";
 
 interface LibraryProps {
   params: {
@@ -15,8 +16,10 @@ interface LibraryProps {
 }
 
 export default async function Library({ params }: LibraryProps) {
-  const tracks = await fetchTracks();
-  const beats = await fetchBeats();
+  const [tracks, beats] = await Promise.all([
+    await prisma.track.findMany({ where: { user_id: params.userid } }),
+    await prisma.beat.findMany({ where: { user_id: params.userid } }),
+  ]);
 
   return (
     <div className="flex flex-col gap-4 mb-20">

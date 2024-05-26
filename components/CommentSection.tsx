@@ -5,7 +5,14 @@ import { Input, Divider } from "@chakra-ui/react";
 import CommentComponent from "@/components/Comment";
 
 interface CommentSectionProps {
-  comments: string[];
+  comments: Array<{
+    id: string;
+    user_id: string;
+    track_id: string;
+    content: string;
+    created_at: Date;
+    updated_at: Date;
+  }>;
 }
 
 const CommentSection = ({ comments }: CommentSectionProps) => {

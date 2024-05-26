@@ -1,0 +1,158 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_PRISMA_URL")
+}
+
+model User {
+  id                    String           @id @default(uuid())
+  username              String
+  email                 String           @unique
+  password              String
+  profile_picture_url   String?
+  created_at            DateTime         @default(now())
+  updated_at            DateTime         @updatedAt
+  beats                 Beat[]
+  tracks                Track[]
+  projects              Project[]
+  likes                 Like[]
+  comments              Comment[]
+  followers             Follow[]         @relation("followers")
+  following             Follow[]         @relation("following")
+  plays                 Play[]
+  notifications         Notification[]   @relation("userNotifications")
+  relatedNotifications  Notification[]   @relation("relatedUserNotifications")
+}
+
+model Beat {
+  id                 String   @id @default(uuid())
+  user_id            String
+  user               User     @relation(fields: [user_id], references: [id])
+  title              String
+  description        String
+  genre              String
+  key                String
+  bpm                Int
+  duration           String
+  cover_image_url    String
+  file_url           String
+  created_at         DateTime @default(now())
+  updated_at         DateTime @updatedAt
+}
+
+model Track {
+  id                 String   @id @default(uuid())
+  user_id            String
+  user               User     @relation(fields: [user_id], references: [id])
+  current_version_id String?   @unique
+  current_version    Track_version? @relation("currentVersion", fields: [current_version_id], references: [id])
+  title              String
+  description        String
+  genre              String
+  cover_image_url    String
+  created_at         DateTime @default(now())
+  updated_at         DateTime @updatedAt
+  versions           Track_version[] @relation("trackVersions")
+  likes              Like[]
+  comments           Comment[]
+  plays              Play[]
+  project_tracks     Project_track[]
+  notifications      Notification[]   @relation("trackNotifications")
+}
+
+model Track_version {
+  id                 String   @id @default(uuid())
+  track_id           String
+  track              Track    @relation("trackVersions", fields: [track_id], references: [id])
+  currentVersion     Track?   @relation("currentVersion")
+  version_number     Int
+  file_url           String
+  duration           String
+  key                String
+  bpm                Int
+  created_at         DateTime @default(now())
+  updated_at         DateTime @updatedAt
+}
+
+model Project {
+  id                 String   @id @default(uuid())
+  user_id            String
+  user               User     @relation(fields: [user_id], references: [id])
+  title              String
+  description        String
+  cover_image_url    String
+  created_at         DateTime @default(now())
+  updated_at         DateTime @updatedAt
+  project_tracks     Project_track[]
+}
+
+model Project_track {
+  project_id         String
+  track_id           String
+  project            Project  @relation(fields: [project_id], references: [id])
+  track              Track    @relation(fields: [track_id], references: [id])
+  position           Int
+  @@id([project_id, track_id])
+}
+
+model Like {
+  id                 String   @id @default(uuid())
+  user_id            String
+  user               User     @relation(fields: [user_id], references: [id])
+  track_id           String
+  track              Track    @relation(fields: [track_id], references: [id])
+  created_at         DateTime @default(now())
+}
+
+model Comment {
+  id                 String   @id @default(uuid())
+  user_id            String
+  user               User     @relation(fields: [user_id], references: [id])
+  track_id           String
+  track              Track    @relation(fields: [track_id], references: [id])
+  content            String
+  created_at         DateTime @default(now())
+  updated_at         DateTime @updatedAt
+}
+
+model Follow {
+  id                 String   @id @default(uuid())
+  follower_id        String
+  follower           User     @relation("followers", fields: [follower_id], references: [id])
+  following_id       String
+  following          User     @relation("following", fields: [following_id], references: [id])
+  created_at         DateTime @default(now())
+}
+
+model Play {
+  id                 String   @id @default(uuid())
+  user_id            String?
+  user               User?    @relation(fields: [user_id], references: [id])
+  track_id           String
+  track              Track    @relation(fields: [track_id], references: [id])
+  created_at         DateTime @default(now())
+}
+
+model Notification {
+  id                 String   @id @default(uuid())
+  user_id            String
+  user               User     @relation("userNotifications", fields: [user_id], references: [id])
+  type               String
+  related_user_id    String?
+  related_user       User?    @relation("relatedUserNotifications", fields: [related_user_id], references: [id])
+  related_track_id   String?
+  related_track      Track?   @relation("trackNotifications", fields: [related_track_id], references: [id])
+  message            String
+  created_at         DateTime @default(now())
+  read_at            DateTime?
+}
+
+model Genre {
+  id                 String   @id @default(uuid())
+  name               String
+  created_at         DateTime @default(now())
+  updated_at         DateTime @updatedAt
+}

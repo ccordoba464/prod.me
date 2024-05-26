@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Divider, Input } from "@chakra-ui/react";
 import CommentSection from "@/components/CommentSection";
 import { PlayerControls } from "@/components/PlayerControls";
+import { prisma } from "@/prisma/prisma";
 
 interface TrackProps {
   params: {
@@ -13,10 +14,17 @@ interface TrackProps {
 
 export default async function Track({ params }: TrackProps) {
   const { songid } = params;
-  const { track, versions } = await getTrackWithVersions(songid);
-  const user = await getUser(track.user_id);
-  // const comments = await getComments(track.id);
-  const comments = ["comment1", "comment2", "comment3"];
+
+  const [track, versions, user, comments] = await Promise.all([
+    prisma.track.findUnique({ where: { id: songid } }),
+    prisma.track_version.findMany({ where: { track_id: songid } }),
+    prisma.track
+      .findUnique({ where: { id: songid } })
+      .then(track =>
+        track ? prisma.user.findUnique({ where: { id: track.user_id } }) : null
+      ),
+    prisma.comment.findMany({ where: { track_id: songid } }),
+  ]);
 
   //const { playTrack } = usePlayer();
 
@@ -27,16 +35,16 @@ export default async function Track({ params }: TrackProps) {
           <div className="w-[320px] h-[320px] overflow-hidden bg-[#3b4045] rounded-md"></div>
         </div>
         <div className="flex flex-col w-full pt-4">
-          <div className="font-bold text-4xl uppercase">{track.title}</div>
+          <div className="font-bold text-4xl uppercase">{track?.title}</div>
 
           <div className="font-bold text-3xl text-red-500 mb-1">
-            <Link href={`/artist/${user.id}`}>{user.username}</Link>
+            {user && <Link href={`/artist/${user.id}`}>{user.username}</Link>}
           </div>
 
           <div className="flex flex-row gap-1 mb-6">
             <span className="font-bold">Track</span> •
             <span className="font-bold">
-              {new Date(track.created_at).getFullYear()}
+              {track && new Date(track.created_at).getFullYear()}
             </span>
           </div>
 
@@ -52,7 +60,7 @@ export default async function Track({ params }: TrackProps) {
 
           <div className="flex mb-6 mt-auto">
             <div className="flex flex-col items-center shadow-md px-12 py-4 mr-4 border rounded-sm">
-              <div className="text-2xl font-bold">{track.genre}</div>
+              <div className="text-2xl font-bold">{track && track.genre}</div>
               <div className="text-md font-bold text-gray-500">Genre</div>
             </div>
             <div className="flex flex-col items-center shadow-md px-12 py-4 mr-4 border rounded-sm">
@@ -104,7 +112,9 @@ export default async function Track({ params }: TrackProps) {
           <Divider />
 
           <div className="text-sm my-2 mb-4">
-            {track.description != null && <div>{track.description}</div>}
+            {track && track.description != null && (
+              <div>{track.description}</div>
+            )}
           </div>
 
           <CommentSection comments={comments} />
