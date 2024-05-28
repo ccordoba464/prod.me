@@ -33,7 +33,9 @@ export default async function Beat({ params }: BeatProps) {
           <div className="w-[320px] h-[320px] overflow-hidden bg-[#3b4045] rounded-md"></div>
         </div>
         <div className="flex flex-col w-full py-4">
-          <div className="font-bold text-4xl uppercase">{beat.title}</div>
+          <div className="font-bold text-4xl uppercase">
+            {beat && beat.title}
+          </div>
 
           <div className="font-bold text-3xl text-red-500 mb-1">
             <Link href={`/artist/${user.id}`}>{user.username}</Link>
@@ -42,7 +44,7 @@ export default async function Beat({ params }: BeatProps) {
           <div className="flex gap-1 mb-6">
             <span className="font-bold">Beat</span> •
             <span className="font-bold">
-              {new Date(beat.created_at).getFullYear()}
+              {beat && new Date(beat.created_at).getFullYear()}
             </span>
           </div>
 
@@ -60,19 +62,19 @@ export default async function Beat({ params }: BeatProps) {
 
           <div className="flex mb-6 mt-auto">
             <div className="flex flex-col items-center shadow-md px-12 py-4 mr-4 border rounded-sm">
-              <div className="text-2xl font-bold">{beat.genre}</div>
+              <div className="text-2xl font-bold">{beat?.genre}</div>
               <div className="text-md font-bold text-gray-500">Genre</div>
             </div>
             <div className="flex flex-col items-center shadow-md px-12 py-4 mr-4 border rounded-sm">
-              <div className="text-2xl font-bold">{beat.key || ""}</div>
+              <div className="text-2xl font-bold">{beat?.key || ""}</div>
               <div className="text-md font-bold text-gray-500">Key</div>
             </div>
             <div className="flex flex-col items-center shadow-md px-12 py-4 mr-4 border rounded-sm">
-              <div className="text-2xl font-bold">{beat.bpm || ""}</div>
+              <div className="text-2xl font-bold">{beat?.bpm || ""}</div>
               <div className="text-md font-bold text-gray-500">BPM</div>
             </div>
             <div className="flex flex-col items-center shadow-md px-12 py-4 mr-4 border rounded-sm">
-              <div className="text-2xl font-bold">{beat.duration || ""}</div>
+              <div className="text-2xl font-bold">{beat?.duration || ""}</div>
               <div className="text-md font-bold text-gray-500">Duration</div>
             </div>
           </div>
