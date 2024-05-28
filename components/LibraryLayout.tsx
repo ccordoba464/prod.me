@@ -8,8 +8,11 @@ import {
   Tab,
   TabPanel,
   TabIndicator,
+  Input,
+  Button,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import Uploader from "./Uploader";
 
 const tabs = ["All", "Projects", "Tracks", "Beats", "Opens"];
 
@@ -21,6 +24,7 @@ export default function LibraryLayout({
   const router = useRouter();
   const pathname = usePathname();
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const tabIndex = tabs.findIndex(tab =>
@@ -37,7 +41,14 @@ export default function LibraryLayout({
 
   return (
     <div className="flex bg-white flex-col mx-auto w-[1200px]">
-      <div className="px-6 py-4">
+      <div className="px-6 py-10">
+        <div className="flex justify-between items-center mb-10">
+          <h1 className="text-5xl">Library</h1>
+          <div className="flex items-center">
+            <Input placeholder="Search" mr={3} size="md" />
+            <Uploader />
+          </div>
+        </div>
         <Tabs
           colorScheme="red"
           index={selectedIndex}

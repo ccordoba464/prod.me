@@ -4,7 +4,6 @@ import {
   BeatInsightCard,
 } from "@/components/InsightCard";
 import { ProjectCard } from "@/components/ProjectCard";
-import { fetchTracks, fetchBeats } from "@/lib/data";
 import { Suspense } from "react";
 import { Divider } from "@chakra-ui/react";
 import { prisma } from "@/prisma/prisma";
