@@ -14,7 +14,7 @@ interface BeatProps {
 
 export default async function Beat({ params }: BeatProps) {
   const { beatid } = params;
-  const [beat, user] = await Promise.all([
+  const [beat, user] = await Promise.allSettled([
     await prisma.beat.findUnique({ where: { id: beatid } }),
     await prisma.beat
       .findUnique({ where: { id: beatid } })

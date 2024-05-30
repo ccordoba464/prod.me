@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { getTrackWithVersions, getUser } from "@/lib/data";
 import Link from "next/link";
 import { Divider, Input } from "@chakra-ui/react";
 import CommentSection from "@/components/CommentSection";
@@ -15,7 +14,7 @@ interface TrackProps {
 export default async function Track({ params }: TrackProps) {
   const { songid } = params;
 
-  const [track, versions, user, comments] = await Promise.all([
+  const [track, versions, user, comments] = await Promise.allSettled([
     prisma.track.findUnique({ where: { id: songid } }),
     prisma.track_version.findMany({ where: { track_id: songid } }),
     prisma.track

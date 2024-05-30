@@ -1,8 +1,7 @@
 "use client";
 
-import { type PutBlobResult } from "@vercel/blob";
 import { upload } from "@vercel/blob/client";
-import { useRef, FormEvent, ChangeEvent } from "react";
+import { useRef, ChangeEvent } from "react";
 import { Button } from "@chakra-ui/react";
 
 export default function Uploader() {
