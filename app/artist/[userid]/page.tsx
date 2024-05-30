@@ -35,9 +35,9 @@ export default async function Profile({ params }: ProfileProps) {
 
         <div className="flex flex-col">
           <h1 className="text-white font-bold text-6xl uppercase">
-            {user.username}
+            {user?.username}
           </h1>
-          <h2>{user.username}</h2>
+          <h2>{user?.username}</h2>
         </div>
       </div>
 

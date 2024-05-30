@@ -14,7 +14,7 @@ interface BeatProps {
 
 export default async function Beat({ params }: BeatProps) {
   const { beatid } = params;
-  const [beat, user] = await Promise.allSettled([
+  const [beat, user] = await Promise.all([
     await prisma.beat.findUnique({ where: { id: beatid } }),
     await prisma.beat
       .findUnique({ where: { id: beatid } })
@@ -44,7 +44,7 @@ export default async function Beat({ params }: BeatProps) {
           <div className="flex gap-1 mb-6">
             <span className="font-bold">Beat</span> •
             <span className="font-bold">
-              {beat && new Date(beat.created_at).getFullYear()}
+              {new Date(beat.created_at).getFullYear()}
             </span>
           </div>
 

@@ -14,7 +14,7 @@ interface TrackProps {
 export default async function Track({ params }: TrackProps) {
   const { songid } = params;
 
-  const [track, versions, user, comments] = await Promise.allSettled([
+  const [track, versions, user, comments] = await Promise.all([
     prisma.track.findUnique({ where: { id: songid } }),
     prisma.track_version.findMany({ where: { track_id: songid } }),
     prisma.track

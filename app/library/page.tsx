@@ -15,7 +15,7 @@ interface LibraryProps {
 }
 
 export default async function Library({ params }: LibraryProps) {
-  const [tracks, beats] = await Promise.allSettled([
+  const [tracks, beats] = await Promise.all([
     await prisma.track.findMany({ where: { user_id: params.userid } }),
     await prisma.beat.findMany({ where: { user_id: params.userid } }),
   ]);
