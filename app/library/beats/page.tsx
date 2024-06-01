@@ -19,7 +19,7 @@ export default async function Library({ params }: LibraryProps) {
   return (
     <div className="flex flex-col gap-4 mb-20">
       <Suspense fallback={<div>TESTING</div>}>
-        {beats.map(beat => (
+        {beats.map((beat: any) => (
           <BeatInsightCard key={beat.id} beat={beat} />
         ))}
       </Suspense>

@@ -16,7 +16,7 @@ export default async function Beat({ params }: BeatProps) {
     await prisma.beat.findUnique({ where: { id: beatid } }),
     await prisma.beat
       .findUnique({ where: { id: beatid } })
-      .then(beat =>
+      .then((beat: any) =>
         beat ? prisma.user.findUnique({ where: { id: beat.user_id } }) : null
       ),
   ]);

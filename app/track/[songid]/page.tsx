@@ -19,7 +19,7 @@ export default async function Track({ params }: TrackProps) {
     prisma.track_version.findMany({ where: { track_id: songid } }),
     prisma.track
       .findUnique({ where: { id: songid } })
-      .then(track =>
+      .then((track: any) =>
         track ? prisma.user.findUnique({ where: { id: track.user_id } }) : null
       ),
     prisma.comment.findMany({ where: { track_id: songid } }),
@@ -125,7 +125,7 @@ export default async function Track({ params }: TrackProps) {
 
         <div className="flex flex-col px-2">
           <div className="mb-2">Versions</div>
-          {versions.map(version => (
+          {versions.map((version: any) => (
             <button
               key={version.id}
               className="flex items-center shadow-md rounded-md w-full hover:bg-red-600 bg-red-500 text-white font-bold p-2 cursor-pointer mb-2 text-xs"
