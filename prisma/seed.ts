@@ -4,9 +4,9 @@ const prisma = new PrismaClient();
 const users = [
   {
     id: "410544b2-4001-4271-9855-fec4b6a6442a",
+    clerk_user_id: "410544b2-4001-4271-9855-fec4b6a6442a",
     username: "User",
     email: "user1@nextmail.com",
-    password: "123456",
     profile_picture_url: "https://example.com/user.jpg",
     created_at: new Date(),
     updated_at: new Date(),
@@ -93,7 +93,6 @@ async function main() {
   await prisma.track.createMany({ data: tracks });
   await prisma.track_version.createMany({ data: track_versions });
   await prisma.comment.createMany({ data: comments });
-  s;
 }
 
 main()
