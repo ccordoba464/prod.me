@@ -1,6 +1,6 @@
 import { InsightCard, TrackInsightCard } from "@/components/InsightCard";
 import { Suspense } from "react";
-import { prisma } from "@/prisma/prisma";
+import { prisma } from "@/lib/prisma";
 
 interface LibraryProps {
   params: {

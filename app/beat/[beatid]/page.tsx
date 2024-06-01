@@ -4,7 +4,7 @@ import Link from "next/link";
 import { InsightCard, TrackInsightCard } from "@/components/InsightCard";
 import CommentComponent from "@/components/Comment";
 import { Divider } from "@chakra-ui/react";
-import { prisma } from "@/prisma/prisma";
+import { prisma } from "@/lib/prisma";
 
 interface BeatProps {
   params: {

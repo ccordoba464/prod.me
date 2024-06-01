@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Divider, Input } from "@chakra-ui/react";
 import CommentSection from "@/components/CommentSection";
 import { PlayerControls } from "@/components/PlayerControls";
-import { prisma } from "@/prisma/prisma";
+import { prisma } from "@/lib/prisma";
 
 interface TrackProps {
   params: {

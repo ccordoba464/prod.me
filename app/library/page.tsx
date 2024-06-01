@@ -6,7 +6,7 @@ import {
 import { ProjectCard } from "@/components/ProjectCard";
 import { Suspense } from "react";
 import { Divider } from "@chakra-ui/react";
-import { prisma } from "@/prisma/prisma";
+import { prisma } from "@/lib/prisma";
 
 interface LibraryProps {
   params: {

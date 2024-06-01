@@ -3,7 +3,7 @@ import {
   TrackInsightCard,
   BeatInsightCard,
 } from "@/components/InsightCard";
-import { prisma } from "@/prisma/prisma";
+import { prisma } from "@/lib/prisma";
 import { Suspense } from "react";
 
 interface LibraryProps {

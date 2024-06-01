@@ -8,7 +8,7 @@ import {
 } from "@chakra-ui/react";
 import Image from "next/image";
 import { TrackInsightCard, InsightCard } from "@/components/InsightCard";
-import { prisma } from "@/prisma/prisma";
+import { prisma } from "@/lib/prisma";
 interface ProfileProps {
   params: {
     userid: string;
