@@ -1,7 +1,5 @@
 import Image from "next/image";
-import { getBeat, getUser } from "@/lib/data";
 import Link from "next/link";
-import { InsightCard, TrackInsightCard } from "@/components/InsightCard";
 import CommentComponent from "@/components/Comment";
 import { Divider } from "@chakra-ui/react";
 import { prisma } from "@/lib/prisma";
@@ -38,13 +36,13 @@ export default async function Beat({ params }: BeatProps) {
           </div>
 
           <div className="font-bold text-3xl text-red-500 mb-1">
-            <Link href={`/artist/${user.id}`}>{user.username}</Link>
+            <Link href={`/artist/${user?.id}`}>{user?.username}</Link>
           </div>
 
           <div className="flex gap-1 mb-6">
             <span className="font-bold">Beat</span> •
             <span className="font-bold">
-              {new Date(beat.created_at).getFullYear()}
+              {beat && new Date(beat.created_at).getFullYear()}
             </span>
           </div>
 
@@ -111,7 +109,7 @@ export default async function Beat({ params }: BeatProps) {
           <Divider />
 
           <div className="text-sm my-2 mb-4">
-            {beat.description != null && <div>{beat.description}</div>}
+            {beat && <div>{beat?.description}</div>}
           </div>
 
           <div className="flex flex-col text-sm">

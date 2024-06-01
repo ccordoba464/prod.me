@@ -3,13 +3,13 @@ interface InsightCardProps {
   track: {
     id: string;
     user_id: string;
-    current_version_id: string;
+    current_version_id: string | null;
     title: string;
     description: string;
     genre: string;
     cover_image_url: string;
-    created_at: string;
-    updated_at: string;
+    created_at: Date;
+    updated_at: Date;
   };
 }
 
@@ -17,13 +17,13 @@ interface TrackInsightCardProps {
   track: {
     id: string;
     user_id: string;
-    current_version_id: string;
+    current_version_id: string | null;
     title: string;
     description: string;
     genre: string;
     cover_image_url: string;
-    created_at: string;
-    updated_at: string;
+    created_at: Date;
+    updated_at: Date;
   };
 }
 
@@ -43,19 +43,19 @@ export const InsightCard = ({ track }: InsightCardProps) => {
           </div>
           <div className="flex justify-between">
             <div className="flex flex-col items-center justify-center w-[100px]">
-              <div className="text-lg font-bold">{track.key || "N/A"}</div>
+              <div className="text-lg font-bold">{"N/A"}</div>
               <div className="text-sm font-bold text-gray-500">Key</div>
             </div>
             <div className="flex flex-col items-center justify-center w-[100px]">
-              <div className="text-lg font-bold">{track.bpm || "N/A"}</div>
+              <div className="text-lg font-bold">{"N/A"}</div>
               <div className="text-sm font-bold text-gray-500">BPM</div>
             </div>
             <div className="flex flex-col items-center justify-center w-[100px]">
-              <div className="text-lg font-bold">{track.genre}</div>
+              <div className="text-lg font-bold">{}</div>
               <div className="text-sm font-bold text-gray-500">Genre</div>
             </div>
             <div className="flex flex-col items-center justify-center w-[100px]">
-              <div className="text-lg font-bold">{track.duration || "N/A"}</div>
+              <div className="text-lg font-bold">{"N/A"}</div>
               <div className="text-sm font-bold text-gray-500">Length</div>
             </div>
           </div>
@@ -82,15 +82,15 @@ export const TrackInsightCard = ({ track }: TrackInsightCardProps) => {
           </div>
           <div className="flex justify-between">
             <div className="flex flex-col items-center justify-center w-[100px]">
-              <div className="text-lg font-bold">{track.key || "N/A"}</div>
+              <div className="text-lg font-bold">{"N/A"}</div>
               <div className="text-sm font-bold text-gray-500">Plays</div>
             </div>
             <div className="flex flex-col items-center justify-center w-[100px]">
-              <div className="text-lg font-bold">{track.bpm || "N/A"}</div>
+              <div className="text-lg font-bold">{"N/A"}</div>
               <div className="text-sm font-bold text-gray-500">Likes</div>
             </div>
             <div className="flex flex-col items-center justify-center w-[100px]">
-              <div className="text-lg font-bold">{track.genre}</div>
+              <div className="text-lg font-bold">{}</div>
               <div className="text-sm font-bold text-gray-500">Adds</div>
             </div>
           </div>
@@ -113,8 +113,8 @@ interface BeatInsightCardProps {
     duration: string;
     cover_image_url: string;
     file_url: string;
-    created_at: string;
-    updated_at: string;
+    created_at: Date;
+    updated_at: Date;
   };
 }
 
