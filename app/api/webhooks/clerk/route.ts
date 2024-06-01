@@ -1,6 +1,8 @@
 import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
+import { createUser } from "@/lib/users";
+import { User } from "@prisma/client";
 
 export async function POST(req: Request) {
   // You can find this in the Clerk Dashboard -> Webhooks -> choose the endpoint
@@ -43,7 +45,7 @@ export async function POST(req: Request) {
     }) as WebhookEvent;
   } catch (err) {
     console.error("Error verifying webhook:", err);
-    return new Response("Error occured", {
+    return new Response("Error occurred", {
       status: 400,
     });
   }
@@ -56,13 +58,25 @@ export async function POST(req: Request) {
   console.log("Webhook body:", body);
 
   if (eventType === "user.created") {
-    const { id } = evt.data;
+    const { id, email_addresses, username } = evt.data;
 
-    if (!id) {
-      return new Response("Error occured -- no id or email", { status: 400 });
+    if (!id || !email_addresses) {
+      return new Response("Error occured -- no id, email, or username", {
+        status: 400,
+      });
     }
 
     console.log(evt.data);
+
+    const user = {
+      clerk_user_id: id,
+      email: email_addresses[0].email_address,
+      username: username,
+    };
+
+    await createUser(user as User);
+
+    console.log("User created");
   }
 
   return new Response("", { status: 200 });

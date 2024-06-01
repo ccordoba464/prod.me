@@ -41,9 +41,10 @@ export default async function Library({ params }: LibraryProps) {
       <div className="">
         <div className="text-xl mb-2">Tracks</div>
         <Suspense fallback={<div>TESTING</div>}>
-          {tracks.map((track: any) => (
-            <TrackInsightCard key={track.id} track={track} />
-          ))}
+          {false &&
+            tracks.map((track: any) => (
+              <TrackInsightCard key={track.id} track={track} />
+            ))}
         </Suspense>
       </div>
 
@@ -52,9 +53,10 @@ export default async function Library({ params }: LibraryProps) {
       <div className="">
         <div className="text-xl mb-2">Beats</div>
         <Suspense fallback={<div>TESTING</div>}>
-          {beats.map((beat: any) => (
-            <BeatInsightCard key={beat.id} beat={beat} />
-          ))}
+          {false &&
+            beats.map((beat: any) => (
+              <BeatInsightCard key={beat.id} beat={beat} />
+            ))}
         </Suspense>
       </div>
 
@@ -63,9 +65,10 @@ export default async function Library({ params }: LibraryProps) {
       <div className="">
         <div className="text-xl mb-2">Opens</div>
         <Suspense fallback={<div>TESTING</div>}>
-          {tracks.map((track: any) => (
-            <InsightCard key={track.id} track={track} />
-          ))}
+          {false &&
+            tracks.map((track: any) => (
+              <InsightCard key={track.id} track={track} />
+            ))}
         </Suspense>
       </div>
     </div>
