@@ -1,14 +1,18 @@
 "use client";
 
 import { upload } from "@vercel/blob/client";
-import { useRef, ChangeEvent } from "react";
+import { useRef, ChangeEvent, useState } from "react";
 import { Button } from "@chakra-ui/react";
+import ProjectForm from "./ProjectForm";
 
 export default function Uploader() {
   const inputFileRef = useRef<HTMLInputElement>(null);
+  const [isOverlayOpen, setIsOverlayOpen] = useState<boolean>(false);
+  const [selectedProject, setSelectedProject] = useState<string | null>(null);
 
   async function uploadAudio(file: File) {
     try {
+      setIsOverlayOpen(true);
       await upload(file.name, file, {
         access: "public",
         handleUploadUrl: "/api/upload",
@@ -31,6 +35,17 @@ export default function Uploader() {
     }
   };
 
+  const handleProjectSelect = async () => {
+    const file = inputFileRef.current?.files?.[0];
+    if (file && selectedProject) {
+      await uploadAudio(file);
+    }
+  };
+
+  const handleClose = () => {
+    setIsOverlayOpen(false);
+  };
+
   return (
     <>
       <Button onClick={handleButtonClick}> + Create </Button>
@@ -43,6 +58,8 @@ export default function Uploader() {
         style={{ display: "none" }}
         onChange={handleFileChange}
       />
+
+      <ProjectForm isOverlayOpen={isOverlayOpen} handleClose={handleClose} />
     </>
   );
 }

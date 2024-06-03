@@ -1,7 +1,7 @@
 import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
-import { createUser } from "@/lib/users";
+import { createUser } from "@/actions/users";
 import { User } from "@prisma/client";
 
 export async function POST(req: Request) {
