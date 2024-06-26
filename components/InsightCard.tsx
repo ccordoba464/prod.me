@@ -5,9 +5,9 @@ interface InsightCardProps {
     user_id: string;
     current_version_id: string | null;
     title: string;
-    description: string;
-    genre: string;
-    cover_image_url: string;
+    description: string | null;
+    genre: string | null;
+    cover_image_url: string | null;
     created_at: Date;
     updated_at: Date;
   };
@@ -19,9 +19,9 @@ interface TrackInsightCardProps {
     user_id: string;
     current_version_id: string | null;
     title: string;
-    description: string;
-    genre: string;
-    cover_image_url: string;
+    description: string | null;
+    genre: string | null;
+    cover_image_url: string | null;
     created_at: Date;
     updated_at: Date;
   };

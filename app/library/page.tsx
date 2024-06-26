@@ -7,6 +7,7 @@ import { ProjectCard } from "@/components/ProjectCard";
 import { Suspense } from "react";
 import { Divider } from "@chakra-ui/react";
 import { prisma } from "@/lib/prisma";
+import Link from "next/link";
 
 interface LibraryProps {
   params: {
@@ -34,6 +35,15 @@ export default async function Library({ params }: LibraryProps) {
             <ProjectCard />
           </div>
         </Suspense>
+      </div>
+
+      <Divider />
+
+      <div className="">
+        <div className="text-xl mb-2">Projects</div>
+        <Link href={`/project/`}>
+          <ProjectCard />
+        </Link>
       </div>
 
       <Divider />
