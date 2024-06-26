@@ -5,7 +5,7 @@ import { User } from "@prisma/client";
 import { auth } from "@clerk/nextjs/server";
 import { getDbUserFromClerkUser } from "./users";
 
-export async function createTrack() {
+export async function createTrack(title: string = "Untitled Track") {
   try {
     const { userId } = auth();
 
@@ -21,7 +21,7 @@ export async function createTrack() {
 
     const trackData = {
       user_id: dbUser.id,
-      title: "Untitled Track",
+      title: title,
       description: "Fetch file name when uploading",
       genre: "N/A",
       cover_image_url: "",

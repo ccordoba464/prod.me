@@ -46,3 +46,22 @@ export async function fetchProjects(data: User) {
     return { error };
   }
 }
+
+export async function createProjectTrack(projectId: string, trackId: string) {
+  try {
+    const projectTrackData = {
+      project_id: projectId,
+      track_id: trackId,
+      position: 1,
+    };
+
+    const projectTrack = await prisma.project_track.create({
+      data: projectTrackData,
+    });
+
+    return projectTrack;
+  } catch (error) {
+    console.error("Error creating project track:", error);
+    return { error };
+  }
+}

@@ -9,10 +9,12 @@ export default function Uploader() {
   const inputFileRef = useRef<HTMLInputElement>(null);
   const [isOverlayOpen, setIsOverlayOpen] = useState<boolean>(false);
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
+  const [file, setFile] = useState<File | null>(null);
 
   async function uploadAudio(file: File) {
     try {
       setIsOverlayOpen(true);
+      setFile(file);
       await upload(file.name, file, {
         access: "public",
         handleUploadUrl: "/api/upload",
@@ -59,7 +61,11 @@ export default function Uploader() {
         onChange={handleFileChange}
       />
 
-      <ProjectForm isOverlayOpen={isOverlayOpen} handleClose={handleClose} />
+      <ProjectForm
+        isOverlayOpen={isOverlayOpen}
+        handleClose={handleClose}
+        file={file}
+      />
     </>
   );
 }

@@ -11,17 +11,20 @@ import {
   FormControl,
 } from "@chakra-ui/react";
 import { prisma } from "@/lib/prisma";
-import { createProject } from "@/actions/projects";
+import { createProject, createProjectTrack } from "@/actions/projects";
+import { createTrack } from "@/actions/tracks";
 import { FormEvent } from "react";
 
 interface ProjectFormProps {
   isOverlayOpen: boolean;
   handleClose: () => void;
+  file: File | null;
 }
 
 export default function ProjectForm({
   isOverlayOpen,
   handleClose,
+  file,
 }: ProjectFormProps) {
   //   const projects = await prisma.project.findMany({
   //     where: { user_id: params.userid },
@@ -30,7 +33,12 @@ export default function ProjectForm({
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log("Creating project");
-    await createProject();
+    const project = await createProject();
+    console.log("Creating Track in project", project);
+    const track = await createTrack(file?.name);
+    const projectTrack = await createProjectTrack(project?.id, track?.id);
+    console.log("Create Project Track link", projectTrack);
+
     handleClose();
   };
 

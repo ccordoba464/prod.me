@@ -50,9 +50,9 @@ model Track {
   current_version_id String?   @unique
   current_version    Track_version? @relation("currentVersion", fields: [current_version_id], references: [id])
   title              String
-  description        String
-  genre              String
-  cover_image_url    String
+  description        String?
+  genre              String?
+  cover_image_url    String?
   created_at         DateTime @default(now())
   updated_at         DateTime @updatedAt
   versions           Track_version[] @relation("trackVersions")
