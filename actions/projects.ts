@@ -65,3 +65,17 @@ export async function createProjectTrack(projectId: string, trackId: string) {
     return { error };
   }
 }
+
+export async function fetchProjectTracks(projectId: string) {
+  try {
+    const projectTracks = await prisma.project_track.findMany({
+      where: { project_id: projectId },
+      include: { track: true },
+    });
+
+    return projectTracks;
+  } catch (error) {
+    console.error("Error fetching project tracks:", error);
+    return { error };
+  }
+}

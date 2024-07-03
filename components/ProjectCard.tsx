@@ -1,3 +1,4 @@
+import Link from "next/link";
 interface ProjectCardProps {
   project: {
     id: string;
@@ -10,12 +11,14 @@ interface ProjectCardProps {
   };
 }
 
-export const ProjectCard = () => {
+export const ProjectCard = ({ project }: ProjectCardProps) => {
   return (
-    <div className="flex flex-col text-xs font-bold">
-      <div className="w-[160px] h-[160px] overflow-hidden rounded-sm bg-[#3b4045] mb-1"></div>
-      <div className="">Project Name</div>
-      <div className=" text-gray-500">3 tracks</div>
-    </div>
+    <Link href={`/project/${project.id}`}>
+      <div className="flex flex-col text-xs font-bold">
+        <div className="w-[160px] h-[160px] overflow-hidden rounded-sm bg-[#3b4045] mb-1"></div>
+        <div className="">Project Name</div>
+        <div className=" text-gray-500">3 tracks</div>
+      </div>
+    </Link>
   );
 };

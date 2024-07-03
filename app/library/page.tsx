@@ -16,9 +16,10 @@ interface LibraryProps {
 }
 
 export default async function Library({ params }: LibraryProps) {
-  const [tracks, beats] = await Promise.all([
+  const [tracks, beats, projects] = await Promise.all([
     await prisma.track.findMany({ where: { user_id: params.userid } }),
     await prisma.beat.findMany({ where: { user_id: params.userid } }),
+    await prisma.project.findMany({ where: { user_id: params.userid } }),
   ]);
 
   return (
@@ -26,14 +27,7 @@ export default async function Library({ params }: LibraryProps) {
       <div className="">
         <div className="text-lg mb-2">Continue working</div>
         <Suspense fallback={<div>TESTING</div>}>
-          <div className="flex w-full justify-between">
-            <ProjectCard />
-            <ProjectCard />
-            <ProjectCard />
-            <ProjectCard />
-            <ProjectCard />
-            <ProjectCard />
-          </div>
+          <div className="flex w-full justify-between"></div>
         </Suspense>
       </div>
 
@@ -41,9 +35,11 @@ export default async function Library({ params }: LibraryProps) {
 
       <div className="">
         <div className="text-xl mb-2">Projects</div>
-        <Link href={`/project/`}>
-          <ProjectCard />
-        </Link>
+        <div className="flex w-full justify-between">
+          {projects.map((project: any) => (
+            <ProjectCard key={project.id} project={project} />
+          ))}
+        </div>
       </div>
 
       <Divider />
