@@ -34,8 +34,19 @@ export default function ProjectForm({
     event.preventDefault();
     console.log("Creating project");
     const project = await createProject();
+
+    if (!project || !file || !file.name) {
+      console.error("Project creation failed or file is missing");
+      return;
+    }
+
     console.log("Creating Track in project", project);
     const track = await createTrack(file?.name);
+
+    if (!track) {
+      console.error("Track creation failed");
+      return;
+    }
     const projectTrack = await createProjectTrack(project?.id, track?.id);
     console.log("Create Project Track link", projectTrack);
 
