@@ -32,7 +32,7 @@ export async function createTrack(title: string = "Untitled Track") {
     return track;
   } catch (error) {
     console.error("Error creating project:", error);
-    return { error };
+    return null;
   }
 }
 
@@ -44,6 +44,6 @@ export async function fetchTracks(data: User) {
     return projects;
   } catch (error) {
     console.error("Error fetching projects:", error);
-    return { error };
+    return [];
   }
 }

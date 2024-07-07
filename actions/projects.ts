@@ -31,7 +31,7 @@ export async function createProject() {
     return project;
   } catch (error) {
     console.error("Error creating project:", error);
-    return { error };
+    return null;
   }
 }
 
@@ -43,7 +43,7 @@ export async function fetchProjects(data: User) {
     return projects;
   } catch (error) {
     console.error("Error fetching projects:", error);
-    return { error };
+    return null;
   }
 }
 
