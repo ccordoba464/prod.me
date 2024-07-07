@@ -1,7 +1,6 @@
 import Image from "next/image";
 import ellipses from "@/public/images/ellipsis-solid.svg";
-import { prisma } from "@/lib/prisma";
-import { fetchProjectTracks } from "@/actions/projects";
+import { fetchProjectTracks, getProject } from "@/actions/projects";
 
 export default async function ProjectPage({
   params: { projectid },
@@ -10,8 +9,13 @@ export default async function ProjectPage({
     projectid: string;
   };
 }) {
-  const project = await prisma.project.findUnique({ where: { id: projectid } });
-  const projectTracks = await fetchProjectTracks(projectid);
+  const projectData = getProject(projectid);
+  const projectTracksData = fetchProjectTracks(projectid);
+
+  const [project, projectTracks] = await Promise.all([
+    projectData,
+    projectTracksData,
+  ]);
 
   return (
     <div className="flex p-6 mx-auto w-[1200px] mt-14">

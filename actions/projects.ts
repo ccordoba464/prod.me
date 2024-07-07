@@ -62,7 +62,20 @@ export async function createProjectTrack(projectId: string, trackId: string) {
     return projectTrack;
   } catch (error) {
     console.error("Error creating project track:", error);
-    return { error };
+    return null;
+  }
+}
+
+export async function getProject(projectId: string) {
+  try {
+    const projectData = await prisma.project.findUnique({
+      where: { id: projectId },
+    });
+
+    return projectData;
+  } catch (error) {
+    console.error("Error fetching project:", error);
+    return null;
   }
 }
 
@@ -76,6 +89,6 @@ export async function fetchProjectTracks(projectId: string) {
     return projectTracks;
   } catch (error) {
     console.error("Error fetching project tracks:", error);
-    return { error };
+    return [];
   }
 }
