@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
 body {
-  @apply leading-[normal] m-0;
+  @apply h-full bg-black leading-[normal] m-0;
 }
