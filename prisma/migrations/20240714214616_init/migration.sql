@@ -1,9 +1,9 @@
 -- CreateTable
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
+    "clerk_user_id" TEXT NOT NULL,
     "username" TEXT NOT NULL,
     "email" TEXT NOT NULL,
-    "password" TEXT NOT NULL,
     "profile_picture_url" TEXT,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
@@ -33,11 +33,11 @@ CREATE TABLE "Beat" (
 CREATE TABLE "Track" (
     "id" TEXT NOT NULL,
     "user_id" TEXT NOT NULL,
-    "current_version_id" TEXT NOT NULL,
+    "current_version_id" TEXT,
     "title" TEXT NOT NULL,
-    "description" TEXT NOT NULL,
-    "genre" TEXT NOT NULL,
-    "cover_image_url" TEXT NOT NULL,
+    "description" TEXT,
+    "genre" TEXT,
+    "cover_image_url" TEXT,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
@@ -148,6 +148,9 @@ CREATE TABLE "Genre" (
 );
 
 -- CreateIndex
+CREATE UNIQUE INDEX "User_clerk_user_id_key" ON "User"("clerk_user_id");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
@@ -160,7 +163,7 @@ ALTER TABLE "Beat" ADD CONSTRAINT "Beat_user_id_fkey" FOREIGN KEY ("user_id") RE
 ALTER TABLE "Track" ADD CONSTRAINT "Track_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Track" ADD CONSTRAINT "Track_current_version_id_fkey" FOREIGN KEY ("current_version_id") REFERENCES "Track_version"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Track" ADD CONSTRAINT "Track_current_version_id_fkey" FOREIGN KEY ("current_version_id") REFERENCES "Track_version"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Track_version" ADD CONSTRAINT "Track_version_track_id_fkey" FOREIGN KEY ("track_id") REFERENCES "Track"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

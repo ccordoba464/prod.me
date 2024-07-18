@@ -5,10 +5,10 @@ import {
   SliderFilledTrack,
   SliderThumb,
 } from "@chakra-ui/react";
-import { usePlayer } from "@/context/PlayerContext";
+import { usePlayer } from "@/hooks/usePlayer";
 
-const Playbar = () => {
-  const { currentTrack } = usePlayer();
+const Player = () => {
+  const player = usePlayer();
 
   return (
     <div className="fixed bottom-0 flex w-full py-6 items-center justify-center text-white font-bold">
@@ -16,7 +16,7 @@ const Playbar = () => {
         <div className="flex mr-4">
           <div className="w-[50px] h-[50px] overflow-hidden bg-[#3b4045] rounded-md mr-2"></div>
           <div className="flex flex-col text-sm justify-center">
-            <div>{currentTrack}</div>
+            <div>{"Current Track"}</div>
             <div>Artist</div>
           </div>
         </div>
@@ -60,4 +60,4 @@ const Playbar = () => {
   );
 };
 
-export default Playbar;
+export default Player;

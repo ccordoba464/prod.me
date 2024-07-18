@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { Divider, Input } from "@chakra-ui/react";
 import CommentSection from "@/components/CommentSection";
-import { PlayerControls } from "@/components/PlayerControls";
 import { prisma } from "@/lib/prisma";
 
 interface TrackProps {
@@ -48,7 +47,6 @@ export default async function Track({ params }: TrackProps) {
           </div>
 
           <div className="flex mb-6 gap-2 text-lg font-bold">
-            <PlayerControls fileUrl={versions[0].file_url} />
             <button className="bg-red-500 px-6 py-1 rounded-lg text-white ">
               + Add
             </button>

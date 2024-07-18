@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Providers } from "./providers";
 import "./globals.css";
-import Playbar from "../components/Playbar";
+import Player from "../components/Player";
 import Header from "@/components/Header";
 
 const font = Inter({ subsets: ["latin"] });
@@ -24,7 +24,7 @@ export default function RootLayout({
           <Providers>
             <Header />
             <div className="">{children}</div>
-            <Playbar />
+            <Player />
           </Providers>
         </main>
       </body>
