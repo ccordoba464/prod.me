@@ -4,6 +4,7 @@ import { Providers } from "./providers";
 import "./globals.css";
 import Player from "../components/Player";
 import Header from "@/components/Header";
+import { ModalProvider } from "@/providers/ModalProvider";
 
 const font = Inter({ subsets: ["latin"] });
 
@@ -22,8 +23,9 @@ export default function RootLayout({
       <body className={font.className}>
         <main>
           <Providers>
+            <ModalProvider />
             <Header />
-            <div className="">{children}</div>
+            {children}
             <Player />
           </Providers>
         </main>
