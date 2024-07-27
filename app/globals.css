@@ -4,5 +4,5 @@
 
 html,
 body {
-  @apply h-full bg-black leading-[normal] m-0;
+  @apply h-full leading-[normal] m-0;
 }

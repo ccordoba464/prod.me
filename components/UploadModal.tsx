@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useForm, FieldValues, SubmitHandler } from "react-hook-form";
+import { useForm, FieldValues, SubmitHandler, set } from "react-hook-form";
 
 import { useUploadModal } from "@/hooks/useUploadModal";
 
@@ -23,7 +23,20 @@ export default function UploadModal() {
   };
 
   const onSubmit: SubmitHandler<FieldValues> = async values => {
-    uploadModal.onClose();
+    try {
+      setIsLoading(true);
+
+      const imageFile = values.image?.[0];
+      const songFile = values.song?.[0];
+
+      if (!imageFile || !songFile) {
+        throw new Error("Please select an image and a song file");
+      }
+    } catch (error) {
+      uploadModal.onClose();
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
