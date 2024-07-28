@@ -1,5 +1,11 @@
 import { useState } from "react";
 import { useForm, FieldValues, SubmitHandler, set } from "react-hook-form";
+import { toast } from "react-hot-toast";
+import { supabase } from "@/lib/supabase/client";
+import uniqid from "uniqid";
+import { useRouter } from "next/navigation";
+import { prisma } from "@/lib/prisma";
+import { createTrack } from "@/actions/tracks";
 
 import { useUploadModal } from "@/hooks/useUploadModal";
 
@@ -10,6 +16,7 @@ import Button from "./Button";
 export default function UploadModal() {
   const [isLoading, setIsLoading] = useState(false);
   const uploadModal = useUploadModal();
+  const router = useRouter();
 
   const { register, handleSubmit, reset } = useForm<FieldValues>({
     defaultValues: { title: "", author: "", song: null, image: null },
@@ -30,8 +37,61 @@ export default function UploadModal() {
       const songFile = values.song?.[0];
 
       if (!imageFile || !songFile) {
-        throw new Error("Please select an image and a song file");
+        toast.error("Missing fields");
       }
+
+      const uniqueID = uniqid();
+
+      const { data: songData, error: songError } = await supabase.storage
+        .from("songs")
+        .upload(`song-${values.title}-${uniqueID}`, songFile, {
+          cacheControl: "3600",
+          upsert: false,
+        });
+
+      if (songError) {
+        setIsLoading(false);
+        return toast.error("Failed song upload");
+      }
+
+      const { data: imageData, error: imageError } = await supabase.storage
+        .from("images")
+        .upload(`image-${values.title}-${uniqueID}`, imageFile, {
+          cacheControl: "3600",
+          upsert: false,
+        });
+
+      if (imageError) {
+        setIsLoading(false);
+        return toast.error("Failed image upload");
+      }
+
+      const track = await createTrack(values.title);
+
+      if (!track) {
+        return toast.error("Failed to create track");
+      }
+
+      // Create record
+      //   const { error: supabaseError } = await supabase
+      //     .from("songs")
+      //     .insert({
+      //       user_id: user.id,
+      //       title: values.title,
+      //       author: values.author,
+      //       image_path: imageData.path,
+      //       song_path: songData.path,
+      //     });
+
+      //   if (supabaseError) {
+      //     return toast.error(supabaseError.message);
+      //   }
+
+      router.refresh();
+      setIsLoading(false);
+      toast.success("Song created!");
+      reset();
+      uploadModal.onClose();
     } catch (error) {
       uploadModal.onClose();
     } finally {
@@ -43,7 +103,7 @@ export default function UploadModal() {
     <Modal
       title="Add a song"
       description="Upload an mp3 file"
-      isOpen={uploadModal.isOpen}
+      isOpen={true}
       onChange={onChange}
     >
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-y-4">
@@ -65,7 +125,7 @@ export default function UploadModal() {
             placeholder="test"
             disabled={isLoading}
             type="file"
-            accept=".mp3"
+            accept=".mp3, .wav"
             id="song"
             {...register("song", { required: true })}
           />
@@ -76,7 +136,7 @@ export default function UploadModal() {
             placeholder="test"
             disabled={isLoading}
             type="file"
-            accept="image/*"
+            accept=".JPG"
             id="image"
             {...register("image", { required: true })}
           />
