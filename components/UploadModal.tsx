@@ -103,7 +103,7 @@ export default function UploadModal() {
     <Modal
       title="Add a song"
       description="Upload an mp3 file"
-      isOpen={true}
+      isOpen={uploadModal.isOpen}
       onChange={onChange}
     >
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-y-4">
