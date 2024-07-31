@@ -4,8 +4,10 @@ import { Providers } from "./providers";
 import "./globals.css";
 import Player from "../components/Player";
 import Header from "@/components/Header";
+import Sidebar from "@/components/Sidebar";
 import { ModalProvider } from "@/providers/ModalProvider";
 import ToasterProvider from "@/providers/ToasterProvider";
+import { ThemeProvider } from "@/providers/ThemeProvider";
 
 const font = Inter({ subsets: ["latin"] });
 
@@ -24,11 +26,17 @@ export default function RootLayout({
       <body className={font.className}>
         <main>
           <Providers>
-            <ModalProvider />
-            <ToasterProvider />
-            <Header />
-            {children}
-            <Player />
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <ModalProvider />
+              <ToasterProvider />
+              <Sidebar>{children}</Sidebar>
+              <Player />
+            </ThemeProvider>
           </Providers>
         </main>
       </body>
