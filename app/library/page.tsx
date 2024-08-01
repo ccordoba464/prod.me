@@ -16,12 +16,6 @@ interface LibraryProps {
 }
 
 export default async function Library({ params }: LibraryProps) {
-  const [tracks, beats, projects] = await Promise.all([
-    await prisma.track.findMany({ where: { user_id: params.userid } }),
-    await prisma.beat.findMany({ where: { user_id: params.userid } }),
-    await prisma.project.findMany({ where: { user_id: params.userid } }),
-  ]);
-
   return (
     <div className="flex flex-col gap-4 mb-20">
       <div className="">
@@ -35,35 +29,21 @@ export default async function Library({ params }: LibraryProps) {
 
       <div className="">
         <div className="text-xl mb-2">Projects</div>
-        <div className="flex w-full justify-between">
-          {projects.map((project: any) => (
-            <ProjectCard key={project.id} project={project} />
-          ))}
-        </div>
+        <div className="flex w-full justify-between"></div>
       </div>
 
       <Divider />
 
       <div className="">
         <div className="text-xl mb-2">Tracks</div>
-        <Suspense fallback={<div>TESTING</div>}>
-          {false &&
-            tracks.map((track: any) => (
-              <TrackInsightCard key={track.id} track={track} />
-            ))}
-        </Suspense>
+        <Suspense fallback={<div>TESTING</div>}></Suspense>
       </div>
 
       <Divider />
 
       <div className="">
         <div className="text-xl mb-2">Beats</div>
-        <Suspense fallback={<div>TESTING</div>}>
-          {false &&
-            beats.map((beat: any) => (
-              <BeatInsightCard key={beat.id} beat={beat} />
-            ))}
-        </Suspense>
+        <Suspense fallback={<div>TESTING</div>}></Suspense>
       </div>
 
       <Divider />

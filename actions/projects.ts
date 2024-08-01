@@ -23,7 +23,7 @@ export async function createProject() {
       user_id: dbUser.id,
       title: "New Project",
       description: "",
-      cover_image_url: "",
+      image_path: "",
     };
 
     const project = await prisma.project.create({ data: projectData });
@@ -35,10 +35,24 @@ export async function createProject() {
   }
 }
 
-export async function fetchProjects(data: User) {
+export async function fetchProjects() {
   try {
+    const { userId } = auth();
+
+    if (!userId) {
+      throw new Error("No user found");
+    }
+
+    const dbUser = await getDbUserFromClerkUser(userId);
+
+    console.log(dbUser);
+
+    if (!dbUser || !dbUser.id) {
+      throw new Error("No corresponding database user found");
+    }
+
     const projects = await prisma.project.findMany({
-      where: { user_id: data.clerk_user_id },
+      where: { user_id: dbUser.id },
     });
     return projects;
   } catch (error) {

@@ -7,15 +7,14 @@ import { useRouter } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { createTrack } from "@/actions/tracks";
 
-import { useUploadModal } from "@/hooks/useUploadModal";
-
 import Modal from "./Modal";
 import Input from "./Input";
 import Button from "./Button";
+import { useProjectModal } from "@/hooks/useProjectModal";
 
-export default function UploadModal() {
+export default function ProjectModal() {
   const [isLoading, setIsLoading] = useState(false);
-  const uploadModal = useUploadModal();
+  const projectModal = useProjectModal();
   const router = useRouter();
 
   const { register, handleSubmit, reset } = useForm<FieldValues>({
@@ -25,7 +24,7 @@ export default function UploadModal() {
   const onChange = (open: boolean) => {
     if (!open) {
       reset();
-      uploadModal.onClose();
+      projectModal.onClose();
     }
   };
 
@@ -51,7 +50,7 @@ export default function UploadModal() {
 
       if (songError) {
         setIsLoading(false);
-        return toast.error("Failed song `upload");
+        return toast.error("Failed song upload");
       }
 
       const { data: imageData, error: imageError } = await supabase.storage
@@ -72,28 +71,13 @@ export default function UploadModal() {
         return toast.error("Failed to create track");
       }
 
-      // Create record
-      //   const { error: supabaseError } = await supabase
-      //     .from("songs")
-      //     .insert({
-      //       user_id: user.id,
-      //       title: values.title,
-      //       author: values.author,
-      //       image_path: imageData.path,
-      //       song_path: songData.path,
-      //     });
-
-      //   if (supabaseError) {
-      //     return toast.error(supabaseError.message);
-      //   }
-
       router.refresh();
       setIsLoading(false);
       toast.success("Song created!");
       reset();
-      uploadModal.onClose();
+      projectModal.onClose();
     } catch (error) {
-      uploadModal.onClose();
+      projectModal.onClose();
     } finally {
       setIsLoading(false);
     }
@@ -101,9 +85,9 @@ export default function UploadModal() {
 
   return (
     <Modal
-      title="Add a song"
-      description="Upload an mp3 file"
-      isOpen={uploadModal.isOpen}
+      title="Create a project"
+      description="Fill out the form"
+      isOpen={projectModal.isOpen}
       onChange={onChange}
     >
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-y-4">

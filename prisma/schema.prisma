@@ -69,7 +69,7 @@ model Track_version {
   track              Track    @relation("trackVersions", fields: [track_id], references: [id])
   currentVersion     Track?   @relation("currentVersion")
   version_number     Int
-  file_url           String
+  track_url          String
   duration           String
   key                String
   bpm                Int
@@ -83,7 +83,7 @@ model Project {
   user               User     @relation(fields: [user_id], references: [id])
   title              String
   description        String
-  cover_image_url    String
+  image_path         String
   created_at         DateTime @default(now())
   updated_at         DateTime @updatedAt
   project_tracks     Project_track[]
