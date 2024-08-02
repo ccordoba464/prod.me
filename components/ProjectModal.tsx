@@ -11,6 +11,7 @@ import Modal from "./Modal";
 import Input from "./Input";
 import Button from "./Button";
 import { useProjectModal } from "@/hooks/useProjectModal";
+import { createProject } from "@/actions/projects";
 
 export default function ProjectModal() {
   const [isLoading, setIsLoading] = useState(false);
@@ -18,7 +19,7 @@ export default function ProjectModal() {
   const router = useRouter();
 
   const { register, handleSubmit, reset } = useForm<FieldValues>({
-    defaultValues: { title: "", author: "", song: null, image: null },
+    defaultValues: { title: "", description: "", song: null, image: null },
   });
 
   const onChange = (open: boolean) => {
@@ -34,6 +35,8 @@ export default function ProjectModal() {
 
       const imageFile = values.image?.[0];
       const songFile = values.song?.[0];
+
+      console.log(values, songFile);
 
       if (!imageFile || !songFile) {
         toast.error("Missing fields");
@@ -65,7 +68,7 @@ export default function ProjectModal() {
         return toast.error("Failed image upload");
       }
 
-      const track = await createTrack(values.title);
+      const track = await createProject(values.title, values.description);
 
       if (!track) {
         return toast.error("Failed to create track");
@@ -91,18 +94,24 @@ export default function ProjectModal() {
       onChange={onChange}
     >
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-y-4">
-        <Input
-          id="title"
-          disabled={isLoading}
-          {...register("title", { required: true })}
-          placeholder="Song title"
-        />
-        <Input
-          id="author"
-          disabled={isLoading}
-          {...register("author", { required: true })}
-          placeholder="Song author"
-        />
+        <div>
+          <div className="pb-1">Project Title</div>
+          <Input
+            id="title"
+            disabled={isLoading}
+            {...register("title", { required: true })}
+            placeholder="Project title"
+          />
+        </div>
+        <div>
+          <div className="pb-1">Project description</div>
+          <Input
+            id="description"
+            disabled={isLoading}
+            {...register("description", { required: true })}
+            placeholder="Description"
+          />
+        </div>
         <div>
           <div className="pb-1">Select a song file</div>
           <Input

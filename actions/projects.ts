@@ -5,7 +5,7 @@ import { User } from "@prisma/client";
 import { auth } from "@clerk/nextjs/server";
 import { getDbUserFromClerkUser } from "./users";
 
-export async function createProject() {
+export async function createProject(title: string, description?: string) {
   try {
     const { userId } = auth();
 
@@ -21,8 +21,8 @@ export async function createProject() {
 
     const projectData = {
       user_id: dbUser.id,
-      title: "New Project",
-      description: "",
+      title: title,
+      description: description || "",
       image_path: "",
     };
 
@@ -44,8 +44,6 @@ export async function fetchProjects() {
     }
 
     const dbUser = await getDbUserFromClerkUser(userId);
-
-    console.log(dbUser);
 
     if (!dbUser || !dbUser.id) {
       throw new Error("No corresponding database user found");
