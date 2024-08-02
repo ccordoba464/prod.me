@@ -23,23 +23,21 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={font.className}>
-        <main>
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="system"
+        enableSystem
+        disableTransitionOnChange
+      >
+        <body>
           <Providers>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
-              <ModalProvider />
-              <ToasterProvider />
-              <Sidebar>{children}</Sidebar>
-              <Player />
-            </ThemeProvider>
+            <ModalProvider />
+            <ToasterProvider />
+            <Sidebar>{children}</Sidebar>
+            <Player />
           </Providers>
-        </main>
-      </body>
+        </body>
+      </ThemeProvider>
     </html>
   );
 }

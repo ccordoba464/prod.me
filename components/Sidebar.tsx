@@ -43,7 +43,7 @@ export default function Sidebar({
   return (
     <div
       className={twMerge(
-        `flex h-screen `,
+        `flex h-screen  `,
         player.activeId && "h-[calc(100%-80px)]"
       )}
     >
@@ -57,7 +57,7 @@ export default function Sidebar({
         </div>
         <div className="overflow-y-auto h-full text-white">Song Library</div>
       </div>
-      <main className="h-full flex-1 overflow-y-auto">{children}</main>
+      <div className="h-full flex-1 overflow-y-auto">{children}</div>
     </div>
   );
 }

@@ -17,7 +17,7 @@ export default async function Home() {
   const projects = await fetchProjects();
 
   return (
-    <div className="text-neutral-400  w-full h-full overflow-hidden overflow-y-auto p-2">
+    <div className="text-neutral-400  w-full h-screen overflow-hidden overflow-y-auto p-2">
       <div className="mt-2 mb-7 px-6">
         <div className="flex justify-between items-center">
           <h1 className="text-white text-4xl font-semibold">Newest Songs</h1>
@@ -25,11 +25,12 @@ export default async function Home() {
           <ProjectButton />
         </div>
       </div>
-      <div className="p-6 flex gap-10">
+      <div className="p-6 flex  gap-10">
         {projects?.map((project: Project) => (
           <MediaItem key={project.id} id={project.id} title={project.title} />
         ))}
       </div>
+      test
     </div>
   );
 }
