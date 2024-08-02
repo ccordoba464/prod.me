@@ -5,7 +5,11 @@ import { User } from "@prisma/client";
 import { auth } from "@clerk/nextjs/server";
 import { getDbUserFromClerkUser } from "./users";
 
-export async function createProject(title: string, description?: string) {
+export async function createProject(
+  title: string,
+  description: string,
+  image_path: string
+) {
   try {
     const { userId } = auth();
 
@@ -22,8 +26,8 @@ export async function createProject(title: string, description?: string) {
     const projectData = {
       user_id: dbUser.id,
       title: title,
-      description: description || "",
-      image_path: "",
+      description: description,
+      image_path: image_path,
     };
 
     const project = await prisma.project.create({ data: projectData });

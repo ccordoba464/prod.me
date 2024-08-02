@@ -19,7 +19,7 @@ export default function ProjectModal() {
   const router = useRouter();
 
   const { register, handleSubmit, reset } = useForm<FieldValues>({
-    defaultValues: { title: "", description: "", song: null, image: null },
+    defaultValues: { title: "", description: "", image: null },
   });
 
   const onChange = (open: boolean) => {
@@ -34,27 +34,14 @@ export default function ProjectModal() {
       setIsLoading(true);
 
       const imageFile = values.image?.[0];
-      const songFile = values.song?.[0];
 
-      console.log(values, songFile);
+      console.log(values);
 
-      if (!imageFile || !songFile) {
+      if (!imageFile) {
         toast.error("Missing fields");
       }
 
       const uniqueID = uniqid();
-
-      const { data: songData, error: songError } = await supabase.storage
-        .from("songs")
-        .upload(`song-${values.title}-${uniqueID}`, songFile, {
-          cacheControl: "3600",
-          upsert: false,
-        });
-
-      if (songError) {
-        setIsLoading(false);
-        return toast.error("Failed song upload");
-      }
 
       const { data: imageData, error: imageError } = await supabase.storage
         .from("images")
@@ -68,15 +55,19 @@ export default function ProjectModal() {
         return toast.error("Failed image upload");
       }
 
-      const track = await createProject(values.title, values.description);
+      const project = await createProject(
+        values.title,
+        values.description,
+        imageData.path
+      );
 
-      if (!track) {
-        return toast.error("Failed to create track");
+      if (!project) {
+        return toast.error("Failed to create project");
       }
 
       router.refresh();
       setIsLoading(false);
-      toast.success("Song created!");
+      toast.success("Project created!");
       reset();
       projectModal.onClose();
     } catch (error) {
@@ -104,7 +95,7 @@ export default function ProjectModal() {
           />
         </div>
         <div>
-          <div className="pb-1">Project description</div>
+          <div className="pb-1">Project Description</div>
           <Input
             id="description"
             disabled={isLoading}
@@ -113,18 +104,7 @@ export default function ProjectModal() {
           />
         </div>
         <div>
-          <div className="pb-1">Select a song file</div>
-          <Input
-            placeholder="test"
-            disabled={isLoading}
-            type="file"
-            accept=".mp3, .wav"
-            id="song"
-            {...register("song", { required: true })}
-          />
-        </div>
-        <div>
-          <div className="pb-1">Select an image</div>
+          <div className="pb-1">Select Cover Art</div>
           <Input
             placeholder="test"
             disabled={isLoading}
