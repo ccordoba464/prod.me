@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from "react";
 
-import UploadModal from "@/components/UploadModal";
-import Modal from "@/components/Modal";
-import ProjectModal from "@/components/ProjectModal";
+import UploadModal from "@/components/modals/UploadModal";
+import ProjectModal from "@/components/modals/ProjectModal";
+import EditTrackModal from "@/components/modals/EditTrackModal";
 
 export function ModalProvider() {
   const [isMounted, setIsMounted] = useState(false);
@@ -19,6 +19,7 @@ export function ModalProvider() {
     <>
       <UploadModal />
       <ProjectModal />
+      <EditTrackModal />
     </>
   );
 }

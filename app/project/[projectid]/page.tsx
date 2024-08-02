@@ -4,6 +4,8 @@ import { fetchProjectTracks, getProject } from "@/actions/projects";
 import { useForm, FieldValues, SubmitHandler, set } from "react-hook-form";
 import { createTrack } from "@/actions/tracks";
 import CreateTrackButton from "@/components/CreateTrackButton";
+import ProjectTrackItem from "@/components/ProjectTrackItem";
+import { Project_track, Track } from "@prisma/client";
 
 export default async function ProjectPage({
   params: { projectid },
@@ -22,7 +24,7 @@ export default async function ProjectPage({
   ]);
 
   return (
-    <div className="flex p-6 mx-auto] w-full h-full mt-14">
+    <div className="flex p-6 mx-auto w-full h-full mt-14">
       <div className="flex gap-8 w-full">
         <div className="flex">
           <div className="flex w-96 h-96 bg-gray-600 justify-center items-center rounded-md">
@@ -60,22 +62,14 @@ export default async function ProjectPage({
           </div>
 
           <ul className="flex flex-col gap-2 pb-32 mb-4">
-            {projectTracks.map((projectTrack: any) => (
-              <li
-                key={projectTrack.id}
-                className="flex justify-between items-center hover:bg-gray-100 px-4 py-2 rounded-lg"
-              >
-                <div>
-                  <p>
-                    {projectTrack.position}. {projectTrack.track.title}
-                  </p>
-                  <p className="text-zinc-400">May 7, 2024</p>
-                </div>
-                <button className="hover:bg-gray-200 w-8 h-6 rounded-lg flex items-center justify-center">
-                  <Image width={16} height={16} src={ellipses} alt="more" />
-                </button>
-              </li>
-            ))}
+            {projectTracks.map(
+              (projectTrack: Project_track & { track: Track }) => (
+                <ProjectTrackItem
+                  key={projectTrack.track_id}
+                  projectTrack={projectTrack}
+                />
+              )
+            )}
           </ul>
         </div>
       </div>

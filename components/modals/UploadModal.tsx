@@ -10,8 +10,8 @@ import { createTrack } from "@/actions/tracks";
 import { useUploadModal } from "@/hooks/useUploadModal";
 
 import Modal from "./Modal";
-import Input from "./Input";
-import Button from "./Button";
+import Input from "../Input";
+import Button from "../Button";
 
 export default function UploadModal() {
   const [isLoading, setIsLoading] = useState(false);

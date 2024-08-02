@@ -8,8 +8,8 @@ import { prisma } from "@/lib/prisma";
 import { createTrack } from "@/actions/tracks";
 
 import Modal from "./Modal";
-import Input from "./Input";
-import Button from "./Button";
+import Input from "../Input";
+import Button from "../Button";
 import { useProjectModal } from "@/hooks/useProjectModal";
 import { createProject } from "@/actions/projects";
 
