@@ -5,7 +5,7 @@ import { User } from "@prisma/client";
 import { auth } from "@clerk/nextjs/server";
 import { getDbUserFromClerkUser } from "./users";
 
-export async function createTrack(title: string = "Untitled Track") {
+export async function createTrack(title: string) {
   try {
     const { userId } = auth();
 

@@ -1,6 +1,9 @@
 import Image from "next/image";
 import ellipses from "@/public/images/ellipsis-solid.svg";
 import { fetchProjectTracks, getProject } from "@/actions/projects";
+import { useForm, FieldValues, SubmitHandler, set } from "react-hook-form";
+import { createTrack } from "@/actions/tracks";
+import CreateTrackButton from "@/components/CreateTrackButton";
 
 export default async function ProjectPage({
   params: { projectid },
@@ -9,6 +12,7 @@ export default async function ProjectPage({
     projectid: string;
   };
 }) {
+  console.log(typeof projectid);
   const projectData = getProject(projectid);
   const projectTracksData = fetchProjectTracks(projectid);
 
@@ -52,9 +56,7 @@ export default async function ProjectPage({
             <button className="px-4 py-2 mb-10 rounded-lg bg-red-500 text-white font-bold">
               Shuffle
             </button>
-            <button className="px-4 py-2 mb-10 rounded-lg bg-red-500 text-white font-bold">
-              + Add tracks
-            </button>
+            <CreateTrackButton projectid={projectid} />
           </div>
 
           <ul className="flex flex-col gap-2 pb-32 mb-4">

@@ -25,7 +25,7 @@ export default async function Home() {
           <ProjectButton />
         </div>
       </div>
-      <div className="p-6 flex  gap-10">
+      <div className="p-6 flex gap-10">
         {projects?.map((project: Project) => (
           <MediaItem key={project.id} id={project.id} title={project.title} />
         ))}
