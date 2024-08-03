@@ -1,6 +1,7 @@
 import Image from "next/image";
 import ellipses from "@/public/images/ellipsis-solid.svg";
-import { fetchProjectTracks, getProject } from "@/actions/projects";
+import { getProject } from "@/actions/projects";
+import { fetchProjectTracks } from "@/actions/project-tracks";
 import { useForm, FieldValues, SubmitHandler, set } from "react-hook-form";
 import { createTrack } from "@/actions/tracks";
 import CreateTrackButton from "@/components/CreateTrackButton";

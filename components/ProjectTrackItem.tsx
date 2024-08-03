@@ -19,13 +19,13 @@ export default function ProjectTrackItem({
   const editTrackModal = useEditTrackModal();
 
   const onClick = async () => {
-    editTrackModal.onOpen();
+    editTrackModal.onOpen(projectTrack.track);
   };
 
   const { project_id, track_id, position, track } = projectTrack;
 
   return (
-    <li className="flex justify-between items-center hover:bg-zinc-400 px-4 py-2 rounded-lg">
+    <li className="flex justify-between items-center hover:border px-4 py-2 rounded-lg ">
       <div>
         <p>
           {position}. {track?.title}

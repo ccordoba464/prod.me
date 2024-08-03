@@ -6,7 +6,7 @@ import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
 import { createTrack } from "@/actions/tracks";
-import { createProjectTrack } from "@/actions/projects";
+import { createProjectTrack } from "@/actions/project-tracks";
 import { supabase } from "@/lib/supabase/client";
 
 export default function CreateTrackButton({

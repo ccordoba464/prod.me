@@ -14,8 +14,9 @@ import Input from "../Input";
 import Button from "../Button";
 
 export default function EditTrackModal() {
-  const [isLoading, setIsLoading] = useState(false);
   const editTrackModal = useEditTrackModal();
+  const track = editTrackModal.track;
+
   const router = useRouter();
 
   const { register, handleSubmit, reset } = useForm<FieldValues>({
@@ -31,120 +32,45 @@ export default function EditTrackModal() {
 
   const onSubmit: SubmitHandler<FieldValues> = async values => {
     try {
-      setIsLoading(true);
-
-      const imageFile = values.image?.[0];
-      const songFile = values.song?.[0];
-
-      if (!imageFile || !songFile) {
-        toast.error("Missing fields");
-      }
-
-      const uniqueID = uniqid();
-
-      const { data: songData, error: songError } = await supabase.storage
-        .from("songs")
-        .upload(`song-${values.title}-${uniqueID}`, songFile, {
-          cacheControl: "3600",
-          upsert: false,
-        });
-
-      if (songError) {
-        setIsLoading(false);
-        return toast.error("Failed song `upload");
-      }
-
-      const { data: imageData, error: imageError } = await supabase.storage
-        .from("images")
-        .upload(`image-${values.title}-${uniqueID}`, imageFile, {
-          cacheControl: "3600",
-          upsert: false,
-        });
-
-      if (imageError) {
-        setIsLoading(false);
-        return toast.error("Failed image upload");
-      }
-
-      const track = await createTrack(values.title);
-
-      if (!track) {
-        return toast.error("Failed to create track");
-      }
-
-      // Create record
-      //   const { error: supabaseError } = await supabase
-      //     .from("songs")
-      //     .insert({
-      //       user_id: user.id,
-      //       title: values.title,
-      //       author: values.author,
-      //       image_path: imageData.path,
-      //       song_path: songData.path,
-      //     });
-
-      //   if (supabaseError) {
-      //     return toast.error(supabaseError.message);
-      //   }
-
       router.refresh();
-      setIsLoading(false);
       toast.success("Song created!");
       reset();
       editTrackModal.onClose();
     } catch (error) {
       editTrackModal.onClose();
-    } finally {
-      setIsLoading(false);
     }
   };
 
+  if (!track && editTrackModal.isOpen) {
+    return toast.error("Track not found");
+  }
+
   return (
     <Modal
-      title="Add a song"
-      description="Upload an mp3 file"
+      title={track?.title}
+      description="Edit your track"
       isOpen={editTrackModal.isOpen}
       onChange={onChange}
     >
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-y-4">
-        <Input
-          id="title"
-          disabled={isLoading}
-          {...register("title", { required: true })}
-          placeholder="Song title"
-        />
-        <Input
-          id="author"
-          disabled={isLoading}
-          {...register("author", { required: true })}
-          placeholder="Song author"
-        />
-        <div>
-          <div className="pb-1">Select a song file</div>
-          <Input
-            placeholder="test"
-            disabled={isLoading}
-            type="file"
-            accept=".mp3, .wav"
-            id="song"
-            {...register("song", { required: true })}
-          />
-        </div>
-        <div>
-          <div className="pb-1">Select an image</div>
-          <Input
-            placeholder="test"
-            disabled={isLoading}
-            type="file"
-            accept=".JPG"
-            id="image"
-            {...register("image", { required: true })}
-          />
-        </div>
-        <Button disabled={isLoading} type="submit">
-          Create
-        </Button>
-      </form>
+      <div>
+        <ul className="flex flex-col gap-1">
+          <li className="p-4 bg-neutral-700 rounded-t-lg cursor-pointer hover:bg-[#2c2b2b]">
+            Edit track info
+          </li>
+          <li className="p-4 bg-neutral-700 cursor-pointer hover:bg-[#323131]">
+            Add Notes
+          </li>
+          <li className="p-4 bg-neutral-700 cursor-pointer hover:bg-[#323131]">
+            Replace audio
+          </li>
+          <li className="p-4 bg-neutral-700 cursor-pointer hover:bg-[#323131]">
+            Export track
+          </li>
+          <li className="p-4 bg-neutral-700 rounded-b-lg cursor-pointer hover:bg-[#323131]">
+            Delete Track
+          </li>
+        </ul>
+      </div>
     </Modal>
   );
 }
