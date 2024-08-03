@@ -47,7 +47,6 @@ export async function loadImageFromSupabase(path: string) {
 export async function loadTrackFromSupabase(path: string) {
   const { data, error } = await supabase.storage.from("songs").download(path);
 
-  console.log(data);
   if (error) {
     throw new Error("Failed to load image");
   }

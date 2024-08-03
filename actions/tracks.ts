@@ -37,6 +37,28 @@ export async function createTrack(title: string, songPath: string) {
     return null;
   }
 }
+
+export async function updateTrack(
+  trackId: string,
+  title: string,
+  description: string
+) {
+  try {
+    await prisma.track.update({
+      where: { id: trackId },
+      data: {
+        title: title,
+        description: description,
+      },
+    });
+
+    return true;
+  } catch (error) {
+    console.error("Error updating track:", error);
+    return false;
+  }
+}
+
 export async function deleteTrack(trackId: string) {
   try {
     // First delete all related project tracks

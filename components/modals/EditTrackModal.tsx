@@ -1,12 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm, FieldValues, SubmitHandler, set } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { supabase } from "@/lib/supabase/client";
 import uniqid from "uniqid";
 import { useRouter } from "next/navigation";
 import { prisma } from "@/lib/prisma";
-import { createTrack, deleteTrack } from "@/actions/tracks";
-import { deleteProjectTrack } from "@/actions/project-tracks";
+import { createTrack, deleteTrack, updateTrack } from "@/actions/tracks";
+import { loadTrackFromSupabase } from "@/actions/supabase-actions";
 
 import { useEditTrackModal } from "@/hooks/useEditTrackModal";
 
@@ -14,18 +14,25 @@ import Modal from "./Modal";
 import Input from "../Input";
 import Button from "../Button";
 import { Track } from "@prisma/client";
-import { loadTrackFromSupabase } from "@/actions/supabase-actions";
 
 export default function EditTrackModal() {
   const [currentView, setCurrentView] = useState("main");
+  const [isLoading, setIsLoading] = useState(false);
+
   const editTrackModal = useEditTrackModal();
   const track = editTrackModal.track;
-
   const router = useRouter();
 
-  const { register, handleSubmit, reset } = useForm<FieldValues>({
+  const { register, handleSubmit, reset, setValue } = useForm<FieldValues>({
     defaultValues: { title: "", author: "", song: null, image: null },
   });
+
+  useEffect(() => {
+    if (track) {
+      setValue("title", track.title);
+      setValue("description", track.description);
+    }
+  }, [track, setValue]);
 
   const handleDownload = async () => {
     if (track && track.song_path) {
@@ -67,12 +74,19 @@ export default function EditTrackModal() {
 
   const onSubmit: SubmitHandler<FieldValues> = async values => {
     try {
-      router.refresh();
-      toast.success("Song created!");
+      setIsLoading(true);
+
+      await updateTrack(track?.id!, values.title, values.description);
+      toast.success("Song updated!");
       reset();
+      setCurrentView("main");
       editTrackModal.onClose();
+      router.refresh();
     } catch (error) {
+      toast.error("Failed to update track");
       editTrackModal.onClose();
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -134,6 +148,26 @@ export default function EditTrackModal() {
           <button onClick={showMainView} className="mb-4">
             Back
           </button>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex flex-col gap-y-4"
+          >
+            <Input
+              id="title"
+              disabled={isLoading}
+              {...register("title", { required: true })}
+              placeholder="Song title"
+            />
+            <Input
+              id="description"
+              disabled={isLoading}
+              {...register("description", { required: true })}
+              placeholder="Song description"
+            />
+            <Button disabled={isLoading} type="submit">
+              Create
+            </Button>
+          </form>
         </div>
       )}
       {currentView == "replaceAudio" && <div></div>}
