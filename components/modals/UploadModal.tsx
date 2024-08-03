@@ -12,6 +12,10 @@ import { useUploadModal } from "@/hooks/useUploadModal";
 import Modal from "./Modal";
 import Input from "../Input";
 import Button from "../Button";
+import {
+  uploadAudioToSupabase,
+  uploadImageToSupabase,
+} from "@/actions/supabase-actions";
 
 export default function UploadModal() {
   const [isLoading, setIsLoading] = useState(false);
@@ -40,31 +44,8 @@ export default function UploadModal() {
         toast.error("Missing fields");
       }
 
-      const uniqueID = uniqid();
-
-      const { data: songData, error: songError } = await supabase.storage
-        .from("songs")
-        .upload(`song-${values.title}-${uniqueID}`, songFile, {
-          cacheControl: "3600",
-          upsert: false,
-        });
-
-      if (songError) {
-        setIsLoading(false);
-        return toast.error("Failed song `upload");
-      }
-
-      const { data: imageData, error: imageError } = await supabase.storage
-        .from("images")
-        .upload(`image-${values.title}-${uniqueID}`, imageFile, {
-          cacheControl: "3600",
-          upsert: false,
-        });
-
-      if (imageError) {
-        setIsLoading(false);
-        return toast.error("Failed image upload");
-      }
+      const songData = await uploadAudioToSupabase(songFile);
+      const imageData = await uploadImageToSupabase(imageFile);
 
       const track = await createTrack(values.title);
 

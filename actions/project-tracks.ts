@@ -1,3 +1,5 @@
+"use server";
+
 import { prisma } from "@/lib/prisma";
 
 export async function fetchProjectTracks(projectId: string) {
@@ -33,9 +35,9 @@ export async function createProjectTrack(projectId: string, trackId: string) {
   }
 }
 
-export async function deleteProjectTrack(projectTrackId: string) {
+export async function deleteProjectTrack(trackId: string) {
   try {
-    await prisma.project_track.delete({ where: { id: projectTrackId } });
+    await prisma.project_track.deleteMany({ where: { track_id: trackId } });
     return true;
   } catch (error) {
     console.error("Error deleting project track:", error);

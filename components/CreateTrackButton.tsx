@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 
 import { createTrack } from "@/actions/tracks";
 import { createProjectTrack } from "@/actions/project-tracks";
-import { supabase } from "@/lib/supabase/client";
+import { uploadAudioToSupabase } from "@/actions/supabase-actions";
 
 export default function CreateTrackButton({
   projectid,
@@ -30,18 +30,15 @@ export default function CreateTrackButton({
   };
 
   const uploadAudio = async (ProjectTrackFile: File) => {
-    const uniqueID = uniqid();
+    const trackData = await uploadAudioToSupabase(ProjectTrackFile);
 
-    const { data: songData, error: songError } = await supabase.storage
-      .from("songs")
-      .upload(`song-${ProjectTrackFile.name}-${uniqueID}`, ProjectTrackFile, {
-        cacheControl: "3600",
-        upsert: false,
-      });
-
-    if (songError) {
-      return toast.error("Failed song upload");
+    if (!trackData) {
+      return toast.error("Failed to upload track");
     }
+
+    console.log(trackData);
+
+    toast.success("Track uploaded!");
 
     const track = await createTrack(ProjectTrackFile.name);
 
@@ -52,7 +49,7 @@ export default function CreateTrackButton({
     const projectTrack = await createProjectTrack(projectid, track.id);
 
     if (!projectTrack) {
-      return toast.error("Failed to create track");
+      return toast.error("Failed to create project track");
     }
 
     router.refresh();

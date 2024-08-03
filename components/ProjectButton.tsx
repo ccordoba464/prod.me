@@ -1,8 +1,5 @@
 "use client";
 
-import { toast } from "react-hot-toast";
-
-import { createProject } from "@/actions/projects";
 import { Button } from "@/components/ui/button";
 import { useProjectModal } from "@/hooks/useProjectModal";
 

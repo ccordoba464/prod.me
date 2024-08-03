@@ -4,14 +4,13 @@ import { toast } from "react-hot-toast";
 import { supabase } from "@/lib/supabase/client";
 import uniqid from "uniqid";
 import { useRouter } from "next/navigation";
-import { prisma } from "@/lib/prisma";
-import { createTrack } from "@/actions/tracks";
 
 import Modal from "./Modal";
 import Input from "../Input";
 import Button from "../Button";
 import { useProjectModal } from "@/hooks/useProjectModal";
 import { createProject } from "@/actions/projects";
+import { uploadImageToSupabase } from "@/actions/supabase-actions";
 
 export default function ProjectModal() {
   const [isLoading, setIsLoading] = useState(false);
@@ -35,25 +34,11 @@ export default function ProjectModal() {
 
       const imageFile = values.image?.[0];
 
-      console.log(values);
-
       if (!imageFile) {
         toast.error("Missing fields");
       }
 
-      const uniqueID = uniqid();
-
-      const { data: imageData, error: imageError } = await supabase.storage
-        .from("images")
-        .upload(`image-${values.title}-${uniqueID}`, imageFile, {
-          cacheControl: "3600",
-          upsert: false,
-        });
-
-      if (imageError) {
-        setIsLoading(false);
-        return toast.error("Failed image upload");
-      }
+      const imageData = await uploadImageToSupabase(imageFile);
 
       const project = await createProject(
         values.title,

@@ -3,8 +3,8 @@ import * as Dialog from "@radix-ui/react-dialog";
 interface ModalProps {
   isOpen: boolean;
   onChange: (open: boolean) => void;
-  title: string | undefined;
-  description: string;
+  title: string | null;
+  description: string | null;
   children: React.ReactNode;
 }
 

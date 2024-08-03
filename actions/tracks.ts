@@ -4,6 +4,7 @@ import { prisma } from "../lib/prisma";
 import { User } from "@prisma/client";
 import { auth } from "@clerk/nextjs/server";
 import { getDbUserFromClerkUser } from "./users";
+import { deleteProjectTrack } from "./project-tracks";
 
 export async function createTrack(title: string) {
   try {
@@ -33,6 +34,22 @@ export async function createTrack(title: string) {
   } catch (error) {
     console.error("Error creating project:", error);
     return null;
+  }
+}
+export async function deleteTrack(trackId: string) {
+  try {
+    // First delete all related project tracks
+    const deletedProjectTracks = await deleteProjectTrack(trackId);
+    if (!deletedProjectTracks) {
+      throw new Error("Failed to delete related project tracks");
+    }
+
+    // Then delete the track itself
+    await prisma.track.delete({ where: { id: trackId } });
+    return true;
+  } catch (error) {
+    console.error("Error deleting track:", error);
+    return false;
   }
 }
 
