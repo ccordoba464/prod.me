@@ -12,7 +12,6 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { useEffect, useState, useRef } from "react";
-import Uploader from "./Uploader";
 
 const tabs = ["All", "Projects", "Tracks", "Beats", "Opens"];
 
@@ -46,7 +45,6 @@ export default function LibraryLayout({
           <h1 className="text-5xl">Library</h1>
           <div className="flex items-center">
             <Input placeholder="Search" mr={3} size="md" />
-            <Uploader />
           </div>
         </div>
         <Tabs

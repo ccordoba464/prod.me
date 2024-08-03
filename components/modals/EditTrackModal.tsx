@@ -40,6 +40,7 @@ export default function EditTrackModal() {
       try {
         await deleteTrack(track.id);
         toast.success("Track deleted");
+        router.refresh();
         editTrackModal.onClose();
       } catch (error) {
         toast.error("Failed to delete track");
@@ -170,7 +171,9 @@ export default function EditTrackModal() {
           >
             Delete Track
           </button>
-          <button className="p-4 bg-zinc-900 rounded-md">Cancel</button>
+          <button className="p-4 bg-zinc-900 rounded-md" onClick={showMainView}>
+            Cancel
+          </button>
         </div>
       )}
     </Modal>
