@@ -11,8 +11,8 @@ import { loadTrackFromSupabase } from "@/actions/supabase-actions";
 import { useEditTrackModal } from "@/hooks/useEditTrackModal";
 
 import Modal from "./Modal";
-import Input from "../Input";
-import Button from "../Button";
+import Input from "../customizable/Input";
+import Button from "../customizable/Button";
 import { Track } from "@prisma/client";
 
 export default function EditTrackModal() {

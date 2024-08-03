@@ -6,8 +6,8 @@ import uniqid from "uniqid";
 import { useRouter } from "next/navigation";
 
 import Modal from "./Modal";
-import Input from "../Input";
-import Button from "../Button";
+import Input from "../customizable/Input";
+import Button from "../customizable/Button";
 import { useProjectModal } from "@/hooks/useProjectModal";
 import { createProject } from "@/actions/projects";
 import { uploadImageToSupabase } from "@/actions/supabase-actions";

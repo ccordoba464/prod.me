@@ -33,7 +33,9 @@ export default function ProjectTrackItem({
         <p className="text-zinc-400">May 7, 2024</p>
       </div>
       <button
-        className="text-white w-8 h-6 rounded-lg flex items-center justify-center hover:bg-zinc-900 z-1"
+        className="
+        text-white w-8 h-6 rounded-lg flex items-center 
+        justify-center hover:bg-zinc-900 z-1"
         onClick={onClick}
       >
         <SlOptions />

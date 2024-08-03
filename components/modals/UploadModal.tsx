@@ -10,8 +10,8 @@ import { createTrack } from "@/actions/tracks";
 import { useUploadModal } from "@/hooks/useUploadModal";
 
 import Modal from "./Modal";
-import Input from "../Input";
-import Button from "../Button";
+import Input from "../customizable/Input";
+import Button from "../customizable/Button";
 import {
   uploadAudioToSupabase,
   uploadImageToSupabase,
