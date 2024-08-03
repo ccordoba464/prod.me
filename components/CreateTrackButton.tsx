@@ -18,9 +18,7 @@ export default function CreateTrackButton({
   const router = useRouter();
 
   const handleClick = () => {
-    if (hiddenFileInput.current) {
-      hiddenFileInput.current.click();
-    }
+    hiddenFileInput.current!.click();
   };
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -40,7 +38,7 @@ export default function CreateTrackButton({
 
     toast.success("Track uploaded!");
 
-    const track = await createTrack(ProjectTrackFile.name);
+    const track = await createTrack(ProjectTrackFile.name, trackData.path);
 
     if (!track) {
       return toast.error("Failed to create track");

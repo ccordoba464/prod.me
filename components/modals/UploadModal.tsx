@@ -47,7 +47,7 @@ export default function UploadModal() {
       const songData = await uploadAudioToSupabase(songFile);
       const imageData = await uploadImageToSupabase(imageFile);
 
-      const track = await createTrack(values.title);
+      const track = await createTrack(values.title, songData.path);
 
       if (!track) {
         return toast.error("Failed to create track");

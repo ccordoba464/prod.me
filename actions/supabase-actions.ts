@@ -33,3 +33,24 @@ export async function uploadImageToSupabase(file: File) {
 
   return data;
 }
+
+export async function loadImageFromSupabase(path: string) {
+  const { data, error } = await supabase.storage.from("images").download(path);
+
+  if (error) {
+    throw new Error("Failed to load image");
+  }
+
+  return data;
+}
+
+export async function loadTrackFromSupabase(path: string) {
+  const { data, error } = await supabase.storage.from("songs").download(path);
+
+  console.log(data);
+  if (error) {
+    throw new Error("Failed to load image");
+  }
+
+  return data;
+}

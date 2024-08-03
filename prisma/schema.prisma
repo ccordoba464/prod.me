@@ -53,6 +53,7 @@ model Track {
   description        String?
   genre              String?
   cover_image_url    String?
+  song_path          String?
   created_at         DateTime @default(now())
   updated_at         DateTime @updatedAt
   versions           Track_version[] @relation("trackVersions")

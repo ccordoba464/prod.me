@@ -14,6 +14,7 @@ import Modal from "./Modal";
 import Input from "../Input";
 import Button from "../Button";
 import { Track } from "@prisma/client";
+import { loadTrackFromSupabase } from "@/actions/supabase-actions";
 
 export default function EditTrackModal() {
   const [currentView, setCurrentView] = useState("main");
@@ -25,6 +26,22 @@ export default function EditTrackModal() {
   const { register, handleSubmit, reset } = useForm<FieldValues>({
     defaultValues: { title: "", author: "", song: null, image: null },
   });
+
+  const handleDownload = async () => {
+    if (track && track.song_path) {
+      // FIGURE OUT WHAT IS GOING ON HERE AND WHY IT WORKS
+      const data = await loadTrackFromSupabase(track.song_path);
+      console.log(data);
+      toast.success("Track downloaded");
+      const url = URL.createObjectURL(data);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${track.title}.mp3`;
+      a.click();
+    } else {
+      toast.error("Failed to download track");
+    }
+  };
 
   const onChange = (open: boolean) => {
     if (!open) {
@@ -97,7 +114,10 @@ export default function EditTrackModal() {
             >
               Replace audio
             </li>
-            <li className="p-4 bg-neutral-700 cursor-pointer hover:bg-[#323131]">
+            <li
+              className="p-4 bg-neutral-700 cursor-pointer hover:bg-[#323131]"
+              onClick={handleDownload}
+            >
               Export track
             </li>
             <li
@@ -114,47 +134,9 @@ export default function EditTrackModal() {
           <button onClick={showMainView} className="mb-4">
             Back
           </button>
-
-          <ul className="flex flex-col gap-1">
-            <li className="p-4 bg-neutral-700 rounded-t-lg cursor-pointer hover:bg-[#2c2b2b]">
-              sssss
-            </li>
-            <li className="p-4 bg-neutral-700 cursor-pointer hover:bg-[#323131]">
-              Add Notes
-            </li>
-            <li className="p-4 bg-neutral-700 cursor-pointer hover:bg-[#323131]">
-              Replace audio
-            </li>
-            <li className="p-4 bg-neutral-700 cursor-pointer hover:bg-[#323131]">
-              Export track
-            </li>
-            <li className="p-4 bg-neutral-700 rounded-b-lg cursor-pointer hover:bg-[#323131]">
-              Delete Track
-            </li>
-          </ul>
         </div>
       )}
-      {currentView == "replaceAudio" && (
-        <div>
-          <ul className="flex flex-col gap-1">
-            <li className="p-4 bg-neutral-700 rounded-t-lg cursor-pointer hover:bg-[#2c2b2b]">
-              esfsefs
-            </li>
-            <li className="p-4 bg-neutral-700 cursor-pointer hover:bg-[#323131]">
-              Add Notes
-            </li>
-            <li className="p-4 bg-neutral-700 cursor-pointer hover:bg-[#323131]">
-              Replace audio
-            </li>
-            <li className="p-4 bg-neutral-700 cursor-pointer hover:bg-[#323131]">
-              Export track
-            </li>
-            <li className="p-4 bg-neutral-700 rounded-b-lg cursor-pointer hover:bg-[#323131]">
-              Delete Track
-            </li>
-          </ul>
-        </div>
-      )}
+      {currentView == "replaceAudio" && <div></div>}
       {currentView == "deleteTrack" && (
         <div className="flex flex-col">
           <div

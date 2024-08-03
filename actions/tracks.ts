@@ -6,7 +6,7 @@ import { auth } from "@clerk/nextjs/server";
 import { getDbUserFromClerkUser } from "./users";
 import { deleteProjectTrack } from "./project-tracks";
 
-export async function createTrack(title: string) {
+export async function createTrack(title: string, songPath: string) {
   try {
     const { userId } = auth();
 
@@ -26,6 +26,7 @@ export async function createTrack(title: string) {
       description: "Fetch file name when uploading",
       genre: "N/A",
       cover_image_url: "",
+      song_path: songPath,
     };
 
     const track = await prisma.track.create({ data: trackData });
