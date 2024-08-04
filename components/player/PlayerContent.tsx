@@ -1,5 +1,8 @@
 import { usePlayer } from "@/hooks/usePlayer";
 import { Track } from "@prisma/client";
+import { useEffect, useState } from "react";
+
+import useSound from "use-sound";
 
 interface PlayerContentProps {
   track: Track;
@@ -10,6 +13,27 @@ export default function PlayerContent({ track, trackUrl }: PlayerContentProps) {
   const player = usePlayer();
   const [volume, setVolume] = useState(1);
   const [isPlaying, setIsPlaying] = useState(false);
+
+  const onPlayNext = () => {};
+
+  const onPlayPrevious = () => {};
+
+  const handlePlay = () => {};
+
+  const toggleMute = () => {};
+
+  useEffect(() => {}, []);
+
+  const [play, { pause, sound }] = useSound(trackUrl, {
+    volume: volume,
+    onplay: () => setIsPlaying(true),
+    onend: () => {
+      setIsPlaying(false);
+      onPlayNext();
+    },
+    onpause: () => setIsPlaying(false),
+    format: ["mp3"],
+  });
 
   return (
     <div className="bg-red-500 flex p-1 rounded-lg">
