@@ -39,6 +39,16 @@ export async function createProject(
   }
 }
 
+export async function deleteProject(projectId: string) {
+  try {
+    await prisma.project.delete({ where: { id: projectId } });
+    return true;
+  } catch (error) {
+    console.error("Error deleting project:", error);
+    return false;
+  }
+}
+
 export async function fetchProjects() {
   try {
     const { userId } = auth();
