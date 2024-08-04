@@ -87,3 +87,16 @@ export async function fetchTracks(data: User) {
     return [];
   }
 }
+
+export async function fetchTrackWithId(trackId: string) {
+  try {
+    const track = await prisma.track.findUnique({
+      where: { id: trackId },
+    });
+
+    return track;
+  } catch (error) {
+    console.error("Error fetching track:", error);
+    return null;
+  }
+}
