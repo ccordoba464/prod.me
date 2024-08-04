@@ -13,15 +13,21 @@ import { Project } from "@prisma/client";
 import { deleteProject } from "@/actions/projects";
 import JSZip from "jszip";
 import { saveAs } from "file-saver";
-import { fetchProjectTracks } from "@/actions/project-tracks";
+import {
+  deleteProjectTrack,
+  fetchProjectTracks,
+} from "@/actions/project-tracks";
 import { loadTrackFromSupabase } from "@/actions/supabase-actions";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 interface MediaProps {
   project: Project;
 }
 
 export default function MediaItem({ project }: MediaProps) {
+  const router = useRouter();
+
   const handleExport = async () => {
     if (project) {
       try {
@@ -47,6 +53,27 @@ export default function MediaItem({ project }: MediaProps) {
     }
   };
 
+  const handleDelete = async () => {
+    const projectTracks = await fetchProjectTracks(project.id);
+
+    for (const projectTrack of projectTracks) {
+      const data = await deleteProjectTrack(projectTrack.track_id);
+      if (!data) {
+        toast.error("Failed to delete project track");
+        return;
+      }
+    }
+
+    const data = await deleteProject(project.id);
+
+    if (data) {
+      toast.success("Project deleted");
+      router.refresh();
+    } else {
+      toast.error("Failed to delete project");
+    }
+  };
+
   return (
     <div className="flex flex-col w-[160px]">
       <Link href={`/project/${project.id}`}>
@@ -66,7 +93,9 @@ export default function MediaItem({ project }: MediaProps) {
             <DropdownMenuItem onClick={handleExport}>
               Export Project
             </DropdownMenuItem>
-            <DropdownMenuItem>Delete Project</DropdownMenuItem>
+            <DropdownMenuItem onClick={handleDelete}>
+              Delete Project
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
