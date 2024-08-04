@@ -7,6 +7,8 @@ import { createTrack } from "@/actions/tracks";
 import CreateTrackButton from "@/components/CreateTrackButton";
 import ProjectTrackItem from "@/components/ProjectTrackItem";
 import { Project_track, Track } from "@prisma/client";
+import { Button } from "@/components/ui/button";
+import { SlOptions } from "react-icons/sl";
 
 export default async function ProjectPage({
   params: { projectid },
@@ -41,8 +43,8 @@ export default async function ProjectPage({
               </p>
             </div>
             <div className="flex gap-4">
-              <div className="p-2 rounded-full bg-red-500 w-12 h-12">
-                <div className="w-12 h-12"></div>
+              <div className="p-2 rounded-full bg-red-500 w-12 h-12 flex items-center justify-center cursor-pointer">
+                <SlOptions />
               </div>
               <div className="p-2 rounded-full bg-red-500 w-12 h-12">
                 <div className="w-12 h-12"></div>
