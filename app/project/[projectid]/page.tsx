@@ -4,13 +4,16 @@ import { getProject } from "@/actions/projects";
 import { fetchProjectTracks } from "@/actions/project-tracks";
 import { useForm, FieldValues, SubmitHandler, set } from "react-hook-form";
 import { createTrack } from "@/actions/tracks";
-import CreateTrackButton from "@/components/CreateTrackButton";
-import ProjectTrackItem from "@/components/ProjectTrackItem";
+import CreateTrackButton from "@/components/project/CreateTrackButton";
+import ProjectTrackItem from "@/components/project/ProjectTrackItem";
 import { Project_track, Track } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 import { SlOptions } from "react-icons/sl";
-import { loadImageFromSupabase } from "@/actions/supabase-actions";
 import { useLoadImage } from "@/hooks/useLoadImage";
+import { BsPauseFill, BsPlayFill } from "react-icons/bs";
+import { BsShuffle } from "react-icons/bs";
+import { IoAdd } from "react-icons/io5";
+import PlayProjectButton from "@/components/project/PlayProjectButton";
 
 export default async function ProjectPage({
   params: { projectid },
@@ -59,11 +62,14 @@ export default async function ProjectPage({
               </p>
             </div>
             <div className="flex gap-4">
-              <div className="p-2 rounded-full bg-red-500 w-12 h-12 flex items-center justify-center cursor-pointer">
-                <SlOptions />
+              <div className="rounded-full bg-red-500 size-10 flex items-center justify-center cursor-pointer ">
+                <PlayProjectButton projectTracks={projectTracks} />
               </div>
-              <div className="p-2 rounded-full bg-red-500 w-12 h-12">
-                <div className="w-12 h-12"></div>
+              <div className="rounded-full bg-red-500 size-10 flex items-center justify-center cursor-pointer">
+                <CreateTrackButton projectid={projectid} />
+              </div>
+              <div className="rounded-full bg-red-500 size-10 flex items-center justify-center cursor-pointer">
+                <SlOptions />
               </div>
             </div>
           </div>
@@ -77,7 +83,6 @@ export default async function ProjectPage({
             <button className="px-4 py-2 mb-10 rounded-lg bg-red-500 text-white font-bold">
               Shuffle
             </button>
-            <CreateTrackButton projectid={projectid} />
           </div>
 
           <ul className="flex flex-col gap-2 pb-32 mb-4">

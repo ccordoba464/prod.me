@@ -7,7 +7,7 @@ import { toast } from "react-hot-toast";
 
 import MediaItem from "@/components/MediaItem";
 import { Project } from "@prisma/client";
-import { ProjectButton } from "@/components/ProjectButton";
+import { ProjectButton } from "@/components/project/ProjectButton";
 
 //import { RevenueChartSkeleton } from "@/app/ui/skeletons"; // This is a skeleton component, replace the loading... fallback
 

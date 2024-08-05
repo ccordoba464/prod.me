@@ -8,6 +8,8 @@ import { useRouter } from "next/navigation";
 import { createTrack } from "@/actions/tracks";
 import { createProjectTrack } from "@/actions/project-tracks";
 import { uploadAudioToSupabase } from "@/actions/supabase-actions";
+import { SlOptions } from "react-icons/sl";
+import { IoAdd } from "react-icons/io5";
 
 export default function CreateTrackButton({
   projectid,
@@ -56,12 +58,12 @@ export default function CreateTrackButton({
 
   return (
     <>
-      <button
-        className="px-4 py-2 mb-10 rounded-lg bg-red-500 text-white font-bold"
+      <div
         onClick={handleClick}
+        className="rounded-full bg-red-500 size-10 flex items-center justify-center cursor-pointer"
       >
-        + Add tracks
-      </button>
+        <IoAdd size={26} />
+      </div>
       <input
         type="file"
         onChange={handleChange}
