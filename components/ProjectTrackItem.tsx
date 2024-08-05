@@ -1,6 +1,7 @@
 "use client";
 
 import { useEditTrackModal } from "@/hooks/useEditTrackModal";
+import { usePlayer } from "@/hooks/usePlayer";
 import { Track } from "@prisma/client";
 import { SlOptions } from "react-icons/sl";
 
@@ -16,16 +17,24 @@ interface ProjectTrackItemProps {
 export default function ProjectTrackItem({
   projectTrack,
 }: ProjectTrackItemProps) {
-  const editTrackModal = useEditTrackModal();
-
-  const onClick = async () => {
-    editTrackModal.onOpen(projectTrack.track);
-  };
-
   const { project_id, track_id, position, track } = projectTrack;
 
+  const editTrackModal = useEditTrackModal();
+  const player = usePlayer();
+
+  const onClick = async () => {
+    editTrackModal.onOpen(track);
+  };
+
+  const handleClick = () => {
+    return player.setId(track_id);
+  };
+
   return (
-    <li className="flex justify-between items-center hover:border px-4 py-2 rounded-lg ">
+    <li
+      className="flex justify-between items-center hover:border px-4 py-2 rounded-lg "
+      onClick={handleClick}
+    >
       <div>
         <p>
           {position}. {track?.title}

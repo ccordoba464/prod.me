@@ -3,7 +3,6 @@ import {
   TrackInsightCard,
   BeatInsightCard,
 } from "@/components/InsightCard";
-import { ProjectCard } from "@/components/ProjectCard";
 import { Suspense } from "react";
 import { Divider } from "@chakra-ui/react";
 import { prisma } from "@/lib/prisma";
@@ -50,12 +49,7 @@ export default async function Library({ params }: LibraryProps) {
 
       <div className="">
         <div className="text-xl mb-2">Opens</div>
-        <Suspense fallback={<div>TESTING</div>}>
-          {false &&
-            tracks.map((track: any) => (
-              <InsightCard key={track.id} track={track} />
-            ))}
-        </Suspense>
+        <Suspense fallback={<div>TESTING</div>}></Suspense>
       </div>
     </div>
   );
