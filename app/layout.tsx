@@ -4,7 +4,7 @@ import { Providers } from "./providers";
 import "./globals.css";
 import Player from "../components/player/Player";
 import Header from "@/components/Header";
-import Sidebar from "@/components/Sidebar";
+import Sidebar from "@/components/sidebar/Sidebar";
 import { ModalProvider } from "@/providers/ModalProvider";
 import ToasterProvider from "@/providers/ToasterProvider";
 import { ThemeProvider } from "@/providers/ThemeProvider";
