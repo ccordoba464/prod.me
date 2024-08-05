@@ -20,6 +20,8 @@ import {
 import { loadTrackFromSupabase } from "@/actions/supabase-actions";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { useLoadImage } from "@/hooks/useLoadImage";
+import Image from "next/image";
 
 interface MediaProps {
   project: Project;
@@ -27,6 +29,11 @@ interface MediaProps {
 
 export default function MediaItem({ project }: MediaProps) {
   const router = useRouter();
+
+  const imageUrl = useLoadImage(project?.image_path!);
+
+  if (!imageUrl) {
+  }
 
   const handleExport = async () => {
     if (project) {
@@ -77,7 +84,19 @@ export default function MediaItem({ project }: MediaProps) {
   return (
     <div className="flex flex-col w-[160px]">
       <Link href={`/project/${project.id}`}>
-        <div className="w-[160px] h-[160px] overflow-hidden bg-[#3b4045] rounded-md"></div>{" "}
+        <div className="w-[160px] h-[160px] overflow-hidden bg-[#3b4045] rounded-md">
+          {imageUrl === "" ? (
+            <span className="text-white">Change Cover Art</span>
+          ) : (
+            <Image
+              className="object-cover w-full h-full"
+              src={imageUrl!}
+              width={384}
+              height={384}
+              alt="cover art"
+            />
+          )}
+        </div>{" "}
       </Link>
 
       <div className="flex justify-between mt-2">

@@ -9,6 +9,8 @@ import ProjectTrackItem from "@/components/ProjectTrackItem";
 import { Project_track, Track } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 import { SlOptions } from "react-icons/sl";
+import { loadImageFromSupabase } from "@/actions/supabase-actions";
+import { useLoadImage } from "@/hooks/useLoadImage";
 
 export default async function ProjectPage({
   params: { projectid },
@@ -17,7 +19,6 @@ export default async function ProjectPage({
     projectid: string;
   };
 }) {
-  console.log(typeof projectid);
   const projectData = getProject(projectid);
   const projectTracksData = fetchProjectTracks(projectid);
 
@@ -26,12 +27,27 @@ export default async function ProjectPage({
     projectTracksData,
   ]);
 
+  const imageUrl = useLoadImage(project?.image_path!);
+
+  if (!imageUrl) {
+  }
+
   return (
     <div className="flex p-6 mx-auto w-full h-full mt-14">
       <div className="flex gap-8 w-full">
         <div className="flex">
           <div className="flex w-96 h-96 bg-gray-600 justify-center items-center rounded-md">
-            <span className="text-white">Change Cover Art</span>
+            {imageUrl === "" ? (
+              <span className="text-white">Change Cover Art</span>
+            ) : (
+              <Image
+                className="object-cover w-full h-full"
+                src={imageUrl!}
+                width={384}
+                height={384}
+                alt="cover art"
+              />
+            )}
           </div>
         </div>
         <div className="flex-1 flex-col">

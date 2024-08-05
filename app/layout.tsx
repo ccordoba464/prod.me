@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { Providers } from "./providers";
 import "./globals.css";
 import Player from "../components/player/Player";
 import Sidebar from "@/components/sidebar/Sidebar";
 import { ModalProvider } from "@/providers/ModalProvider";
 import ToasterProvider from "@/providers/ToasterProvider";
+import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 
 const font = Inter({ subsets: ["latin"] });
@@ -29,12 +29,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Providers>
+          <ClerkProvider>
             <ModalProvider />
             <ToasterProvider />
             <Sidebar>{children}</Sidebar>
             <Player />
-          </Providers>
+          </ClerkProvider>
         </ThemeProvider>
       </body>
     </html>
