@@ -56,9 +56,14 @@ export default async function ProjectPage({
         <div className="flex-1 flex-col">
           <div className="flex items-center justify-between mb-6">
             <div className="">
-              <h1 className="text-4xl font-bold mb-1">{project?.title}</h1>
+              <h1 className="text-4xl font-bold mb-2">{project?.title}</h1>
               <p className="text-zinc-700">
-                <span>1 track</span> • <span>Created this day</span>
+                <span>
+                  {projectTracks.length > 1
+                    ? `${projectTracks.length} tracks`
+                    : `${projectTracks.length} track`}
+                </span>{" "}
+                • <span>Created this day</span>
               </p>
             </div>
             <div className="flex gap-4">
@@ -75,15 +80,6 @@ export default async function ProjectPage({
           </div>
 
           <div className="mb-6">{project?.description}</div>
-
-          <div className="flex gap-2">
-            <button className="px-4 py-2 mb-10 rounded-lg bg-red-500 text-white font-bold">
-              Play
-            </button>
-            <button className="px-4 py-2 mb-10 rounded-lg bg-red-500 text-white font-bold">
-              Shuffle
-            </button>
-          </div>
 
           <ul className="flex flex-col gap-2 pb-32 mb-4">
             {projectTracks.map(

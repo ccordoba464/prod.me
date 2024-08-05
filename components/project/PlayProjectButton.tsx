@@ -21,7 +21,6 @@ interface PlayProjectButtonProps {
 export default function PlayProjectButton({
   projectTracks,
 }: PlayProjectButtonProps) {
-  const router = useRouter();
   const player = usePlayer();
 
   const handleClick = () => {
