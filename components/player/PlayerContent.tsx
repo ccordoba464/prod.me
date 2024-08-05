@@ -7,14 +7,21 @@ import useSound from "use-sound";
 import { BsPauseFill, BsPlayFill } from "react-icons/bs";
 import { HiSpeakerWave, HiSpeakerXMark } from "react-icons/hi2";
 import { AiFillStepBackward, AiFillStepForward } from "react-icons/ai";
+import Image from "next/image";
 
 interface PlayerContentProps {
   track: Track;
   trackUrl: string;
+  imageUrl: string;
 }
 
-export default function PlayerContent({ track, trackUrl }: PlayerContentProps) {
+export default function PlayerContent({
+  track,
+  trackUrl,
+  imageUrl,
+}: PlayerContentProps) {
   const player = usePlayer();
+
   const [volume, setVolume] = useState(1);
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -90,13 +97,43 @@ export default function PlayerContent({ track, trackUrl }: PlayerContentProps) {
     <div className="grid grid-cols-2 md:grid-cols-3 h-full">
       <div className="flex w-full justify-start">
         <div className="flex items-center gap-x-4">
-          <button
+          <div
             className="
+        flex 
+        items-center 
+        gap-x-3 
         cursor-pointer 
-        hover:opacity-75 
-        transition
+        hover:bg-neutral-800/50 
+        w-full 
+        p-2 
+        rounded-md
       "
           >
+            <div
+              className="
+          relative 
+          rounded-md 
+          min-h-[48px] 
+          min-w-[48px] 
+          overflow-hidden
+        "
+            >
+              <Image
+                fill
+                src={imageUrl || ""}
+                alt="MediaItem"
+                className="object-cover"
+              />
+            </div>
+            <div className="flex flex-col gap-y-1 overflow-hidden">
+              <p className="text-white truncate">{track.title}</p>
+              <p className="text-neutral-400 text-sm truncate">
+                By {track.user_id}
+              </p>
+            </div>
+          </div>
+
+          <button className="cursor-pointer hover:opacity-75 transition">
             <AiOutlineHeart />
           </button>
         </div>

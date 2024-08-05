@@ -32,7 +32,7 @@ export default function ProjectTrackItem({
 
   return (
     <li
-      className="flex justify-between items-center hover:border px-4 py-2 rounded-lg "
+      className="flex justify-between items-center hover:border px-4 py-2 rounded-lg cursor-pointer"
       onClick={handleClick}
     >
       <div>

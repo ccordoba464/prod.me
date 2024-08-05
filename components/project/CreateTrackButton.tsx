@@ -10,12 +10,9 @@ import { createProjectTrack } from "@/actions/project-tracks";
 import { uploadAudioToSupabase } from "@/actions/supabase-actions";
 import { SlOptions } from "react-icons/sl";
 import { IoAdd } from "react-icons/io5";
+import { Project } from "@prisma/client";
 
-export default function CreateTrackButton({
-  projectid,
-}: {
-  projectid: string;
-}) {
+export default function CreateTrackButton({ project }: { project: Project }) {
   const hiddenFileInput = useRef<HTMLInputElement | null>(null);
   const router = useRouter();
 
@@ -36,24 +33,26 @@ export default function CreateTrackButton({
       return toast.error("Failed to upload track");
     }
 
-    console.log(trackData);
-
     toast.success("Track uploaded!");
 
-    const track = await createTrack(ProjectTrackFile.name, trackData.path);
+    const track = await createTrack(
+      ProjectTrackFile.name,
+      trackData.path,
+      project.image_path
+    );
 
     if (!track) {
       return toast.error("Failed to create track");
     }
 
-    const projectTrack = await createProjectTrack(projectid, track.id);
+    const projectTrack = await createProjectTrack(project.id, track.id);
 
     if (!projectTrack) {
       return toast.error("Failed to create project track");
     }
 
     router.refresh();
-    toast.success("Song created!");
+    toast.success("Track created!");
   };
 
   return (

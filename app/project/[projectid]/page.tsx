@@ -71,7 +71,7 @@ export default async function ProjectPage({
                 <PlayProjectButton projectTracks={projectTracks} />
               </div>
               <div className="rounded-full bg-red-500 size-10 flex items-center justify-center cursor-pointer">
-                <CreateTrackButton projectid={projectid} />
+                <CreateTrackButton project={project!} />
               </div>
               <div className="rounded-full bg-red-500 size-10 flex items-center justify-center cursor-pointer">
                 <SlOptions />

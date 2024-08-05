@@ -6,7 +6,11 @@ import { auth } from "@clerk/nextjs/server";
 import { getDbUserFromClerkUser } from "./users";
 import { deleteProjectTrack } from "./project-tracks";
 
-export async function createTrack(title: string, songPath: string) {
+export async function createTrack(
+  title: string,
+  songPath: string,
+  imagePath: string
+) {
   try {
     const { userId } = auth();
 
@@ -25,12 +29,13 @@ export async function createTrack(title: string, songPath: string) {
       title: title,
       description: "Fetch file name when uploading",
       genre: "N/A",
-      cover_image_url: "",
+      image_path: imagePath,
       song_path: songPath,
     };
 
     const track = await prisma.track.create({ data: trackData });
 
+    console.log(track);
     return track;
   } catch (error) {
     console.error("Error creating project:", error);
