@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import LibraryLayout from "@/components/LibraryLayout";
+import LibraryLayout from "@/components/library/LibraryLayout";
 
 export default function LibraryRootLayout({
   children,

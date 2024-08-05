@@ -1,4 +1,7 @@
-import { InsightCard, TrackInsightCard } from "@/components/InsightCard";
+import {
+  InsightCard,
+  TrackInsightCard,
+} from "@/components/library/InsightCard";
 import { Suspense } from "react";
 import { prisma } from "@/lib/prisma";
 

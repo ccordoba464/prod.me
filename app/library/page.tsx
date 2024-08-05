@@ -2,7 +2,7 @@ import {
   InsightCard,
   TrackInsightCard,
   BeatInsightCard,
-} from "@/components/InsightCard";
+} from "@/components/library/InsightCard";
 import { Suspense } from "react";
 import { Divider } from "@chakra-ui/react";
 import { prisma } from "@/lib/prisma";

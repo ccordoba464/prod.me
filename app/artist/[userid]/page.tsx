@@ -7,7 +7,10 @@ import {
   TabIndicator,
 } from "@chakra-ui/react";
 import Image from "next/image";
-import { TrackInsightCard, InsightCard } from "@/components/InsightCard";
+import {
+  TrackInsightCard,
+  InsightCard,
+} from "@/components/library/InsightCard";
 import { prisma } from "@/lib/prisma";
 interface ProfileProps {
   params: {
