@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Divider, Input } from "@chakra-ui/react";
-import CommentSection from "@/components/CommentSection";
+import CommentSection from "@/components/comments/CommentSection";
 import { prisma } from "@/lib/prisma";
 
 interface TrackProps {

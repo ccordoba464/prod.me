@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import CommentComponent from "@/components/Comment";
+import CommentComponent from "@/components/comments/Comment";
 import { Divider } from "@chakra-ui/react";
 import { prisma } from "@/lib/prisma";
 

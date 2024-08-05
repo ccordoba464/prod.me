@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Input, Divider } from "@chakra-ui/react";
-import CommentComponent from "@/components/Comment";
+import CommentComponent from "@/components/comments/Comment";
 
 interface CommentSectionProps {
   comments: Array<{
