@@ -2,6 +2,7 @@
 
 import { twMerge } from "tailwind-merge";
 import { HiHome } from "react-icons/hi";
+import { BsFileMusic } from "react-icons/bs";
 import { BiSearch } from "react-icons/bi";
 import { usePathname } from "next/navigation";
 import { useMemo } from "react";
@@ -49,13 +50,17 @@ export default function Sidebar({
     >
       <div className="hidden md:flex flex-col gap-y-2  h-full w-[280px] p-2">
         <div>
+          <div className="text-white px-5 py-4 flex items-center text-3xl gap-2">
+            <BsFileMusic size={30} />
+            prod.me
+          </div>
+
           <div className="flex flex-col gap-y-4 px-5 py-4">
             {routes.map(item => (
               <SidebarItem key={item.label} {...item} />
             ))}
           </div>
         </div>
-        <div className="overflow-y-auto h-full text-white">Song Library</div>
       </div>
       <div className="h-full flex-1 overflow-y-auto">{children}</div>
     </div>

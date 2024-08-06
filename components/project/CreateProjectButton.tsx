@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { useProjectModal } from "@/hooks/useProjectModal";
 
-export function ProjectButton() {
+export function CreateProjectButton() {
   const projectModal = useProjectModal();
 
   const onClick = async () => {

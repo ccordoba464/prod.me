@@ -30,6 +30,8 @@ export async function createProject(
       image_path: image_path,
     };
 
+    console.log(projectData);
+
     const project = await prisma.project.create({ data: projectData });
 
     return project;
