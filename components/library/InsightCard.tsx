@@ -1,33 +1,7 @@
+import { Track } from "@prisma/client";
 import Link from "next/link";
-interface InsightCardProps {
-  track: {
-    id: string;
-    user_id: string;
-    current_version_id: string | null;
-    title: string;
-    description: string | null;
-    genre: string | null;
-    cover_image_url: string | null;
-    created_at: Date;
-    updated_at: Date;
-  };
-}
 
-interface TrackInsightCardProps {
-  track: {
-    id: string;
-    user_id: string;
-    current_version_id: string | null;
-    title: string;
-    description: string | null;
-    genre: string | null;
-    cover_image_url: string | null;
-    created_at: Date;
-    updated_at: Date;
-  };
-}
-
-export const InsightCard = ({ track }: InsightCardProps) => {
+export const InsightCard = (track: Track) => {
   return (
     <Link href={`/track/${track.id}`}>
       <div className="flex flex-col w-[1120px]">
@@ -66,7 +40,7 @@ export const InsightCard = ({ track }: InsightCardProps) => {
   );
 };
 
-export const TrackInsightCard = ({ track }: TrackInsightCardProps) => {
+export const TrackInsightCard = (track: Track) => {
   return (
     <Link href={`/track/${track.id}`}>
       <div className="flex flex-col w-[1120px]">

@@ -55,32 +55,16 @@ export default async function Profile({ params }: ProfileProps) {
           <TabIndicator mt="-1.5px" height="2px" borderRadius="1px" />
           <TabPanels>
             <TabPanel>
-              <div className="flex flex-col gap-4 mb-20">
-                {tracks.map(track => (
-                  <InsightCard key={track.id} track={track} />
-                ))}
-              </div>
+              <div className="flex flex-col gap-4 mb-20"></div>
             </TabPanel>
             <TabPanel>
-              <div className="flex flex-col gap-4 mb-20">
-                {tracks.map(track => (
-                  <TrackInsightCard key={track.id} track={track} />
-                ))}
-              </div>
+              <div className="flex flex-col gap-4 mb-20"></div>
             </TabPanel>
             <TabPanel>
-              <div className="flex flex-col gap-4 mb-20">
-                {tracks.map(track => (
-                  <InsightCard key={track.id} track={track} />
-                ))}
-              </div>
+              <div className="flex flex-col gap-4 mb-20"></div>
             </TabPanel>
             <TabPanel>
-              <div className="flex flex-col gap-4 mb-20">
-                {tracks.map(track => (
-                  <InsightCard key={track.id} track={track} />
-                ))}
-              </div>
+              <div className="flex flex-col gap-4 mb-20"></div>
             </TabPanel>
           </TabPanels>
         </Tabs>
