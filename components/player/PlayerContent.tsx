@@ -1,5 +1,5 @@
 import { usePlayer } from "@/hooks/usePlayer";
-import { Track } from "@prisma/client";
+import { Track, User } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
@@ -8,17 +8,21 @@ import { BsPauseFill, BsPlayFill } from "react-icons/bs";
 import { HiSpeakerWave, HiSpeakerXMark } from "react-icons/hi2";
 import { AiFillStepBackward, AiFillStepForward } from "react-icons/ai";
 import Image from "next/image";
+import { getUserById } from "@/actions/users";
+import toast from "react-hot-toast";
 
 interface PlayerContentProps {
   track: Track;
   trackUrl: string;
   imageUrl: string;
+  user: User;
 }
 
 export default function PlayerContent({
   track,
   trackUrl,
   imageUrl,
+  user,
 }: PlayerContentProps) {
   const player = usePlayer();
 
@@ -97,27 +101,8 @@ export default function PlayerContent({
     <div className="grid grid-cols-2 md:grid-cols-3 h-full">
       <div className="flex w-full justify-start">
         <div className="flex items-center gap-x-4">
-          <div
-            className="
-        flex 
-        items-center 
-        gap-x-3 
-        cursor-pointer 
-        hover:bg-neutral-800/50 
-        w-full 
-        p-2 
-        rounded-md
-      "
-          >
-            <div
-              className="
-          relative 
-          rounded-md 
-          min-h-[48px] 
-          min-w-[48px] 
-          overflow-hidden
-        "
-            >
+          <div className="flex items-center gap-x-3 cursor-pointer hover:bg-neutral-800/50 w-full p-2 rounded-md">
+            <div className="relative rounded-md min-h-[60px] min-w-[60px] overflow-hidden">
               <Image
                 fill
                 src={imageUrl || ""}
@@ -128,101 +113,50 @@ export default function PlayerContent({
             <div className="flex flex-col gap-y-1 overflow-hidden">
               <p className="text-white truncate">{track.title}</p>
               <p className="text-neutral-400 text-sm truncate">
-                By {track.user_id}
+                {user.username}
               </p>
             </div>
           </div>
-
-          <button className="cursor-pointer hover:opacity-75 transition">
-            <AiOutlineHeart />
-          </button>
         </div>
       </div>
 
-      <div
-        className="
-            flex 
-            md:hidden 
-            col-auto 
-            w-full 
-            justify-end 
-            items-center
-          "
-      >
+      <div className="flex md:hidden col-auto w-full justify-end items-center">
         <div
           onClick={handlePlay}
-          className="
-              h-10
-              w-10
-              flex 
-              items-center 
-              justify-center 
-              rounded-full 
-              bg-white 
-              p-1 
-              cursor-pointer
-            "
+          className="h-10 w-10 flex items-center justify-center rounded-full bg-white p-1 cursor-pointer"
         >
           <Icon size={30} className="text-black" />
         </div>
       </div>
 
-      <div
-        className="
-            hidden
-            h-full
-            md:flex 
-            justify-center 
-            items-center 
-            w-full 
-            max-w-[722px] 
-            gap-x-6
-          "
-      >
+      <div className="hidden h-full md:flex justify-center items-center w-full max-w-[722px] gap-x-6">
         <AiFillStepBackward
           onClick={onPlayPrevious}
           size={30}
-          className="
-              text-neutral-400 
-              cursor-pointer 
-              hover:text-white 
-              transition
-            "
+          className="text-neutral-400 cursor-pointer hover:text-white transition"
         />
         <div
           onClick={handlePlay}
-          className="
-              flex 
-              items-center 
-              justify-center
-              h-10
-              w-10 
-              rounded-full 
-              bg-white 
-              p-1 
-              cursor-pointer
-            "
+          className="flex items-center justify-center h-10 w-10 rounded-full bg-white p-1 cursor-pointer"
         >
           <Icon size={30} className="text-black" />
         </div>
         <AiFillStepForward
           onClick={onPlayNext}
           size={30}
-          className="
-              text-neutral-400 
-              cursor-pointer 
-              hover:text-white 
-              transition
-            "
+          className="text-neutral-400 cursor-pointer hover:text-white transition"
         />
       </div>
 
       <div className="hidden md:flex w-full justify-end pr-2">
         <div className="flex items-center gap-x-2 w-[120px]">
+          <button className="cursor-pointer hover:opacity-75 transition">
+            <AiOutlineHeart size={30} />
+          </button>
           <VolumeIcon
             onClick={toggleMute}
             className="cursor-pointer"
-            size={34}
+            size={30}
           />
         </div>
       </div>

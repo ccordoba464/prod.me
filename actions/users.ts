@@ -2,7 +2,6 @@
 
 import { prisma } from "@/lib/prisma";
 import { User } from "@prisma/client";
-import { currentUser } from "@clerk/nextjs/server";
 
 export async function createUser(
   data: Omit<User, "id" | "created_at" | "updated_at">
@@ -16,7 +15,7 @@ export async function createUser(
   }
 }
 
-export async function getUserById({ id }: { id: string }) {
+export async function getUserById(id: string) {
   try {
     const user = await prisma.user.findUnique({ where: { id: id } });
     return user;
