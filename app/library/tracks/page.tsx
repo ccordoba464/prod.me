@@ -18,11 +18,7 @@ export default async function Tracks({ params }: LibraryProps) {
 
   return (
     <div className="flex flex-col gap-4 mb-20">
-      <Suspense fallback={<div>TESTING</div>}>
-        {tracks.map((track: any) => (
-          <InsightCard key={track.id} track={track} />
-        ))}
-      </Suspense>
+      <Suspense fallback={<div>TESTING</div>}></Suspense>
     </div>
   );
 }
