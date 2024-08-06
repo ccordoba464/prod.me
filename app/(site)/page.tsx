@@ -17,20 +17,36 @@ export default async function Home() {
   const projects = await fetchProjects();
 
   return (
-    <div className="text-neutral-400  w-full h-screen overflow-hidden overflow-y-auto p-2">
+    <div className="text-neutral-400 flex flex-col  w-full h-screen overflow-hidden overflow-y-auto p-2">
       <div className="mt-2 mb-7 px-6">
         <div className="flex justify-between items-center">
-          <h1 className="text-white text-4xl font-semibold">Newest Songs</h1>
+          <h1 className="text-white text-4xl font-semibold">Projects</h1>
           <ModeToggle />
           <CreateProjectButton />
         </div>
       </div>
-      <div className="p-6 flex gap-10">
+      <div className="p-6 flex flex-wrap gap-10  justify-start items-start">
         {projects?.map((project: Project) => (
-          <MediaItem key={project.id} project={project} />
+          <>
+            <MediaItem key={project.id} project={project} />
+            <MediaItem key={project.id} project={project} />
+            <MediaItem key={project.id} project={project} />
+            <MediaItem key={project.id} project={project} />
+            <MediaItem key={project.id} project={project} />
+            <MediaItem key={project.id} project={project} />
+            <MediaItem key={project.id} project={project} />
+            <MediaItem key={project.id} project={project} />
+            <MediaItem key={project.id} project={project} />
+            <MediaItem key={project.id} project={project} />
+            <MediaItem key={project.id} project={project} />
+            <MediaItem key={project.id} project={project} />
+            <MediaItem key={project.id} project={project} />
+            <MediaItem key={project.id} project={project} />
+            <MediaItem key={project.id} project={project} />
+            <MediaItem key={project.id} project={project} />
+          </>
         ))}
       </div>
-      test
     </div>
   );
 }

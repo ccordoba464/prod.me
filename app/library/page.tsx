@@ -1,12 +1,5 @@
-import {
-  InsightCard,
-  TrackInsightCard,
-  BeatInsightCard,
-} from "@/components/library/InsightCard";
 import { Suspense } from "react";
 import { Divider } from "@chakra-ui/react";
-import { prisma } from "@/lib/prisma";
-import Link from "next/link";
 
 interface LibraryProps {
   params: {
@@ -24,14 +17,10 @@ export default async function Library({ params }: LibraryProps) {
         </Suspense>
       </div>
 
-      <Divider />
-
       <div className="">
         <div className="text-xl mb-2">Projects</div>
         <div className="flex w-full justify-between"></div>
       </div>
-
-      <Divider />
 
       <div className="">
         <div className="text-xl mb-2">Tracks</div>

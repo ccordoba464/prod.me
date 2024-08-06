@@ -4,6 +4,7 @@ import { twMerge } from "tailwind-merge";
 import { HiHome } from "react-icons/hi";
 import { BsFileMusic } from "react-icons/bs";
 import { BiSearch } from "react-icons/bi";
+import { MdLibraryMusic } from "react-icons/md";
 import { usePathname } from "next/navigation";
 import { useMemo } from "react";
 import { usePlayer } from "@/hooks/usePlayer";
@@ -32,7 +33,7 @@ export default function Sidebar({
         href: "/search",
       },
       {
-        icon: HiHome,
+        icon: MdLibraryMusic,
         label: "Library",
         active: pathname === "/library",
         href: "/library",
@@ -45,10 +46,10 @@ export default function Sidebar({
     <div
       className={twMerge(
         `flex h-screen  `,
-        player.activeId && "h-[calc(100%-80px)]"
+        player.activeId && "h-[calc(100svh-108px)]"
       )}
     >
-      <div className="hidden md:flex flex-col gap-y-2  h-full w-[280px] p-2">
+      <div className="hidden md:flex flex-col gap-y-2 h-full w-[280px] p-2 border-r border-[#A3A3A3]">
         <div>
           <div className="text-white px-5 py-4 flex items-center text-3xl gap-2">
             <BsFileMusic size={30} />
@@ -62,7 +63,7 @@ export default function Sidebar({
           </div>
         </div>
       </div>
-      <div className="h-full flex-1 overflow-y-auto">{children}</div>
+      <div className=" flex-1 overflow-y-auto">{children}</div>
     </div>
   );
 }
