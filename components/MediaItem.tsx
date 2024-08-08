@@ -30,7 +30,7 @@ interface MediaProps {
 export default function MediaItem({ project }: MediaProps) {
   const router = useRouter();
 
-  const imageUrl = useLoadImage(project?.image_path!);
+  const imageUrl = useLoadImage(project?.image_path);
 
   if (!imageUrl) {
   }

@@ -9,7 +9,13 @@ import Modal from "./Modal";
 import Input from "../customizable/Input";
 import Button from "../customizable/Button";
 import { deleteProject, updateProject } from "@/actions/projects";
-import { uploadImageToSupabase } from "@/actions/supabase-actions";
+import {
+  loadTrackFromSupabase,
+  uploadImageToSupabase,
+} from "@/actions/supabase-actions";
+import { fetchProjectTracks } from "@/actions/project-tracks";
+import JSZip from "jszip";
+import saveAs from "file-saver";
 
 export default function EditProjectModal() {
   const [currentView, setCurrentView] = useState("main");
@@ -49,6 +55,31 @@ export default function EditProjectModal() {
       } catch (error) {
         toast.error("Failed to delete project");
       }
+    }
+  };
+
+  const handleExport = async () => {
+    if (project) {
+      try {
+        const projectTracks = await fetchProjectTracks(project.id);
+        const zip = new JSZip();
+
+        for (const projectTrack of projectTracks) {
+          const data = await loadTrackFromSupabase(
+            projectTrack.track?.song_path!
+          );
+          zip.file(`${projectTrack.track.title}.mp3`, data, { binary: true });
+        }
+
+        const zipContent = await zip.generateAsync({ type: "blob" });
+        saveAs(zipContent, `${project.title}_tracks.zip`);
+
+        toast.success("Tracks downloaded successfully");
+      } catch (error) {
+        toast.error("Failed to download tracks");
+      }
+    } else {
+      toast.error("Project not found");
     }
   };
 
@@ -122,7 +153,10 @@ export default function EditProjectModal() {
             >
               Move Project
             </li>
-            <li className="p-4 bg-neutral-700 cursor-pointer hover:bg-[#323131]">
+            <li
+              className="p-4 bg-neutral-700 cursor-pointer hover:bg-[#323131]"
+              onClick={handleExport}
+            >
               Export Project
             </li>
             <li
