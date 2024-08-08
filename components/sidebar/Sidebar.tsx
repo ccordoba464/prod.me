@@ -49,7 +49,7 @@ export default function Sidebar({
         player.activeId && "h-[calc(100svh-108px)]"
       )}
     >
-      <div className="hidden md:flex flex-col gap-y-2 h-full w-[280px] p-2 border-r border-[#A3A3A3]">
+      <div className="hidden md:flex flex-col gap-y-2 h-full w-[280px] p-2">
         <div>
           <div className="text-white px-5 py-4 flex items-center text-3xl gap-2">
             <BsFileMusic size={30} />

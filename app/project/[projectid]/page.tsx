@@ -7,13 +7,9 @@ import { createTrack } from "@/actions/tracks";
 import CreateTrackButton from "@/components/project/CreateTrackButton";
 import ProjectTrackItem from "@/components/project/ProjectTrackItem";
 import { Project_track, Track } from "@prisma/client";
-import { Button } from "@/components/ui/button";
-import { SlOptions } from "react-icons/sl";
 import { useLoadImage } from "@/hooks/useLoadImage";
-import { BsPauseFill, BsPlayFill } from "react-icons/bs";
-import { BsShuffle } from "react-icons/bs";
-import { IoAdd } from "react-icons/io5";
 import PlayProjectButton from "@/components/project/PlayProjectButton";
+import EditProjectButton from "@/components/project/EditProjectButton";
 
 export default async function ProjectPage({
   params: { projectid },
@@ -74,7 +70,7 @@ export default async function ProjectPage({
                 <CreateTrackButton project={project!} />
               </div>
               <div className="rounded-full bg-red-500 size-10 flex items-center justify-center cursor-pointer">
-                <SlOptions />
+                <EditProjectButton project={project!} />
               </div>
             </div>
           </div>

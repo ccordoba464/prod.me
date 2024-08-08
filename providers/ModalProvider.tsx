@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import UploadModal from "@/components/modals/UploadModal";
 import ProjectModal from "@/components/modals/ProjectModal";
 import EditTrackModal from "@/components/modals/EditTrackModal";
+import EditProjectModal from "@/components/modals/EditProjectModal";
 
 export function ModalProvider() {
   const [isMounted, setIsMounted] = useState(false);
@@ -20,6 +21,7 @@ export function ModalProvider() {
       <UploadModal />
       <ProjectModal />
       <EditTrackModal />
+      <EditProjectModal />
     </>
   );
 }

@@ -29,21 +29,6 @@ export default async function Home() {
         {projects?.map((project: Project) => (
           <>
             <MediaItem key={project.id} project={project} />
-            <MediaItem key={project.id} project={project} />
-            <MediaItem key={project.id} project={project} />
-            <MediaItem key={project.id} project={project} />
-            <MediaItem key={project.id} project={project} />
-            <MediaItem key={project.id} project={project} />
-            <MediaItem key={project.id} project={project} />
-            <MediaItem key={project.id} project={project} />
-            <MediaItem key={project.id} project={project} />
-            <MediaItem key={project.id} project={project} />
-            <MediaItem key={project.id} project={project} />
-            <MediaItem key={project.id} project={project} />
-            <MediaItem key={project.id} project={project} />
-            <MediaItem key={project.id} project={project} />
-            <MediaItem key={project.id} project={project} />
-            <MediaItem key={project.id} project={project} />
           </>
         ))}
       </div>

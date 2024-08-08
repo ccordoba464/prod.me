@@ -41,6 +41,25 @@ export async function createProject(
   }
 }
 
+export async function updateProject(
+  projectId: string,
+  title: string,
+  description: string,
+  image_path: string
+) {
+  try {
+    await prisma.project.update({
+      where: { id: projectId },
+      data: { title, description, image_path },
+    });
+
+    return true;
+  } catch (error) {
+    console.error("Error updating project:", error);
+    return false;
+  }
+}
+
 export async function deleteProject(projectId: string) {
   try {
     await prisma.project.delete({ where: { id: projectId } });
