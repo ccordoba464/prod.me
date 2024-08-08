@@ -30,6 +30,11 @@ export default function ProjectTrackItem({
     return player.setId(track_id);
   };
 
+  const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    onClick();
+  };
+
   return (
     <li
       className="flex justify-between items-center hover:border px-4 py-2 rounded-lg cursor-pointer"
@@ -44,8 +49,8 @@ export default function ProjectTrackItem({
       <button
         className="
         text-white w-8 h-6 rounded-lg flex items-center 
-        justify-center hover:bg-zinc-900 z-1"
-        onClick={onClick}
+        justify-center hover:bg-zinc-900 z-10"
+        onClick={handleButtonClick}
       >
         <SlOptions />
       </button>
