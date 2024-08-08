@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import { useForm, FieldValues, SubmitHandler, set } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { supabase } from "@/lib/supabase/client";
-import uniqid from "uniqid";
 import { useRouter } from "next/navigation";
 
 import { useEditProjectModal } from "@/hooks/useEditProjectModal";
@@ -11,6 +9,7 @@ import Modal from "./Modal";
 import Input from "../customizable/Input";
 import Button from "../customizable/Button";
 import { deleteProject, updateProject } from "@/actions/projects";
+import { uploadImageToSupabase } from "@/actions/supabase-actions";
 
 export default function EditProjectModal() {
   const [currentView, setCurrentView] = useState("main");
@@ -23,6 +22,13 @@ export default function EditProjectModal() {
   const { register, handleSubmit, reset, setValue } = useForm<FieldValues>({
     defaultValues: { title: "", decription: "", image: null },
   });
+
+  useEffect(() => {
+    if (project) {
+      setValue("title", project.title);
+      setValue("description", project.description);
+    }
+  }, [project, setValue]);
 
   const onChange = (open: boolean) => {
     if (!open) {
@@ -41,7 +47,7 @@ export default function EditProjectModal() {
         router.refresh();
         editProjectModal.onClose();
       } catch (error) {
-        toast.error("Failed to delete track");
+        toast.error("Failed to delete project");
       }
     }
   };
@@ -51,19 +57,26 @@ export default function EditProjectModal() {
       try {
         setIsLoading(true);
 
+        const imageFile = values.image?.[0];
+
+        if (!imageFile) {
+          toast.error("Missing fields");
+        }
+        const imageData = await uploadImageToSupabase(imageFile);
+
         await updateProject(
           project.id,
           values.title,
           values.description,
-          values.image
+          imageData.path
         );
-        toast.success("Song updated!");
+        toast.success("Project updated!");
         reset();
         setCurrentView("main");
         editProjectModal.onClose();
         router.refresh();
       } catch (error) {
-        toast.error("Failed to update track");
+        toast.error("Failed to update Project");
         editProjectModal.onClose();
       } finally {
         setIsLoading(false);
@@ -95,7 +108,7 @@ export default function EditProjectModal() {
               className="p-4 bg-neutral-700 rounded-t-lg cursor-pointer hover:bg-[#2c2b2b]"
               onClick={showEditInfoView}
             >
-              Edit track info
+              Edit Project Info
             </li>
             <li
               className="p-4 bg-neutral-700 cursor-pointer hover:bg-[#323131]"
@@ -107,16 +120,16 @@ export default function EditProjectModal() {
               className="p-4 bg-neutral-700 cursor-pointer hover:bg-[#323131]"
               onClick={showReplaceAudioView}
             >
-              Replace audio
+              Move Project
             </li>
             <li className="p-4 bg-neutral-700 cursor-pointer hover:bg-[#323131]">
-              Export track
+              Export Project
             </li>
             <li
               className="p-4 bg-neutral-700 rounded-b-lg cursor-pointer hover:bg-[#323131]"
               onClick={showDeleteProjectView}
             >
-              Delete Track
+              Delete Project
             </li>
           </ul>
         </div>
@@ -148,16 +161,16 @@ export default function EditProjectModal() {
               type="file"
               accept=".JPG"
               id="image"
-              {...register("image", { required: true })}
+              {...register("image")}
             />
             <Button disabled={isLoading} type="submit">
-              Create
+              Update Project
             </Button>
           </form>
         </div>
       )}
       {currentView == "replaceAudio" && <div></div>}
-      {currentView == "deleteTrack" && (
+      {currentView == "deleteProject" && (
         <div className="flex flex-col">
           <div
             className="text-2xl
@@ -165,13 +178,13 @@ export default function EditProjectModal() {
                   font-bold
                   mb-6"
           >
-            Delete track?
+            Delete Project?
           </div>
           <button
             className="p-4 bg-zinc-900 rounded-md mb-2"
             onClick={onDelete}
           >
-            Delete Track
+            Delete Project
           </button>
           <button className="p-4 bg-zinc-900 rounded-md" onClick={showMainView}>
             Cancel
