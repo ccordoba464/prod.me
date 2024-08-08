@@ -17,7 +17,7 @@ export default async function Home() {
   const projects = await fetchProjects();
 
   return (
-    <div className="text-neutral-400 flex flex-col  w-full h-screen overflow-hidden overflow-y-auto p-2">
+    <div className="text-neutral-400 flex flex-col  w-full h-full overflow-hidden overflow-y-auto">
       <div className="mt-2 mb-7 px-6">
         <div className="flex justify-between items-center">
           <h1 className="text-white text-4xl font-semibold">Projects</h1>

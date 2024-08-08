@@ -99,10 +99,10 @@ export default function PlayerContent({
   };
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 gap-x-10 h-full">
+    <div className="grid grid-cols-2 md:grid-cols-3 gap-x-10 h-vh">
       <div className="flex w-full justify-start">
         <div className="flex items-center gap-x-4">
-          <div className="flex items-center gap-x-3 cursor-pointer hover:bg-neutral-800/50 w-full p-2 rounded-md">
+          <div className="flex items-center gap-x-3 cursor-pointer  w-full p-2 rounded-md">
             <div className="relative rounded-md min-h-[60px] min-w-[60px] overflow-hidden">
               <Image
                 fill
@@ -149,8 +149,8 @@ export default function PlayerContent({
         />
       </div>
 
-      <div className="hidden md:flex w-full justify-end pr-2">
-        <div className="flex items-center gap-x-2 w-[200px]">
+      <div className="hidden md:flex w-full pr-2">
+        <div className="flex items-center gap-x-2 w-[160px]">
           <VolumeIcon
             onClick={toggleMute}
             className="cursor-pointer"

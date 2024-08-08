@@ -64,9 +64,9 @@
     @apply border-border;
   }
   body {
-    @apply text-foreground;
+    @apply h-full bg-background text-foreground;
   }
   html {
-    @apply bg-background;
+    @apply h-full bg-background;
   }
 }
