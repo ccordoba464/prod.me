@@ -44,7 +44,7 @@ export default function EditProjectModal() {
       try {
         await deleteProject(project.id);
         toast.success("Project deleted");
-        router.refresh();
+        router.push("/");
         editProjectModal.onClose();
       } catch (error) {
         toast.error("Failed to delete project");
