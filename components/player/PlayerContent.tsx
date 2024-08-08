@@ -10,6 +10,7 @@ import { AiFillStepBackward, AiFillStepForward } from "react-icons/ai";
 import Image from "next/image";
 import { getUserById } from "@/actions/users";
 import toast from "react-hot-toast";
+import { Slider } from "./Slider";
 
 interface PlayerContentProps {
   track: Track;
@@ -98,7 +99,7 @@ export default function PlayerContent({
   };
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 h-full">
+    <div className="grid grid-cols-2 md:grid-cols-3 gap-x-10 h-full">
       <div className="flex w-full justify-start">
         <div className="flex items-center gap-x-4">
           <div className="flex items-center gap-x-3 cursor-pointer hover:bg-neutral-800/50 w-full p-2 rounded-md">
@@ -149,15 +150,13 @@ export default function PlayerContent({
       </div>
 
       <div className="hidden md:flex w-full justify-end pr-2">
-        <div className="flex items-center gap-x-2 w-[120px]">
-          <button className="cursor-pointer hover:opacity-75 transition">
-            <AiOutlineHeart size={30} />
-          </button>
+        <div className="flex items-center gap-x-2 w-[200px]">
           <VolumeIcon
             onClick={toggleMute}
             className="cursor-pointer"
             size={30}
           />
+          <Slider value={volume} onChange={value => setVolume(value)} />
         </div>
       </div>
     </div>
