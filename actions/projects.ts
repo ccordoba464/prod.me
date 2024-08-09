@@ -17,6 +17,8 @@ export async function createProject(
       throw new Error("No user found");
     }
 
+    console.log("userId", userId);
+
     const dbUser = await getDbUserFromClerkUser(userId);
 
     if (!dbUser || !dbUser.id) {
@@ -29,8 +31,6 @@ export async function createProject(
       description: description,
       image_path: image_path,
     };
-
-    console.log(projectData);
 
     const project = await prisma.project.create({ data: projectData });
 

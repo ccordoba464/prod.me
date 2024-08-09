@@ -46,6 +46,8 @@ export default function ProjectModal() {
         imageData.path
       );
 
+      console.log(project);
+
       if (!project) {
         return toast.error("Failed to create project");
       }
