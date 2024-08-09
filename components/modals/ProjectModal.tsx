@@ -46,7 +46,7 @@ export default function ProjectModal() {
         imageData.path
       );
 
-      console.log(project);
+      console.log("test");
 
       if (!project) {
         return toast.error("Failed to create project");
@@ -58,6 +58,7 @@ export default function ProjectModal() {
       reset();
       projectModal.onClose();
     } catch (error) {
+      console.error("Error creating project:", error);
       projectModal.onClose();
     } finally {
       setIsLoading(false);
