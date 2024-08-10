@@ -9,6 +9,8 @@ import { usePathname } from "next/navigation";
 import { useMemo } from "react";
 import { usePlayer } from "@/hooks/usePlayer";
 import SidebarItem from "./SidebarItem";
+import { logout } from "@/app/login/actions";
+import { Button } from "../ui/button";
 
 export default function Sidebar({
   children,
@@ -49,21 +51,26 @@ export default function Sidebar({
         player.activeId && "h-[calc(100svh)]"
       )}
     >
-      <div className="hidden md:flex flex-col gap-y-2 h-full w-[280px] p-2">
+      <div className="hidden md:flex flex-col justify-between gap-y-2 h-svh w-[260px] p-2 border-r">
         <div>
-          <div className="text-white px-5 py-4 flex items-center text-3xl gap-2">
+          <div className="text-white px-2 py-4 flex items-center text-3xl gap-2">
             <BsFileMusic size={30} />
             prod.me
           </div>
-
           <div className="flex flex-col gap-y-4 px-5 py-4">
             {routes.map(item => (
               <SidebarItem key={item.label} {...item} />
             ))}
           </div>
         </div>
+
+        <form action={logout}>
+          <Button type="submit" variant={"outline"} className="w-full">
+            Logout
+          </Button>
+        </form>
       </div>
-      <div className="flex flex-1 overflow-y-auto">{children}</div>
+      <div className="flex w-svh flex-1 overflow-y-auto">{children}</div>
     </div>
   );
 }

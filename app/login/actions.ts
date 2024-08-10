@@ -24,8 +24,6 @@ export async function login(formData: FormData) {
     redirect("/error");
   }
 
-  const user = await createUser(authData.user.id, data.email);
-
   revalidatePath("/", "layout");
   redirect("/");
 }
