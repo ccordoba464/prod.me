@@ -8,7 +8,6 @@ import { useRouter } from "next/navigation";
 import { createTrack } from "@/actions/tracks";
 import { createProjectTrack } from "@/actions/project-tracks";
 import { uploadAudioToSupabase } from "@/actions/supabase-actions";
-import { SlOptions } from "react-icons/sl";
 import { IoAdd } from "react-icons/io5";
 import { Project } from "@prisma/client";
 

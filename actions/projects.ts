@@ -4,41 +4,33 @@ import { prisma } from "../lib/prisma";
 import { User } from "@prisma/client";
 import { auth } from "@clerk/nextjs/server";
 import { getDbUserFromClerkUser } from "./users";
+import { createClient } from "@/lib/supabase/server";
 
 export async function createProject(
   title: string,
   description: string,
   image_path: string
 ) {
-  try {
-    const { userId } = auth();
+  const supabase = createClient();
 
-    if (!userId) {
-      throw new Error("No user found");
-    }
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-    console.log("userId", userId);
-
-    const dbUser = await getDbUserFromClerkUser(userId);
-
-    if (!dbUser || !dbUser.id) {
-      throw new Error("No corresponding database user found");
-    }
-
-    const projectData = {
-      user_id: dbUser.id,
-      title: title,
-      description: description,
-      image_path: image_path,
-    };
-
-    const project = await prisma.project.create({ data: projectData });
-
-    return project;
-  } catch (error) {
-    console.error("Error creating project:", error);
+  if (!user) {
     return null;
   }
+
+  const projectData = {
+    user_id: user.id,
+    title: title,
+    description: description,
+    image_path: image_path,
+  };
+
+  const project = await prisma.project.create({ data: projectData });
+
+  return project;
 }
 
 export async function updateProject(
@@ -71,27 +63,21 @@ export async function deleteProject(projectId: string) {
 }
 
 export async function fetchProjects() {
-  try {
-    const { userId } = auth();
+  const supabase = createClient();
 
-    if (!userId) {
-      throw new Error("No user found");
-    }
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-    const dbUser = await getDbUserFromClerkUser(userId);
-
-    if (!dbUser || !dbUser.id) {
-      throw new Error("No corresponding database user found");
-    }
-
-    const projects = await prisma.project.findMany({
-      where: { user_id: dbUser.id },
-    });
-    return projects;
-  } catch (error) {
-    console.error("Error fetching projects:", error);
+  if (!user) {
     return null;
   }
+
+  const projects = await prisma.project.findMany({
+    where: { user_id: user.id },
+  });
+
+  return projects;
 }
 
 export async function getProject(projectId: string) {
