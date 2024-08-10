@@ -17,7 +17,7 @@ export default async function Home() {
     <div className="text-neutral-400 flex flex-col w-full h-full overflow-hidden overflow-y-auto">
       <div className="mb-7 px-4">
         <div className="flex justify-between items-center">
-          <h1 className="text-white text-2xl font-semibold">Projects</h1>
+          <h1 className="text-white text-2xl ">projects.</h1>
           <CreateProjectButton />
         </div>
       </div>
