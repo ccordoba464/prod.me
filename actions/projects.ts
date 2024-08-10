@@ -1,9 +1,6 @@
 "use server";
 
 import { prisma } from "../lib/prisma";
-import { User } from "@prisma/client";
-import { auth } from "@clerk/nextjs/server";
-import { getDbUserFromClerkUser } from "./users";
 import { createClient } from "@/lib/supabase/server";
 
 export async function createProject(
