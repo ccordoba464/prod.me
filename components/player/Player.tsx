@@ -31,7 +31,7 @@ const Player = () => {
   }
 
   return (
-    <div className="fixed bottom-0 flex w-full py-4 items-center justify-center text-white font-bold border-t border-gray-500">
+    <div className="fixed bottom-0 flex w-full py-4 items-center justify-center text-white font-bold border-t">
       <PlayerContent
         track={track}
         trackUrl={trackUrl}

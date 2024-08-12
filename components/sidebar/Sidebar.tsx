@@ -49,10 +49,10 @@ export default function Sidebar({
     <div
       className={twMerge(
         `flex h-full  `,
-        player.activeId && "h-[calc(100svh)]"
+        player.activeId && "h-[calc(100svh-108px)]"
       )}
     >
-      <div className="hidden md:flex flex-col justify-between gap-y-2 h-svh w-[260px] p-6 border-r">
+      <div className="hidden md:flex flex-col justify-between gap-y-2 w-[260px] p-6 border-r">
         <div>
           <div className="text-white flex items-center text-4xl gap-2 mb-4">
             <BsFileMusic size={30} />

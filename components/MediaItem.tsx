@@ -82,9 +82,9 @@ export default function MediaItem({ project }: MediaProps) {
   };
 
   return (
-    <div className="flex flex-col w-[160px]">
+    <div className="flex flex-col w-[180px]">
       <Link href={`/project/${project.id}`}>
-        <div className="w-[160px] h-[160px] overflow-hidden bg-[#3b4045] rounded-md">
+        <div className="w-[180px] h-[180px] overflow-hidden bg-[#3b4045] rounded-md">
           {imageUrl === "" ? (
             <span className="text-white">Change Cover Art</span>
           ) : (

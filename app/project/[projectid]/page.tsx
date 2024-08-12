@@ -32,10 +32,10 @@ export default async function ProjectPage({
   }
 
   return (
-    <div className="flex p-6 mx-auto w-full h-full mt-14">
+    <div className="flex mx-auto w-full h-full">
       <div className="flex gap-8 w-full">
         <div className="flex">
-          <div className="flex w-96 h-96 bg-gray-600 justify-center items-center rounded-md">
+          <div className="flex size-72 md:size-80 bg-gray-600 justify-center items-center rounded-md">
             {imageUrl === "" ? (
               <span className="text-white">Change Cover Art</span>
             ) : (
