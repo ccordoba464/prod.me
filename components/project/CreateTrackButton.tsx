@@ -10,6 +10,7 @@ import { createProjectTrack } from "@/actions/project-tracks";
 import { uploadAudioToSupabase } from "@/actions/supabase-actions";
 import { IoAdd } from "react-icons/io5";
 import { Project } from "@prisma/client";
+import { Button } from "../ui/button";
 
 export default function CreateTrackButton({ project }: { project: Project }) {
   const hiddenFileInput = useRef<HTMLInputElement | null>(null);
@@ -56,12 +57,14 @@ export default function CreateTrackButton({ project }: { project: Project }) {
 
   return (
     <>
-      <div
+      <Button
         onClick={handleClick}
-        className="rounded-full bg-red-500 size-10 flex items-center justify-center cursor-pointer"
+        className="rounded-full "
+        variant={"outline"}
+        size="icon"
       >
-        <IoAdd size={26} />
-      </div>
+        <IoAdd size={20} />
+      </Button>
       <input
         type="file"
         onChange={handleChange}
