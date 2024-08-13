@@ -1,10 +1,7 @@
 import { useState } from "react";
 import { useForm, FieldValues, SubmitHandler, set } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { supabase } from "@/lib/supabase/client";
-import uniqid from "uniqid";
 import { useRouter } from "next/navigation";
-
 import Modal from "./Modal";
 import Input from "../customizable/Input";
 import Button from "../customizable/Button";

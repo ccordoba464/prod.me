@@ -1,7 +1,6 @@
 "use server";
 
 import { prisma } from "../lib/prisma";
-import { User } from "@prisma/client";
 import { createClient } from "@/lib/supabase/server";
 import { deleteProjectTrack } from "./project-tracks";
 

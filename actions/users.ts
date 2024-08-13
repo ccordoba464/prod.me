@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { createClient } from "@/lib/supabase/server";
 import { User } from "@prisma/client";
 
 export async function createUser(userId: string, email: string) {
@@ -9,13 +10,25 @@ export async function createUser(userId: string, email: string) {
   return user;
 }
 
-export async function getUserById(id: string) {
-  try {
-    const user = await prisma.user.findUnique({ where: { id: id } });
-    return user;
-  } catch (error) {
+export async function getCurrentUser() {
+  const supabase = createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
     return null;
   }
+
+  const currentUser = await prisma.user.findUnique({ where: { id: user.id } });
+
+  return currentUser;
+}
+
+export async function getUserById(id: string) {
+  const user = await prisma.user.findUnique({ where: { id: id } });
+  return user;
 }
 
 export async function updateUser(id: string, data: Partial<User>) {
