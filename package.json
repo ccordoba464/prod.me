@@ -14,9 +14,6 @@
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} lib/seed.ts"
   },
   "dependencies": {
-    "@chakra-ui/next-js": "^2.2.0",
-    "@chakra-ui/react": "^2.8.2",
-    "@clerk/nextjs": "^5.1.0",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@prisma/client": "^5.17.0",
@@ -27,8 +24,6 @@
     "@radix-ui/react-slot": "^1.1.0",
     "@supabase/ssr": "^0.4.0",
     "@supabase/supabase-js": "^2.44.4",
-    "@vercel/blob": "^0.23.3",
-    "@vercel/postgres": "^0.8.0",
     "bcrypt": "^5.1.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
@@ -61,7 +56,7 @@
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
     "postcss": "^8",
-    "prisma": "^5.17.0",
+    "prisma": "^5.18.0",
     "tailwindcss": "^3.4.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5"
