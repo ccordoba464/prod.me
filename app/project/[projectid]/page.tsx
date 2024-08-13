@@ -63,13 +63,13 @@ export default async function ProjectPage({
               </p>
             </div>
             <div className="flex gap-4">
-              <div className="rounded-full bg-red-500 size-10 flex items-center justify-center cursor-pointer ">
+              <div className="rounded-full  size-10 flex items-center justify-center cursor-pointer ">
                 <PlayProjectButton projectTracks={projectTracks} />
               </div>
-              <div className="rounded-full bg-red-500 size-10 flex items-center justify-center cursor-pointer">
+              <div className="rounded-full  size-10 flex items-center justify-center cursor-pointer">
                 <CreateTrackButton project={project!} />
               </div>
-              <div className="rounded-full bg-red-500 size-10 flex items-center justify-center cursor-pointer">
+              <div className="rounded-full size-10 flex items-center justify-center cursor-pointer">
                 <EditProjectButton project={project!} />
               </div>
             </div>
