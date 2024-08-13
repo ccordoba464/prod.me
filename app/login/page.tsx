@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 export default function AuthPage() {
-  const isSignUp = true;
+  const isSignUp = false;
   return (
     <div className="text-neutral-400 flex flex-col w-full items-center justify-center h-screen">
       <Card className="w-[440px]">
