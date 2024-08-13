@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { login, signup } from "./actions";
@@ -15,8 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 export default function AuthPage() {
-  const [isSignUp, setIsSignUp] = useState(false);
-
+  const isSignUp = true;
   return (
     <div className="text-neutral-400 flex flex-col w-full items-center justify-center h-screen">
       <Card className="w-[440px]">
@@ -67,11 +64,7 @@ export default function AuthPage() {
             <Button variant="outline" formAction={isSignUp ? signup : login}>
               {isSignUp ? "Sign up" : "Log in"}
             </Button>
-            <Button
-              variant="link"
-              type="button"
-              onClick={() => setIsSignUp(!isSignUp)}
-            >
+            <Button variant="link" type="button">
               {isSignUp
                 ? "Already have an account? Sign in"
                 : "Don't have an account? Sign up"}
