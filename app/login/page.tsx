@@ -18,7 +18,7 @@ export default function AuthPage() {
   const [isSignUp, setIsSignUp] = useState(false);
 
   return (
-    <div className="text-neutral-400 flex flex-col w-full items-center justify-center h-screen">
+    <div className=" flex flex-col w-full items-center justify-center h-screen">
       <Card className="w-[440px]">
         <form>
           <CardHeader>
@@ -39,12 +39,24 @@ export default function AuthPage() {
                   required
                 />
               </div>
+              {isSignUp && (
+                <div className="flex flex-col space-y-2">
+                  <Label htmlFor="username">Username</Label>
+                  <Input
+                    id="username"
+                    name="username"
+                    type="username"
+                    placeholder="Enter your username"
+                    required
+                  />
+                </div>
+              )}
               <div className="flex flex-col space-y-2">
                 <Label htmlFor="password">Password</Label>
                 <Input
                   id="password"
                   name="password"
-                  type="password"
+                  type="text"
                   placeholder="Enter your password"
                   required
                 />

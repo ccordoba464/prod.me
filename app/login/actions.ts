@@ -41,10 +41,19 @@ export async function signup(formData: FormData) {
   const { data: authData, error } = await supabase.auth.signUp(data);
 
   if (error || !authData.user) {
+    console.log(error);
     redirect("/error");
   }
 
-  const user = await createUser(authData.user.id, data.email);
+  const user = await createUser(
+    authData.user.id,
+    data.email,
+    formData.get("username") as string
+  );
+
+  if (!user) {
+    redirect("/error");
+  }
 
   revalidatePath("/", "layout");
   redirect("/");

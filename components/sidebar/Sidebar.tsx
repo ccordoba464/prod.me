@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { getCurrentUser } from "@/actions/users";
 import { User } from "@prisma/client";
+import Link from "next/link";
 
 export default function Sidebar({
   children,
@@ -94,7 +95,7 @@ export default function Sidebar({
         player.activeId && "h-[calc(100svh-108px)]"
       )}
     >
-      <div className="hidden md:flex flex-col justify-between gap-y-2 w-[280px] p-6 border-r">
+      <div className="hidden md:flex flex-col justify-between gap-y-2 w-[300px] p-6 border-r">
         <div>
           <div className="text-white flex items-center text-4xl gap-2 mb-4">
             <BsFileMusic size={30} />
@@ -111,20 +112,24 @@ export default function Sidebar({
 
         <DropdownMenu>
           <DropdownMenuTrigger>
-            <div className="flex items-center">
-              <Avatar className="size-12">
+            <div className="flex items-center hover:bg-accent p-2 rounded-md">
+              <Avatar className="size-10 rounded-md">
                 <AvatarImage src="https://github.com/shadcn.png" />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
               <div className="flex flex-1 flex-col items-start justify-center ml-2 text-sm">
-                <span className="text-white">{user?.email}</span>
-                <span className="text-neutral-400">Admin</span>
+                <span className="text-white">{user?.username}</span>
+                <span className="text-neutral-400 text-xs">{user?.email}</span>
               </div>
             </div>
           </DropdownMenuTrigger>
           <DropdownMenuContent side="right" align="end">
             <DropdownMenuItem>Profile</DropdownMenuItem>
-            <DropdownMenuItem>Settings</DropdownMenuItem>
+            <DropdownMenuItem>
+              <Link href="/settings" className="flex w-full">
+                Settings
+              </Link>
+            </DropdownMenuItem>
             <DropdownMenuItem>
               <form action={logout} className="flex w-full">
                 <button type="submit" className="w-full text-left">

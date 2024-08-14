@@ -7,7 +7,8 @@ import { useEditProjectModal } from "@/hooks/useEditProjectModal";
 
 import Modal from "./Modal";
 import Input from "../customizable/Input";
-import Button from "../customizable/Button";
+import CustButton from "../customizable/Button";
+import { Button } from "../ui/button";
 import { deleteProject, updateProject } from "@/actions/projects";
 import {
   loadTrackFromSupabase,
@@ -134,36 +135,51 @@ export default function EditProjectModal() {
     >
       {currentView == "main" && (
         <div>
-          <ul className="flex flex-col gap-1">
-            <li
-              className="p-4 bg-neutral-700 rounded-t-lg cursor-pointer hover:bg-[#2c2b2b]"
-              onClick={showEditInfoView}
-            >
-              Edit Project Info
+          <ul className="flex flex-col gap-3">
+            <li>
+              <Button
+                className="w-full p-6 bg-neutral-800 cursor-pointer hover:bg-neutral-950 border-none"
+                variant="outline"
+                onClick={showEditInfoView}
+              >
+                Edit Project Info
+              </Button>
             </li>
-            <li
-              className="p-4 bg-neutral-700 cursor-pointer hover:bg-[#323131]"
-              onClick={showAddNotesView}
-            >
-              Add Notes
+            <li>
+              <Button
+                className="w-full p-6 bg-neutral-800 cursor-pointer hover:bg-neutral-950 border-none"
+                variant="outline"
+                onClick={showAddNotesView}
+              >
+                Add Notes
+              </Button>
             </li>
-            <li
-              className="p-4 bg-neutral-700 cursor-pointer hover:bg-[#323131]"
-              onClick={showReplaceAudioView}
-            >
-              Move Project
+            <li>
+              <Button
+                className="w-full p-6 bg-neutral-800 cursor-pointer hover:bg-neutral-950 border-none"
+                variant="outline"
+                onClick={showAddNotesView}
+              >
+                Move Project
+              </Button>
             </li>
-            <li
-              className="p-4 bg-neutral-700 cursor-pointer hover:bg-[#323131]"
-              onClick={handleExport}
-            >
-              Export Project
+            <li>
+              <Button
+                className="w-full p-6 bg-neutral-800 cursor-pointer hover:bg-neutral-950 border-none"
+                variant="outline"
+                onClick={showReplaceAudioView}
+              >
+                Export Project
+              </Button>
             </li>
-            <li
-              className="p-4 bg-neutral-700 rounded-b-lg cursor-pointer hover:bg-[#323131]"
-              onClick={showDeleteProjectView}
-            >
-              Delete Project
+            <li>
+              <Button
+                className="w-full p-6 bg-neutral-800 cursor-pointer hover:bg-neutral-950 border-none"
+                variant="outline"
+                onClick={showDeleteProjectView}
+              >
+                Delete Project
+              </Button>
             </li>
           </ul>
         </div>
@@ -197,9 +213,9 @@ export default function EditProjectModal() {
               id="image"
               {...register("image")}
             />
-            <Button disabled={isLoading} type="submit">
+            <CustButton disabled={isLoading} type="submit">
               Update Project
-            </Button>
+            </CustButton>
           </form>
         </div>
       )}
@@ -215,12 +231,12 @@ export default function EditProjectModal() {
             Delete Project?
           </div>
           <button
-            className="p-4 bg-zinc-900 rounded-md mb-2"
+            className="p-4 bg-zinc-950 rounded-md mb-2"
             onClick={onDelete}
           >
             Delete Project
           </button>
-          <button className="p-4 bg-zinc-900 rounded-md" onClick={showMainView}>
+          <button className="p-4 bg-zinc-950 rounded-md" onClick={showMainView}>
             Cancel
           </button>
         </div>

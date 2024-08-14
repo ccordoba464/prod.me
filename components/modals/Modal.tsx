@@ -36,7 +36,8 @@ export default function Modal({
             translate-x-[-50%] 
             translate-y-[-50%] 
             rounded-md 
-            bg-neutral-800 
+            bg-neutral-900 
+            bg-background
             p-[25px] 
             focus:outline-none 
             text-white"
