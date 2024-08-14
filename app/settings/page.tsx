@@ -10,8 +10,6 @@ export default async function SettingsPage() {
     return null;
   }
 
-  // TODO: Fix password Edit item
-
   return (
     <div className="flex flex-col w-full h-full ">
       <div className="flex justify-between items-center ">
@@ -35,7 +33,7 @@ export default async function SettingsPage() {
 
         <Separator />
 
-        <EditItem title="Password" attribute="password" value="" />
+        <EditItem title="Password" attribute="password" value={"-"} />
 
         <Separator />
       </div>

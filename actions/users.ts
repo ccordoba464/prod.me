@@ -48,6 +48,10 @@ export async function updateUser(attributes: { [key: string]: string }) {
     return null;
   }
 
+  if (attributes.hasOwnProperty("password")) {
+    delete attributes.password;
+  }
+
   const updatedUser = await prisma.user.update({
     where: { id: data.user.id },
     data: attributes,
