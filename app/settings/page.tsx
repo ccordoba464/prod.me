@@ -1,7 +1,9 @@
 import { getCurrentUser } from "@/actions/users";
+import { ModeToggle } from "@/components/ModeToggle";
 import EditItem from "@/components/settings/EditItem";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { useUser } from "@/hooks/useUser";
 
 export default async function SettingsPage() {
   const user = await getCurrentUser();
@@ -13,10 +15,11 @@ export default async function SettingsPage() {
   return (
     <div className="flex flex-col w-full h-full ">
       <div className="flex justify-between items-center ">
-        <h1 className="text-2xl">settings.</h1>
+        <h1 className="text-3xl">settings</h1>
+        <ModeToggle />
       </div>
 
-      <div className="flex flex-col py-4">
+      <div className="flex flex-col py-6">
         <div className="py-2">Basics</div>
 
         <Separator />

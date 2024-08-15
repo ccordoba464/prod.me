@@ -13,14 +13,41 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useRouter } from "next/navigation";
+import { useUser } from "@/hooks/useUser";
+import toast from "react-hot-toast";
 
 export default function AuthPage() {
   const [isSignUp, setIsSignUp] = useState(false);
+  const router = useRouter();
+  const { setUser } = useUser();
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+
+    let user;
+
+    if (isSignUp) {
+      user = await signup(formData);
+    } else {
+      user = await login(formData);
+    }
+
+    if (user) {
+      setUser(user);
+      toast.success(isSignUp ? "Signup successful" : "Login successful");
+      router.push("/");
+    } else {
+      toast.error("Authentication failed");
+    }
+  };
 
   return (
-    <div className=" flex flex-col w-full items-center justify-center h-screen">
+    <div className="flex flex-col w-full items-center justify-center h-screen">
       <Card className="w-[440px]">
-        <form>
+        <form onSubmit={handleSubmit}>
           <CardHeader>
             <CardTitle>{isSignUp ? "Sign Up" : "Sign In"}</CardTitle>
             <CardDescription>
@@ -45,7 +72,7 @@ export default function AuthPage() {
                   <Input
                     id="username"
                     name="username"
-                    type="username"
+                    type="text"
                     placeholder="Enter your username"
                     required
                   />
@@ -56,7 +83,7 @@ export default function AuthPage() {
                 <Input
                   id="password"
                   name="password"
-                  type="text"
+                  type="password"
                   placeholder="Enter your password"
                   required
                 />
@@ -76,7 +103,7 @@ export default function AuthPage() {
             </div>
           </CardContent>
           <CardFooter className="flex flex-col items-center gap-4">
-            <Button variant="outline" formAction={isSignUp ? signup : login}>
+            <Button variant="outline" type="submit">
               {isSignUp ? "Sign up" : "Log in"}
             </Button>
             <Button

@@ -1,12 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm, FieldValues, SubmitHandler, set } from "react-hook-form";
 
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { updateUser } from "@/actions/users";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import { useUser } from "@/hooks/useUser";
 
 interface EditItemProps {
   title: string;
@@ -16,10 +18,16 @@ interface EditItemProps {
 
 export default function EditItem({ title, attribute, value }: EditItemProps) {
   const [isEditing, setIsEditing] = useState(false);
+  const router = useRouter();
+  const { setUser } = useUser();
 
-  const { register, handleSubmit, reset } = useForm<FieldValues>({
+  const { register, handleSubmit, reset, setValue } = useForm<FieldValues>({
     defaultValues: { [attribute]: value },
   });
+
+  useEffect(() => {
+    setValue(attribute, value);
+  }, [isEditing, value, setValue, attribute]);
 
   const onSubmit: SubmitHandler<FieldValues> = async values => {
     const updatedValue = { [attribute]: values[attribute] };
@@ -27,9 +35,11 @@ export default function EditItem({ title, attribute, value }: EditItemProps) {
     if (!updatedUser) {
       return toast.error("Failed to update user");
     }
+    setUser(updatedUser);
     toast.success("User updated");
 
     reset();
+    router.refresh();
     setIsEditing(!isEditing);
   };
 

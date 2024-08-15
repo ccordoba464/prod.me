@@ -10,8 +10,6 @@ import { useEffect, useMemo, useState } from "react";
 import { usePlayer } from "@/hooks/usePlayer";
 import SidebarItem from "./SidebarItem";
 import { logout } from "@/app/login/actions";
-import { Button } from "../ui/button";
-import { ModeToggle } from "../ModeToggle";
 import { RiDashboardHorizontalFill } from "react-icons/ri";
 import { RiFolderMusicFill } from "react-icons/ri";
 import { TbActivity } from "react-icons/tb";
@@ -20,13 +18,12 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { getCurrentUser } from "@/actions/users";
-import { User } from "@prisma/client";
 import Link from "next/link";
+import { useUser } from "@/hooks/useUser";
+import { useRouter } from "next/navigation";
 
 export default function Sidebar({
   children,
@@ -34,8 +31,9 @@ export default function Sidebar({
   children: React.ReactNode;
 }>) {
   const pathname = usePathname();
+  const router = useRouter();
   const player = usePlayer();
-  const [user, setUser] = useState<User | null>(null);
+  const { user, setUser, reset } = useUser();
 
   useEffect(() => {
     async function fetchUser() {
@@ -44,7 +42,7 @@ export default function Sidebar({
       console.log(userData);
     }
     fetchUser();
-  }, []);
+  }, [setUser]);
 
   const routes = useMemo(
     () => [
@@ -88,6 +86,12 @@ export default function Sidebar({
     [pathname]
   );
 
+  const handleLogout = async () => {
+    await logout();
+    reset();
+    router.refresh();
+  };
+
   return (
     <div
       className={twMerge(
@@ -107,8 +111,6 @@ export default function Sidebar({
             ))}
           </div>
         </div>
-
-        <ModeToggle />
 
         <DropdownMenu>
           <DropdownMenuTrigger>
@@ -131,7 +133,7 @@ export default function Sidebar({
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <form action={logout} className="flex w-full">
+              <form action={handleLogout} className="flex w-full">
                 <button type="submit" className="w-full text-left">
                   Logout
                 </button>
