@@ -1,17 +1,8 @@
-import {
-  Tabs,
-  TabList,
-  TabPanels,
-  Tab,
-  TabPanel,
-  TabIndicator,
-} from "@chakra-ui/react";
+import { getUserById } from "@/actions/users";
+import ProfileTrackItem from "@/components/artist/ProfileTrackItem";
+import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import {
-  TrackInsightCard,
-  InsightCard,
-} from "@/components/library/InsightCard";
-import { prisma } from "@/lib/prisma";
+
 interface ProfileProps {
   params: {
     userid: string;
@@ -20,54 +11,76 @@ interface ProfileProps {
 
 export default async function Profile({ params }: ProfileProps) {
   const { userid } = params;
-  const tracks = await prisma.track.findMany();
-  const user = await prisma.user.findUnique({ where: { id: userid } });
+
+  const user = await getUserById(userid);
 
   return (
-    <div className="flex bg-white flex-col mx-auto w-[1200px] mt-14">
-      <div className="flex p-20 bg-gray-600 items-center">
-        <div className="w-[200px] h-[200px] overflow-hidden mr-10">
-          <Image
-            src="/profilepic.JPG"
-            width={200}
-            height={200}
-            objectFit="cover"
-            alt="Profile Picture"
-          />
+    <div className="flex flex-col w-full h-full ">
+      <div className="flex">
+        <div className="flex size-72 md:size-96 bg-gray-600 justify-center items-center rounded-md mr-10">
+          {user?.profile_picture_url! ? (
+            <Image
+              className="object-cover w-full h-full"
+              src={user?.profile_picture_url!}
+              width={320}
+              height={320}
+              alt="cover art"
+            />
+          ) : (
+            <span className="text-white">Change Cover Art</span>
+          )}
         </div>
 
-        <div className="flex flex-col">
-          <h1 className="text-white font-bold text-6xl uppercase">
-            {user?.username}
-          </h1>
-          <h2>{user?.username}</h2>
+        <div className="flex flex-1 flex-col justify-between">
+          <div className="flex flex-col">
+            <div className="flex justify-between items-center mb-2">
+              <div className="text-5xl">{user?.username}</div>
+              <div className="flex gap-4">
+                <Button variant="secondary">Listen</Button>
+                <Button variant="outline">Follow</Button>
+              </div>
+            </div>
+            <div className="text-lg">100 Monthly Listeners</div>
+          </div>
+
+          <div className="flex flex-col ">
+            <div className="text-xl mb-2">Top songs</div>
+            <div className="flex flex-1 items-end gap-3">
+              <div className="flex-1 flex flex-col gap-2">
+                <ProfileTrackItem />
+                <ProfileTrackItem />
+                <ProfileTrackItem />
+              </div>
+              <div className="flex-1 flex flex-col gap-2">
+                <ProfileTrackItem />
+                <ProfileTrackItem />
+                <ProfileTrackItem />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+      <div className="flex ">
+        <div className="flex flex-col py-10 flex-1">
+          <div className="flex justify-between flex-1">
+            <div>Title</div>
+            <div>See All</div>
+          </div>
+          <div className="flex">
+            <div className="flex flex-col">
+              <div className="w-[180px] h-[180px] overflow-hidden bg-[#3b4045] rounded-md"></div>
 
-      <div className="px-6 py-2">
-        <Tabs colorScheme="red">
-          <TabList>
-            <Tab>All</Tab>
-            <Tab>Tracks</Tab>
-            <Tab>Beats</Tab>
-            <Tab>Opens</Tab>
-          </TabList>
-          <TabIndicator mt="-1.5px" height="2px" borderRadius="1px" />
-          <TabPanels>
-            <TabPanel>
-              <div className="flex flex-col gap-4 mb-20"></div>
-            </TabPanel>
-            <TabPanel>
-              <div className="flex flex-col gap-4 mb-20"></div>
-            </TabPanel>
-            <TabPanel>
-              <div className="flex flex-col gap-4 mb-20"></div>
-            </TabPanel>
-            <TabPanel>
-              <div className="flex flex-col gap-4 mb-20"></div>
-            </TabPanel>
-          </TabPanels>
-        </Tabs>
+              <div className="flex">
+                <div>Title</div>
+                <div>Play Button</div>
+              </div>
+              <div className="flex">
+                <div>Artist</div>
+                <div>Length</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

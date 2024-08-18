@@ -96,7 +96,7 @@ export default function MediaItem({ project }: MediaProps) {
               alt="cover art"
             />
           )}
-        </div>{" "}
+        </div>
       </Link>
 
       <div className="flex justify-between mt-2">

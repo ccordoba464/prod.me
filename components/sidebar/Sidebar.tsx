@@ -6,7 +6,7 @@ import { BsFileMusic } from "react-icons/bs";
 import { BiSearch } from "react-icons/bi";
 import { MdLibraryMusic } from "react-icons/md";
 import { usePathname } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { usePlayer } from "@/hooks/usePlayer";
 import SidebarItem from "./SidebarItem";
 import { logout } from "@/app/login/actions";
@@ -126,7 +126,11 @@ export default function Sidebar({
             </div>
           </DropdownMenuTrigger>
           <DropdownMenuContent side="right" align="end">
-            <DropdownMenuItem>Profile</DropdownMenuItem>
+            <DropdownMenuItem>
+              <Link href={`/artist/${user?.id}`} className="flex w-full">
+                Profile
+              </Link>
+            </DropdownMenuItem>
             <DropdownMenuItem>
               <Link href="/settings" className="flex w-full">
                 Settings
@@ -142,7 +146,7 @@ export default function Sidebar({
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="flex w-svh flex-1 px-10 py-6 overflow-y-auto">
+      <div className="flex w-svh flex-1 px-10 py-10 overflow-y-auto">
         {children}
       </div>
     </div>
